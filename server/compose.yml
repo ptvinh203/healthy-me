@@ -1,0 +1,20 @@
+services:
+  health_me_db:
+    image: postgres:15
+    container_name: health-me-db
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
+    ports:
+      - "7373:5432"
+    volumes:
+      - health_me_data:/var/lib/postgresql/data
+      - ./database/initial_database.sql:/docker-entrypoint-initdb.d/initial_database.sql
+
+volumes:
+  health_me_data:
+    driver: local

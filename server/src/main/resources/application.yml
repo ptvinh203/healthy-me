@@ -1,0 +1,38 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /api
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  datasource:
+    url: jdbc:postgresql://${SPRING_DATASOURCE_HOST}:${SPRING_DATASOURCE_PORT}/${SPRING_DATASOURCE_NAME}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # Apply CamelCase to Underscores field naming in database
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      ddl-auto: none
+    show-sql: true
+    properties.hibernate.format_sql: true
+    database: postgresql
+    open-in-view: false # Disable OpenEntityManagerInView
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# Custom properties
+application:
+  jwt:
+    access-token-secret: ${JWT_ACCESS_TOKEN_SECRET}
+    access-token-expiration-ms: ${JWT_ACCESS_TOKEN_EXPIRATION_MS}
+  cloudinary:
+    cloud-name: ${CLOUDINARY_CLOUD_NAME}
+    api-key: ${CLOUDINARY_API_KEY}
+    api-secret: ${CLOUDINARY_API_SECRET}
