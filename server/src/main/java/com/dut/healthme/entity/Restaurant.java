@@ -20,9 +20,6 @@ import java.util.List;
 @Entity
 @Table(name = "restaurants")
 public class Restaurant extends AbstractEntity {
-    @Column(nullable = false)
-    private String name;
-
     private String information;
 
     @Column(nullable = false)
@@ -36,4 +33,8 @@ public class Restaurant extends AbstractEntity {
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
     private List<Item> items;
+
+    @OneToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account account;
 }

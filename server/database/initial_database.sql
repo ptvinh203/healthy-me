@@ -25,7 +25,7 @@ create type shopping_cart_state as ENUM ('PAID', 'UNPAID');
 create table if not exists accounts
 (
     id            bigserial primary key,
-    username      varchar(255) not null unique,
+    name      varchar(255) ,
     email         varchar(255) not null unique,
     password      text         not null,
     role          account_role not null,
@@ -61,11 +61,11 @@ create table if not exists customers
 create table if not exists restaurants
 (
     id            bigserial primary key,
-    name          varchar(255) not null,
     information   text,
     certification text[]       not null,
     phone_number  varchar(20),
     address       varchar(400) not null,
+    account_id    bigint   not null unique references accounts (id),
     created_at    timestamp    not null default current_timestamp,
     updated_at    timestamp,
     deleted_at    timestamp
