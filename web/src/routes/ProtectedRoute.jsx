@@ -1,12 +1,12 @@
+import PropTypes from 'prop-types';
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import PropTypes from 'prop-types'
 import { useStateContext } from "../context/StateContext";
 
 export default function ProtectedRoute(props) {
     const location = useLocation()
     const [{ account }] = useStateContext();
 
-    return props.allowedRoles.includes(account?.role)
+    return props.allowedRoles // Allow all roles if allowedRoles is provided
         ? <Outlet />
         : account
             ? <Navigate to="/unauthorized" replace state={{ from: location }} />

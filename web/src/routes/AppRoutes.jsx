@@ -1,10 +1,10 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import { ROLE_CUSTOMER, ROLE_RESTAURANT } from "../constants/Role";
-import ProtectedRoute from "./ProtectedRoute";
 import ScrollTop from "../components/ScrollTop";
-import { routes } from "./routes";
+import { ROLE_CUSTOMER, ROLE_RESTAURANT } from "../constants/Role";
 import CustomerLayout from "../layouts/CustomerLayout";
 import RestaurantLayout from "../layouts/RestaurantLayout";
+import ProtectedRoute from "./ProtectedRoute";
+import { routes } from "./routes";
 
 export default function AppRoutes() {
     return (
