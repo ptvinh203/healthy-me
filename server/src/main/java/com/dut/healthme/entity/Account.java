@@ -25,8 +25,8 @@ import java.util.List;
 @Entity
 @Table(name = "accounts")
 public class Account extends AbstractEntity implements UserDetails {
-    @Column(nullable = false, unique = true, name = "username")
-    private String displayName;
+
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
