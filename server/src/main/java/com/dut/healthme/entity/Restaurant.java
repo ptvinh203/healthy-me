@@ -1,6 +1,9 @@
 package com.dut.healthme.entity;
 
 import com.dut.healthme.common.model.AbstractEntity;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,6 +22,9 @@ import java.util.List;
 @SuperBuilder
 @Entity
 @Table(name = "restaurants")
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class Restaurant extends AbstractEntity {
     private String information;
 
@@ -32,6 +38,7 @@ public class Restaurant extends AbstractEntity {
     private String address;
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
+//    @JsonManagedReference
     private List<Item> items;
 
     @OneToOne
