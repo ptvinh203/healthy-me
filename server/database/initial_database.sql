@@ -66,6 +66,7 @@ create table if not exists restaurants
     certification text[]       not null,
     phone_number  varchar(20),
     address       varchar(400) not null,
+    account_id    bigint   not null unique references accounts (id),
     created_at    timestamp    not null default current_timestamp,
     updated_at    timestamp,
     deleted_at    timestamp
