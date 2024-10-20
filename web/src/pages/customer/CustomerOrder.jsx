@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import { useStateContext } from "../../context/StateContext"
 import OrderItemCart from "../../components/OrderItemCart"
 import ItemSearchHeader from "../../components/ItemSearchHeader"
+import recommendService from "../../services/recommendService"
+import { ReducerCases } from "../../constants/ReducerCases"
 
 export default function CustomerOrder() {
     const [{ profile, recommendItems, highRatingItems }, dispatch] = useStateContext();
@@ -15,7 +17,19 @@ export default function CustomerOrder() {
     useEffect(() => {
         const fetchRecommendAndHighRatingItems = async () => {
             try {
-                // TODO: fetch api
+                const response = await recommendService.recommend()
+                console.log(response);
+
+                if (response.is_success) {
+                    dispatch({
+                        type: ReducerCases.SET_RECOMMEND_ITEMS,
+                        data: response.data.list_by_calo
+                    })
+                    dispatch({
+                        type: ReducerCases.SET_HIGH_RATING_ITEMS,
+                        data: response.data.list_by_evaluate
+                    })
+                }
 
             } catch (error) {
                 console.log(error)
