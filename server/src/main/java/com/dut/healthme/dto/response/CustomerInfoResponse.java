@@ -31,6 +31,7 @@ public class CustomerInfoResponse extends AbstractDTO<Customer> {
     private Double suggestedCalorieIntake;
     private Timestamp dateOfBirth;
     private Gender gender;
+    private short activityIndex;
 
     @Override
     public CustomerInfoResponse fromEntity(Customer entity) {
@@ -50,6 +51,7 @@ public class CustomerInfoResponse extends AbstractDTO<Customer> {
             .healthGoal(entity.getHealthGoal())
             .dateOfBirth(entity.getDateOfBirth())
             .gender(entity.getGender())
+            .activityIndex(entity.getActivityIndex())
             .build();
     }
 }
