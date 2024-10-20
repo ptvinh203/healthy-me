@@ -17,7 +17,7 @@ const CustomerLayout = () => {
             display: 'flex',
             justifyContent: 'center',
         }}>
-            <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30, maxHeight: '630px', minHeight: '620px' }}>
+            <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30 }}>
                 <Sidebar />
 
                 <Layout style={{
@@ -26,7 +26,7 @@ const CustomerLayout = () => {
                     background: colors.background,
                 }}>
                     <Content>
-                        <Outlet /> 
+                        <Outlet />
                     </Content>
                 </Layout>
             </Layout>
