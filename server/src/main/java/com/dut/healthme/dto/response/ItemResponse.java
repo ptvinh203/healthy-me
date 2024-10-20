@@ -12,6 +12,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.OptionalDouble;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,6 +30,7 @@ public class ItemResponse {
     private ItemType type;
     private Restaurant restaurant;
     private List<Review> reviews;
+    private Double rating;
 
     public ItemResponse(Item item) {
         this.id = item.getId();
@@ -49,5 +52,15 @@ public class ItemResponse {
             this.restaurant.setUpdatedAt(item.getRestaurant().getUpdatedAt());
         }
         this.reviews = item.getReviews();
+
+        // Tính trung bình đánh giá (evaluate) từ danh sách reviews
+        if (this.reviews != null && !this.reviews.isEmpty()) {
+            OptionalDouble average = this.reviews.stream()
+                .mapToDouble(Review::getEvaluate)
+                .average();
+            this.rating = average.isPresent() ? average.getAsDouble() : 0.0;
+        } else {
+            this.rating = 0.0; // hoặc có thể gán mặc định là 0
+        }
     }
 }
