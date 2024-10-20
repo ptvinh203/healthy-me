@@ -1,4 +1,5 @@
 import { Col, Row, Select } from 'antd';
+import React from 'react';
 import BodyInformation from '../../components/home/BodyInformation';
 import IndicatorCard from '../../components/home/IndicatorCard';
 import LeftHeader from '../../components/home/LeftHeader';
