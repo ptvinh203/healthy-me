@@ -8,7 +8,7 @@ const Login = lazy(() => import("../pages/Login"));
 const Unauthorized = lazy(() => import("../pages/error/Unauthorized"));
 const PageNotFound = lazy(() => import("../pages/error/PageNotFound"));
 const CustomerHome = lazy(() => import("../pages/customer/CustomerHome"));
-
+const CustomerDetail = lazy(() => import("../pages/customer/CustomerOrderDetail"));
 
 //---------------------------
 // exports
@@ -32,6 +32,10 @@ export const routes = {
         {
             path: "/cus/home",
             element: <CustomerHome />
+        },
+        {
+            path : "/cus/orderdetail",
+            element : <CustomerDetail />
         }
     ],
     restaurant: [],
