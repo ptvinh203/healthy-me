@@ -1,7 +1,11 @@
 package com.dut.healthme.controller;
 
+import com.dut.healthme.annotation.auth.CurrentAccount;
+import com.dut.healthme.annotation.auth.PreAuthorizeAllWithoutAdmin;
+import com.dut.healthme.annotation.auth.PreAuthorizeCustomer;
 import com.dut.healthme.common.model.AbstractResponse;
 import com.dut.healthme.dto.response.ListRecommendResponse;
+import com.dut.healthme.entity.Account;
 import com.dut.healthme.service.ItemService;
 import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +21,10 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping("/recommend")
-    public ResponseEntity<AbstractResponse> GetRecommend2List(@Param("calo") double calo) {
+    @PreAuthorizeCustomer
+    public ResponseEntity<AbstractResponse> GetRecommend2List(@CurrentAccount Account account) {
         var listRecommend1 = this.itemService.getItemsByEvaluate();
-        var listRecommend2 = this.itemService.getItemsByCaloRec(calo);
+        var listRecommend2 = this.itemService.getItemsByCaloRec(account);
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(new ListRecommendResponse(listRecommend1, listRecommend2)));
     }
 
