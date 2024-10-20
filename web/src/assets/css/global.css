@@ -8,3 +8,8 @@ html,
 body {
     height: 100%;
 }
+
+.ant-input .ant-input-affix-wrapper{
+    outline: none !important;
+    border: none !important;
+}

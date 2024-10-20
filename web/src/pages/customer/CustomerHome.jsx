@@ -48,7 +48,7 @@ const CustomerHome = () => {
         <div style={{ height: '100%', overflowX: 'auto' }}> {/* Enable horizontal scrolling */}
             <Row justify="space-between" style={{ height: '100%' }}>
                 {/* Health overview */}
-                <Col span={16}>
+                <Col span={16} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
                     {/* Header */}
                     <LeftHeader />
 
@@ -62,12 +62,23 @@ const CustomerHome = () => {
                         }}
                     >
                         {indicators.map((indicator, index) => (
-                            <IndicatorCard key={index} indicator={indicator} />
+                            <div
+                                key={index}
+                                style={{
+                                    flexBasis: 'calc(33.33% - 20px)',
+                                    maxWidth: 'calc(33.33% - 20px)',
+                                    minWidth: '200px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <IndicatorCard indicator={indicator} />
+                            </div>
                         ))}
                     </div>
 
                     {/* Target */}
-                    <div style={{ 
+                    <div style={{
                         padding: 20,
                         display: 'flex',
                         gap: 100,
@@ -76,7 +87,7 @@ const CustomerHome = () => {
                         <span>Mục tiêu lành mạnh</span>
                         <Select
                             defaultValue=""
-                            style={{ 
+                            style={{
                                 width: 240,
                                 border: 'none',
                                 color: 'white'
@@ -106,7 +117,7 @@ const CustomerHome = () => {
                             }}
                         />
                     </div>
-                    <div style={{ 
+                    <div style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -121,7 +132,7 @@ const CustomerHome = () => {
                             Lượng calo tiêu thụ gợi ý: 2323 - 2424 kcal
                         </span>
                     </div>
-                    <div style={{ 
+                    <div style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',

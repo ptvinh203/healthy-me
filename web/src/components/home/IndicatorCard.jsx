@@ -28,7 +28,7 @@ function IndicatorCard({ indicator }) {
         'default': {
             icon: GlucoseIcon,
             background: '#F8DEBD',
-            chart: GlucoseChart 
+            chart: GlucoseChart
         }
     };
 
@@ -116,14 +116,14 @@ function IndicatorCard({ indicator }) {
 
     return (
         <>
-            <div 
+            <div
                 style={{
                     backgroundColor: 'white',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    width: '176px',
-                    height: '180px',
+                    width: '100%',
+                    height: '100%',
                     borderRadius: '8px',
                     padding: '10px',
                     gap: 4,
@@ -149,13 +149,13 @@ function IndicatorCard({ indicator }) {
                     }}>
                         <img src={icon} alt={name} style={{ width: '14px', height: '14px' }} />
                     </div>
-                    <span style={{fontSize: '13px', fontWeight: 550}}>{name}</span>
+                    <span style={{ fontSize: '13px', fontWeight: 550 }}>{name}</span>
                 </div>
                 {/* Indicator */}
                 <div>
-                    <span style={{fontSize: '18px', color: colors.textPrimary, fontWeight: 350}}>{value}</span>
+                    <span style={{ fontSize: '18px', color: colors.textPrimary, fontWeight: 350 }}>{value}</span>
                     &nbsp;
-                    <span style={{fontSize: '13px', color: colors.grayMedium}}>{unit}</span>
+                    <span style={{ fontSize: '13px', color: colors.grayMedium }}>{unit}</span>
                 </div>
                 {/* Type */}
                 <div style={{
@@ -167,19 +167,19 @@ function IndicatorCard({ indicator }) {
                     justifyContent: 'center',
                     alignItems: 'center'
                 }}>
-                    <span style={{ fontSize: '10px', fontWeight: 440}}>{type}</span>
+                    <span style={{ fontSize: '10px', fontWeight: 440 }}>{type}</span>
                 </div>
                 {/* Chart */}
                 <div>
-                    <img src={chart} alt="chart" style={{ width: '100%'}} />
+                    <img src={chart} alt="chart" style={{ width: '100%' }} />
                 </div>
             </div>
 
             {/* Modal for showing detailed info */}
-            <Modal 
-                title={name} 
-                visible={isModalVisible} 
-                onCancel={handleCloseModal} 
+            <Modal
+                title={name}
+                visible={isModalVisible}
+                onCancel={handleCloseModal}
                 footer={
                     <Button type="primary" onClick={handleCloseModal}>Lưu thay đổi</Button>
                 }
