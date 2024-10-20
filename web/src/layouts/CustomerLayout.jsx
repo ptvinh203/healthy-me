@@ -14,15 +14,16 @@ const CustomerLayout = () => {
             margin: '0px',
             width: '100%',
             height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
         }}>
-            <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30 }}>
+            <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30, maxHeight: '630px', minHeight: '620px' }}>
                 <Sidebar />
 
                 <Layout style={{
                     borderTopRightRadius: 30,
                     borderBottomRightRadius: 30,
                     background: colors.background,
-                    padding: '20px',
                 }}>
                     <Content>
                         <Outlet /> 
