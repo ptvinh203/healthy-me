@@ -48,6 +48,7 @@ create table if not exists customers
     bmi               numeric,
     heart_rate        numeric,
     blood_glucose     numeric,
+    blood_pressure    numeric,
     chest_measurement numeric,
     waist_measurement numeric,
     hips_measurement  numeric,
