@@ -29,4 +29,9 @@ public class ItemServiceImpl implements ItemService {
         double calo = this.customerService.getCustomerInfo(idCustomer).getSuggestedCalorieIntake();
         return this.itemsRepository.findItemsByCaloApproximation(calo);
     }
+
+    @Override
+    public ItemResponse getItemById(Long id){
+        return this.itemsRepository.findItemById(id);
+    }
 }
