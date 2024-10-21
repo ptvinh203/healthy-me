@@ -26,7 +26,7 @@ const CustomerLayout = () => {
                     background: colors.background,
                 }}>
                     <Content>
-                        <Outlet /> 
+                        <Outlet />
                     </Content>
                 </Layout>
             </Layout>

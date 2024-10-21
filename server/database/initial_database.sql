@@ -48,10 +48,12 @@ create table if not exists customers
     bmi               numeric,
     heart_rate        numeric,
     blood_glucose     numeric,
+    blood_pressure    numeric,
     chest_measurement numeric,
     waist_measurement numeric,
     hips_measurement  numeric,
     "health_goal"     healthy_goal,
+    activity_index    integer         not null default 0,
     created_at        timestamp       not null default current_timestamp,
     updated_at        timestamp,
     deleted_at        timestamp
