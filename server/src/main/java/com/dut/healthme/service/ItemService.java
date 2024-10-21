@@ -8,4 +8,5 @@ import java.util.List;
 public interface ItemService {
     List<ItemResponse> getItemsByEvaluate();
     List<ItemResponse> getItemsByCaloRec(double calo);
+    ItemResponse getItemById(Long id);
 }

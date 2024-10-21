@@ -22,4 +22,9 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemResponse> getItemsByCaloRec(double calo) {
         return this.itemsRepository.findItemsByCaloApproximation(calo);
     }
+
+    @Override
+    public ItemResponse getItemById(Long id){
+        return this.itemsRepository.findItemById(id);
+    }
 }

@@ -2,7 +2,9 @@ package com.dut.healthme.controller;
 
 import com.dut.healthme.common.model.AbstractResponse;
 import com.dut.healthme.dto.request.LoginRequest;
+import com.dut.healthme.dto.response.ItemResponse;
 import com.dut.healthme.dto.response.ListRecommendResponse;
+import com.dut.healthme.entity.Item;
 import com.dut.healthme.service.ItemService;
 import io.lettuce.core.dynamic.annotation.Param;
 import jakarta.validation.Valid;
@@ -25,4 +27,15 @@ public class ItemController {
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta( new ListRecommendResponse(listRecommend1,listRecommend2)));
     }
 
+    @GetMapping("/item/{id}")
+    public ResponseEntity<ItemResponse> GetItemById (@Param("id") Long id)
+    {
+        ItemResponse itemResponse = itemService.getItemById(id);
+        if (itemResponse != null)
+        {
+            return ResponseEntity.ok(itemResponse);
+        } else {
+            return ResponseEntity.notFound().build(); // return 404
+        }
+    }
 }
