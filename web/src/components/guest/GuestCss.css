@@ -1,0 +1,21 @@
+.ant-table-cell {
+  border: none !important;
+  width: 100px !important;
+}
+.ant-table-thead > tr > th.ant-table-cell {
+  color: #65a9fb;
+}
+.ant-table-row {
+  border: none !important;
+  color: "white" !important;
+}
+
+.logo {
+  width: 42px;
+  height: 35.75px;
+}
+
+.logo_text {
+  width: 124.5px;
+  height: 31.14px;
+}
