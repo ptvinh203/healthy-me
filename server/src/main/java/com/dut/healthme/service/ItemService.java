@@ -9,4 +9,5 @@ import java.util.List;
 public interface ItemService {
     List<ItemResponse> getItemsByEvaluate();
     List<ItemResponse> getItemsByCaloRec(Account account);
+    ItemResponse getItemById(Long id);
 }
