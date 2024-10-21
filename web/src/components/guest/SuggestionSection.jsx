@@ -65,7 +65,7 @@ function SuggestionSection() {
           gridTemplateColumns: "repeat(4, 1fr)",
         }}
       >
-        {items.slice(0, 4).map((item, index) => (
+        {items.slice(0, 8).map((item, index) => (
           <div key={index} style={{ marginBottom: "20px" }}>
             <div
               style={{
@@ -73,12 +73,15 @@ function SuggestionSection() {
                 flexDirection: "column",
                 justifyContent: "space-around",
                 // alignItems: "center",
-                borderRadius: "30px",
                 paddingBottom: "20px",
               }}
             >
               <img
-                style={{ width: "150px", height: "150px" }}
+                style={{
+                  width: "150px",
+                  height: "150px",
+                  borderRadius: "30px",
+                }}
                 alt={item.title}
                 src={item.image}
               />
