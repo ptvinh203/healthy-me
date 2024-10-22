@@ -5,7 +5,6 @@ import com.dut.healthme.entity.Item;
 import com.dut.healthme.entity.Restaurant;
 import com.dut.healthme.entity.Review;
 import com.dut.healthme.entity.enums.ItemType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,6 +39,7 @@ public class ItemResponse {
         this.image = item.getImage();
         this.calo = item.getCalo();
         this.type = item.getType();
+        this.ingredients = item.getIngredients();
         // Initialize and set restaurant details
         if (item.getRestaurant() != null) {
             this.restaurant = new Restaurant();

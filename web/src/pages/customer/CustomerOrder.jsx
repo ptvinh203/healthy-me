@@ -14,6 +14,7 @@ export default function CustomerOrder() {
     const [isShowAllRecommendItems, setIsShowAllRecommendItems] = useState(false)
     const [isShowAllHighRatingItems, setIsShowAllHighRatingItems] = useState(false)
 
+
     useEffect(() => {
         const fetchRecommendAndHighRatingItems = async () => {
             try {

@@ -5,13 +5,17 @@ import searchIcon from '../assets/svgs/orderDetail/search.svg';
 export default function ItemSearchHeader({ icon, iconOnClick, onItemSearch }) {
     return (
         <Row justify='space-between' align='middle'>
-            <Col xs={{ span: 21 }} md={{ span: 14 }}>
-                <Flex align='center' justify='center' style={{ padding: '6px 15px', borderRadius: '30px', background: 'white' }}>
+            <Col xs={{ span: 21 }} md={{ span: 10 }}>
+                <Flex
+                    align='center'
+                    justify='center'
+                    style={{ padding: '6px 15px', borderRadius: '30px', background: '#F9F7F7', boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)' }}
+                >
                     <Input
                         placeholder="Tìm kiếm sản phẩm của bạn"
                         allowClear
                         size="large"
-                        style={{ border: 'none', boxShadow: 'none' }}
+                        style={{ border: 'none', boxShadow: 'none', backgroundColor: '#F9F7F7' }}
                         onSubmit={onItemSearch}
                     />
                     <Button

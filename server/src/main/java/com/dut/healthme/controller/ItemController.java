@@ -1,14 +1,12 @@
 package com.dut.healthme.controller;
 
 import com.dut.healthme.annotation.auth.CurrentAccount;
-import com.dut.healthme.annotation.auth.PreAuthorizeAllWithoutAdmin;
 import com.dut.healthme.annotation.auth.PreAuthorizeCustomer;
 import com.dut.healthme.common.model.AbstractResponse;
 import com.dut.healthme.dto.response.ItemResponse;
 import com.dut.healthme.dto.response.ListRecommendResponse;
 import com.dut.healthme.entity.Account;
 import com.dut.healthme.service.ItemService;
-import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +29,11 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemResponse> GetItemById(@PathVariable Long id) {
+    public ResponseEntity<AbstractResponse> GetItemById(@PathVariable Long id) {
         ItemResponse itemResponse = this.itemService.getItemById(id);
         if (itemResponse != null) {
-            return ResponseEntity.ok(itemResponse);
-        }
-        else{
+            return ResponseEntity.ok(AbstractResponse.successWithoutMeta(itemResponse));
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

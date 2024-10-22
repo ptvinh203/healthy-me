@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Button, Card, Flex, Rate } from "antd";
+import { useNavigate } from "react-router-dom";
+import { handlePrice } from "../utils/commonUtils";
 
-export default function OrderItemCart({ item, onOrder, onItemClick }) {
+export default function OrderItemCart({ item, onOrder, isShowNameOnly }) {
+    const navigate = useNavigate()
 
-    const handlePrice = (price) => {
-        return price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+    const handleItemOnClick = () => {
+        if (item) navigate(`/cus/item/${item.id}`);
     }
 
     return (
@@ -18,12 +21,12 @@ export default function OrderItemCart({ item, onOrder, onItemClick }) {
                     aspectRatio: '1/1'
                 }}
             ></Card> :
-            <Flex vertical style={{ cursor: 'pointer' }} onClick={onItemClick}>
+            <Flex vertical style={{ cursor: 'pointer' }} onClick={handleItemOnClick}>
                 <Flex vertical style={{ textAlign: 'center', position: 'relative' }}>
                     <img
                         alt="Item image"
                         src={item.image}
-                        style={{ borderRadius: '30px', aspectRatio: '4/3', marginBottom: '10px' }}
+                        style={{ borderRadius: '30px', aspectRatio: '4/3', marginBottom: '10px', objectFit: 'cover', objectPosition: 'center center' }}
                     />
                     <Rate
                         style={{
@@ -41,13 +44,17 @@ export default function OrderItemCart({ item, onOrder, onItemClick }) {
                 </Flex>
                 <Flex gap={4} vertical align="center">
                     <p style={{ fontSize: '16px' }}>{item.name}</p>
-                    <p style={{ fontSize: '16px', textAlign: 'center' }}>{item.restaurant.account.name}</p>
-                    <p style={{ fontSize: '16px', textAlign: 'center', color: '#FFCA42', fontWeight: 'bold' }}>{handlePrice(item.price)}</p>
-                    <Button
-                        style={{ border: '1px solid #FFCA42', fontSize: '19px' }}
-                        type="text"
-                        onClick={onOrder}
-                    >Đặt món</Button>
+                    {!isShowNameOnly &&
+                        <Flex gap={4} vertical align="center">
+                            <p style={{ fontSize: '16px', textAlign: 'center' }}>{item.restaurant.account.name}</p>
+                            <p style={{ fontSize: '16px', textAlign: 'center', color: '#FFCA42', fontWeight: 'bold' }}>{handlePrice(item.price)}</p>
+                            <Button
+                                style={{ border: '1px solid #FFCA42', fontSize: '19px' }}
+                                type="text"
+                                onClick={onOrder}
+                            >Đặt món</Button>
+                        </Flex>
+                    }
                 </Flex>
             </Flex >
     )
