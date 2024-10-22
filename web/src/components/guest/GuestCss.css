@@ -1,9 +1,12 @@
 .ant-table-cell {
   border: none !important;
   width: 100px !important;
+  cursor: pointer;
+
 }
 .ant-table-thead > tr > th.ant-table-cell {
   color: #65a9fb;
+  cursor: pointer;
 }
 .ant-table-row {
   border: none !important;
