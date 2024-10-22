@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import colors from "../constants/Colors";
+import Sidebar from '../components/Sidebar';
+import colors from '../constants/Colors';
 
 const { Content } = Layout;
 
@@ -19,20 +19,20 @@ const CustomerLayout = () => {
             <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30 }}>
                 <Sidebar />
 
-        <Layout
-          style={{
-            borderTopRightRadius: 30,
-            borderBottomRightRadius: 30,
-            background: colors.background,
-          }}
-        >
-          <Content>
-            <Outlet />
-          </Content>
+                <Layout
+                    style={{
+                        borderTopRightRadius: 30,
+                        borderBottomRightRadius: 30,
+                        background: colors.background,
+                    }}
+                >
+                    <Content>
+                        <Outlet />
+                    </Content>
+                </Layout>
+            </Layout>
         </Layout>
-      </Layout>
-    </Layout>
-  );
+    );
 };
 
 export default CustomerLayout;

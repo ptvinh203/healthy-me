@@ -195,4 +195,4 @@ function BodyInformation() {
     )
 }
 
-export default BodyInformation;
+export default BodyInformation

@@ -42,35 +42,35 @@ export default function AppRoutes() {
             })
     }, [account, dispatch])
 
-  return (
-    <BrowserRouter>
-      <ScrollTop /> {/* Scroll to top when load a new page */}
-      <Routes>
-        {/* All common route */}
-        <Route path="/" element={<GuestLayout />}>
-          {renderRoute(routes.common)}
-        </Route>
+    return (
+        <BrowserRouter>
+            <ScrollTop /> {/* Scroll to top when load a new page */}
+            <Routes>
+                {/* All common route */}
+                <Route path="/" element={<GuestLayout />}>
+                    {renderRoute(routes.common)}
+                </Route>
 
-        {/* All customer route */}
-        <Route path="/cus" element={<CustomerLayout />}>
-          <Route element={<ProtectedRoute allowedRoles={[ROLE_CUSTOMER]} />}>
-            {renderRoute(routes.customer)}
-          </Route>
-        </Route>
+                {/* All customer route */}
+                <Route path="/cus" element={<CustomerLayout />}>
+                    <Route element={<ProtectedRoute allowedRoles={[ROLE_CUSTOMER]} />}>
+                        {renderRoute(routes.customer)}
+                    </Route>
+                </Route>
 
-        {/* All restaurant route */}
-        <Route path="/res" element={<RestaurantLayout />}>
-          <Route element={<ProtectedRoute allowedRoles={[ROLE_RESTAURANT]} />}>
-            {renderRoute(routes.restaurant)}
-          </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+                {/* All restaurant route */}
+                <Route path="/res" element={<RestaurantLayout />}>
+                    <Route element={<ProtectedRoute allowedRoles={[ROLE_RESTAURANT]} />}>
+                        {renderRoute(routes.restaurant)}
+                    </Route>
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 const renderRoute = (routes) => {
-  return routes.map((route, index) => (
-    <Route key={index} path={route.path} element={route.element} />
-  ));
+    return routes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+    ));
 };
