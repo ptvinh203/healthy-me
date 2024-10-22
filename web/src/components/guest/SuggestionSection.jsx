@@ -11,11 +11,11 @@ function SuggestionSection() {
         const fetchItems = async () => {
             try {
                 const response = await fetch(
-                    "http://localhost:8000/api/v1/item/low-calorie?limit=10"
+                    "http://localhost:8000/api/v1/item/landing"
                 );
                 const data = await response.json();
-                console.log(data);
-                setItems(data);
+                // console.log(data);
+                setItems(data.data);
             } catch (error) {
                 console.error("Error fetching items:", error);
             } finally {
