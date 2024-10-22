@@ -1,5 +1,4 @@
 import { Button, Layout } from 'antd';
-import React from 'react';
 import { Outlet } from "react-router-dom";
 import bellIcon from '../assets/svgs/res/bellIcon.svg';
 import Sidebar from '../components/Sidebar';
@@ -27,11 +26,11 @@ const RestaurantLayout = () => {
                     position: 'relative'
                 }}>
                     <Content>
-                        <Outlet /> 
+                        <Outlet />
                     </Content>
 
                     {/* Button float */}
-                    <Button 
+                    <Button
                         type="primary"
                         style={{
                             position: 'absolute',
@@ -42,12 +41,12 @@ const RestaurantLayout = () => {
                             width: '50px',
                             height: '50px',
                             boxShadow: `0 2px 4px ${colors.shadow}`,
-                        }} 
-                        onClick={() => {}}
+                        }}
+                        onClick={() => { }}
                     >
-                        <img 
-                            src={bellIcon} 
-                            alt="Notification" 
+                        <img
+                            src={bellIcon}
+                            alt="Notification"
                             style={{ width: '24px', height: '24px' }}
                         />
                     </Button>
