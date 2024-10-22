@@ -26,7 +26,7 @@ export const routes = {
             element: <CustomerHome />
         },
         {
-            path: "/cus/orderdetail",
+            path: "/cus/item/:itemId",
             element: <CustomerDetail />
         },
         {
