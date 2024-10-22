@@ -26,4 +26,12 @@ public class CustomerController {
         CustomerInfoResponse updatedCustomer = customerService.updateHealthGoal(id, request.getHealthGoal());
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedCustomer));
     }
+
+    @PutMapping("/{id}/activity-index/{index}")
+    public ResponseEntity<AbstractResponse> updateHealthGoal(@PathVariable Long id,
+                                                             @PathVariable short index) {
+        CustomerInfoResponse updatedCustomer = customerService.updateActivityIndex(id, index);
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedCustomer));
+    }
+
 }
