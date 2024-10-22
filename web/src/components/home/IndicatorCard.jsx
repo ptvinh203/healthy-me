@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { Button, Input, Modal, Select } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import BloodIcon from '../../assets/svgs/home/blood.svg';
 import BloodChart from '../../assets/svgs/home/bloodChart.svg';
 import GlucoseIcon from '../../assets/svgs/home/glucose.svg';

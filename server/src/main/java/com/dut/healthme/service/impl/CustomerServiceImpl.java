@@ -117,4 +117,16 @@ public class CustomerServiceImpl implements CustomerService {
 
         return new CustomerInfoResponse().fromEntity(customer);
     }
+
+    @Override
+    public CustomerInfoResponse updateActivityIndex(Long customerId, short activityIndex) {
+        Customer customer = customerRepository.findById(customerId)
+            .orElseThrow(() -> new NotFoundObjectException("Customer not found with id " + customerId));
+
+        customer.setActivityIndex(activityIndex);
+
+        customer = customerRepository.save(customer);
+
+        return new CustomerInfoResponse().fromEntity(customer);
+    }
 }

@@ -1,11 +1,8 @@
 import { Layout } from 'antd';
-import React from 'react';
 import { Outlet } from "react-router-dom";
 import Sidebar from '../components/Sidebar';
 import colors from '../constants/Colors';
-
 const { Content } = Layout;
-
 const CustomerLayout = () => {
     return (
         <Layout style={{
@@ -17,7 +14,7 @@ const CustomerLayout = () => {
             display: 'flex',
             justifyContent: 'center',
         }}>
-            <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30, maxHeight: '630px', minHeight: '620px' }}>
+            <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30 }}>
                 <Sidebar />
 
                 <Layout style={{
@@ -33,5 +30,4 @@ const CustomerLayout = () => {
         </Layout>
     );
 };
-
 export default CustomerLayout;
