@@ -13,9 +13,8 @@ function Header() {
                 <Flex vertical>
                     <Flex style={{ paddingBottom: "50px", cursor: "pointer" }}>
                         <div onClick={() => scrollToTop()}>
-                            <img className="logo" src={Logo} alt="Logo" />
-                            <img className="logo_text" src={LogoText} alt="Logo Text" />
-
+                            <img className="logo" src={Logo} alt="Logo" style={{ width: "120px", height: "80px" }} />
+                            <img className="logo_text" src={LogoText} style={{ width: "180px", height: "80px" }} alt="Logo Text" />
                         </div>
 
                     </Flex>

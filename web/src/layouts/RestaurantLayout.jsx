@@ -3,7 +3,9 @@ import { Outlet } from "react-router-dom";
 import bellIcon from '../assets/svgs/res/bellIcon.svg';
 import Sidebar from '../components/Sidebar';
 import colors from '../constants/Colors';
+
 const { Content } = Layout;
+
 const RestaurantLayout = () => {
     return (
         <Layout style={{
@@ -13,7 +15,8 @@ const RestaurantLayout = () => {
             width: '100%',
             height: '100vh',
         }}>
-            <Layout style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30 }}>
+            <Layout
+                style={{ boxShadow: `0 4px 8px ${colors.shadow}`, borderRadius: 30 }}>
                 <Sidebar />
 
                 <Layout style={{
@@ -29,7 +32,7 @@ const RestaurantLayout = () => {
 
                     {/* Button float */}
                     <Button
-                        type="primary"
+                        type='primary'
                         style={{
                             position: 'absolute',
                             top: '20px',
@@ -44,7 +47,7 @@ const RestaurantLayout = () => {
                     >
                         <img
                             src={bellIcon}
-                            alt="Notification"
+                            alt='Notification'
                             style={{ width: '24px', height: '24px' }}
                         />
                     </Button>
@@ -53,4 +56,5 @@ const RestaurantLayout = () => {
         </Layout>
     );
 };
+
 export default RestaurantLayout;

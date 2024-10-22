@@ -46,6 +46,7 @@ function SuggestionSection() {
                 padding: "20px 80px",
                 display: "flex",
                 flexDirection: "column",
+
             }}
         >
             <Paragraph strong style={{ width: "150px" }}>
@@ -60,6 +61,7 @@ function SuggestionSection() {
 
             <div
                 style={{
+                    marginTop: "40px",
                     padding: "20px 80px",
                     display: "grid",
                     gridTemplateColumns: "repeat(4, 1fr)",
