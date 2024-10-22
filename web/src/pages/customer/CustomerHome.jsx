@@ -45,19 +45,10 @@ const CustomerHome = () => {
     };
 
     return (
-        <div style={{ height: '100%', overflowX: 'auto' }}>
-            {' '}
-            {/* Enable horizontal scrolling */}
-            <Row justify='space-between' style={{ height: '100%' }}>
+        <div style={{ height: '100%', overflowX: 'auto' }}> {/* Enable horizontal scrolling */}
+            <Row justify="space-between" style={{ height: '100%' }}>
                 {/* Health overview */}
-                <Col
-                    span={16}
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-around',
-                    }}
-                >
+                <Col span={16} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
                     {/* Header */}
                     <LeftHeader />
 
@@ -87,21 +78,19 @@ const CustomerHome = () => {
                     </div>
 
                     {/* Target */}
-                    <div
-                        style={{
-                            padding: 20,
-                            display: 'flex',
-                            gap: 100,
-                            alignItems: 'center',
-                        }}
-                    >
+                    <div style={{
+                        padding: 20,
+                        display: 'flex',
+                        gap: 100,
+                        alignItems: 'center'
+                    }}>
                         <span>Mục tiêu lành mạnh</span>
                         <Select
-                            defaultValue=''
+                            defaultValue=""
                             style={{
                                 width: 240,
                                 border: 'none',
-                                color: 'white',
+                                color: 'white'
                             }}
                             onChange={handleChange}
                             options={[
@@ -124,48 +113,39 @@ const CustomerHome = () => {
                                 },
                             ]}
                             dropdownStyle={{
-                                backgroundColor: colors.grayMedium,
+                                backgroundColor: colors.grayMedium
                             }}
                         />
                     </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <span
-                            style={{
-                                backgroundColor: '#ccc',
-                                padding: 8,
-                                borderRadius: 10,
-                                fontWeight: 500,
-                                fontSize: '14px',
-                            }}
-                        >
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                        <span style={{
+                            backgroundColor: '#ccc',
+                            padding: 8,
+                            borderRadius: 10,
+                            fontWeight: 500,
+                            fontSize: '14px'
+                        }}>
                             Lượng calo tiêu thụ gợi ý: 2323 - 2424 kcal
                         </span>
                     </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginTop: 10,
-                        }}
-                    >
-                        <i
-                            style={{
-                                backgroundColor: 'white',
-                                padding: '4px 10px',
-                                borderRadius: 6,
-                                color: colors.danger,
-                                fontSize: '12px',
-                            }}
-                        >
-                            Vui lòng kiểm tra và điều chỉnh để đảm bảo nó phù hợp với mục tiêu
-                            sức khoẻ của bạn!
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginTop: 10,
+                    }}>
+                        <i style={{
+                            backgroundColor: 'white',
+                            padding: '4px 10px',
+                            borderRadius: 6,
+                            color: colors.danger,
+                            fontSize: '12px'
+                        }}>
+                            Vui lòng kiểm tra và điều chỉnh để đảm bảo nó phù hợp với mục tiêu sức khoẻ của bạn!
                         </i>
                     </div>
                 </Col>
