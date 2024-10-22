@@ -31,7 +31,7 @@ public class ItemResponse {
     private Restaurant restaurant;
     private List<Review> reviews;
     private Double rating;
-    
+
     public ItemResponse(Item item) {
         this.id = item.getId();
         this.name = item.getName();
@@ -52,8 +52,8 @@ public class ItemResponse {
             this.restaurant.setUpdatedAt(item.getRestaurant().getUpdatedAt());
         }
         this.reviews = item.getReviews();
-        // Tính trung bình đánh giá (evaluate) từ danh sách reviews
 
+        // Tính trung bình đánh giá (evaluate) từ danh sách reviews
         if (this.reviews != null && !this.reviews.isEmpty()) {
             OptionalDouble average = this.reviews.stream()
                 .mapToDouble(Review::getEvaluate)
