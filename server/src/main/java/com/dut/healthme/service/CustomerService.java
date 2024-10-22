@@ -7,4 +7,6 @@ public interface CustomerService {
     CustomerInfoResponse getCustomerInfo(Long customerId);
 
     CustomerInfoResponse updateHealthGoal(Long customerId, HealthGoal healthGoalRequest);
+
+    CustomerInfoResponse updateActivityIndex(Long customerId, short activityIndex);
 }
