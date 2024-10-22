@@ -6,7 +6,7 @@ export default function ProtectedRoute(props) {
     const location = useLocation()
     const [{ account }] = useStateContext();
 
-    return props.allowedRoles // Allow all roles if allowedRoles is provided
+    return props.allowedRoles.includes(account?.role)
         ? <Outlet />
         : account
             ? <Navigate to="/unauthorized" replace state={{ from: location }} />
