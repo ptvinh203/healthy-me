@@ -24,6 +24,7 @@ function FeatureSection() {
     return (
         <div
             style={{
+
                 width: "100%",
                 padding: "80px ",
                 display: "flex",

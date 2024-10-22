@@ -38,4 +38,10 @@ public class ItemController {
         }
     }
 
+    @GetMapping("/landing")
+    public ResponseEntity<AbstractResponse> GetItemLanding() {
+        var listRecommend1 = this.itemService.getItemsByEvaluate();
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta( listRecommend1));
+    }
+
 }
