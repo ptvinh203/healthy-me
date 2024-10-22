@@ -20,6 +20,7 @@ import java.util.OptionalDouble;
 @SuperBuilder
 @JsonSnakeCaseNaming
 public class ItemResponse {
+
     private Long id;
     private String name;
     private List<String> ingredients;
@@ -56,8 +57,8 @@ public class ItemResponse {
         // Tính trung bình đánh giá (evaluate) từ danh sách reviews
         if (this.reviews != null && !this.reviews.isEmpty()) {
             OptionalDouble average = this.reviews.stream()
-                .mapToDouble(Review::getEvaluate)
-                .average();
+                    .mapToDouble(Review::getEvaluate)
+                    .average();
             this.rating = average.isPresent() ? average.getAsDouble() : 0.0;
         } else {
             this.rating = 0.0; // hoặc có thể gán mặc định là 0

@@ -1,6 +1,16 @@
 import { Col, Typography, List, Table, Flex } from "antd";
 const { Text, Paragraph } = Typography;
 import Logo from "../../assets/images/logo.png";
+import Facebook from "../../assets/images/Facebook.png";
+import phone from "../../assets/images/phone.jpg";
+import LinkedIn from "../../assets/images/LinkedIn.png";
+import logo_text from "../../assets/images/logo_text.png";
+import Instagram from "../../assets/images/Instagram.png";
+import Twitter from "../../assets/images/Twitter.png";
+import email from "../../assets/images/email.svg";
+import Youtube from "../../assets/images/Youtube.png";
+
+
 import "./GuestCss.css";
 function Footer() {
   const columns = [
@@ -24,7 +34,7 @@ function Footer() {
       contact: (
         <img
           width={32}
-          src="https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg"
+          src={phone}
         />
       ),
     },
@@ -36,7 +46,7 @@ function Footer() {
       contact: (
         <img
           width={32}
-          src="https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg"
+          src={email}
         />
       ),
     },
@@ -45,12 +55,7 @@ function Footer() {
       product: "Case studies",
       company: "Careers",
       support: "Server status",
-      contact: (
-        <img
-          width={32}
-          src="https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg"
-        />
-      ),
+      contact:"",
     },
     {
       key: "4",
@@ -71,9 +76,10 @@ function Footer() {
   return (
     <div style={{ backgroundColor: "white" }}>
       <Flex justify="center" style={{ padding: "40px 80px " }}>
-        <Flex vertical style={{ marginRight: "100px", paddingTop: "20px" }}>
-          <img width={150} src={Logo} alt="The Neighbourhood Album" />
-          <Paragraph style={{ width: "250px" }}>
+        <Flex  vertical style={{ marginRight: "100px", paddingTop: "20px" }}>
+            <img style={{width:"130px",height:"71.21px",paddingRight:"30px"}} src={Logo} alt="logo" />
+            <img style={{width:"250px",height:"60px"}} src={logo_text} alt="logo" />
+          <Paragraph style={{ width: "250px",paddingTop:"20px" }}>
             <Text
               style={{ wordBreak: "break-word" }}
               //ellipsis={{tooltip:true}}
@@ -85,15 +91,17 @@ function Footer() {
           <List
             grid={{ gutter: 16, column: 5 }}
             dataSource={[
-              "https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg",
-              "https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg",
-              "https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg",
-              "https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg",
-              "https://product.hstatic.net/1000304920/product/dia-cd-the-neighbourhood-wiped-out-jewel-case-cd_d396dd8b45ca4f26871393846a7d7fb4.jpg",
+             Facebook,Twitter,Instagram,LinkedIn,Youtube
             ]}
             renderItem={(item) => (
               <List.Item>
-                <img width={32} src={item} />
+              <div style={{padding:"20px 0px"}}>
+              <button  style={{width:"24px",height:"24px",border:"none",backgroundColor:"white"}}>
+              <img style={{width:"100%",height:"100%",backgroundColor:"white"}}src={item} />
+
+              </button>
+
+</div>
               </List.Item>
             )}
           />

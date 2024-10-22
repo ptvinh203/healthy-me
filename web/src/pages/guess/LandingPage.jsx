@@ -1,11 +1,9 @@
 import Footer from "../../components/guest/Footer";
-
 import Header from "../../components/guest/Header";
 import FeatureSection from "../../components/guest/FeatureSection";
 import SuggestionSection from "../../components/guest/SuggestionSection";
 import Image from "../../components/guest/Image";
 import SearchBar from "../../components/guest/SearchBar";
-// import DoctorImage from "../../assets/images/doctor.png";
 
 function LandingPage() {
   return (
@@ -29,10 +27,8 @@ function LandingPage() {
           <SearchBar></SearchBar>
           <Image></Image>
         </div>
-
         <FeatureSection />
         <SuggestionSection />
-
         <Footer />
       </div>
     </>

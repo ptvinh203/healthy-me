@@ -1,5 +1,4 @@
 import { Button, Layout } from "antd";
-import "./GuestCss.css";
 import bellIcon from "../assets/svgs/res/bellIcon.svg";
 import colors from "../constants/Colors";
 import { Outlet } from "react-router-dom";
