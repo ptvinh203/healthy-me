@@ -66,7 +66,7 @@ function SuggestionSection() {
                 }}
             >
                 {items.slice(0, 8).map((item, index) => (
-                    <div key={index} onClick={() => { }} style={{ marginBottom: "20px", textAlign: "left", cursor: "pointer" }}>
+                    <div key={index} style={{ marginBottom: "20px", textAlign: "left" }}>
                         <div
                             style={{
                                 display: "flex",
@@ -77,10 +77,11 @@ function SuggestionSection() {
                         >
                             <img
                                 style={{
-                                    width: "150px",
+                                    width: "150px", cursor: "pointer",
                                     height: "150px",
                                     borderRadius: "30px",
                                 }}
+                                onClick={() => { }}
                                 alt={item.title}
                                 src={item.image}
                             />
