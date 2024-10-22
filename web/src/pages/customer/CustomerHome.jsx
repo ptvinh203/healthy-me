@@ -1,47 +1,81 @@
 import { Col, Row, Select } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BodyInformation from '../../components/home/BodyInformation';
 import IndicatorCard from '../../components/home/IndicatorCard';
 import LeftHeader from '../../components/home/LeftHeader';
 import colors from '../../constants/Colors';
+import { useStateContext } from '../../context/StateContext';
+import customerService from '../../services/customerService';
 
 const CustomerHome = () => {
-    const indicators = [
+    const [{ profile }] = useStateContext();
+    const [customerInfo, setCustomerInfo] = useState(null);
+
+    useEffect(() => {
+        const fetchCustomerInfo = async () => {
+            if (profile && profile.id) {
+                try {
+                    const response = await customerService.getCustomerInfo(profile.id);
+                    console.log(response.data);
+                    setCustomerInfo(response.data);
+                } catch (error) {
+                    console.error('Error fetching customer info:', error);
+                }
+            }
+        };
+
+        fetchCustomerInfo();
+    }, [profile]);
+
+    const handleHealthGoalChange = async (value) => {
+        if (profile && profile.id) {
+            try {
+                const response = await customerService.updateHealthGoal(profile.id, value);
+                console.log(response.data);
+                setCustomerInfo(response.data);
+            } catch (error) {
+                console.error('Error updating health goal:', error);
+            }
+        }
+    };
+
+    const indicators = customerInfo ? [
         {
             name: 'Đường huyết',
-            value: 80,
+            value: customerInfo.blood_glucose,
             unit: 'mg/dL',
             type: 'Normal',
         },
         {
             name: 'Nhịp tim',
-            value: 98,
+            value: customerInfo.heart_rate,
             unit: 'bpm',
             type: 'Normal',
         },
         {
             name: 'Huyết áp',
-            value: 102,
-            unit: '/72 mmHg',
+            value: customerInfo.blood_pressure,
+            unit: 'mmHg',
             type: 'Normal',
         },
         {
             name: 'Lượng calo hấp thụ',
-            value: 1800,
+            value: customerInfo.calories_consumed,
             unit: 'kcal/day',
             type: 'Normal',
         },
         {
             name: 'Lượng calo đốt cháy',
-            value: 1900,
+            value: customerInfo.calories_burned,
             unit: 'kcal/day',
             type: 'Normal',
         },
-    ];
+    ] : [];
 
     // Handle change for the Select component
     const handleChange = (value) => {
         console.log(`Selected: ${value}`);
+        handleHealthGoalChange(value);
     };
 
     return (
@@ -86,7 +120,7 @@ const CustomerHome = () => {
                     }}>
                         <span>Mục tiêu lành mạnh</span>
                         <Select
-                            defaultValue=""
+                            value={customerInfo ? customerInfo.healthGoal : ""}
                             style={{
                                 width: 240,
                                 border: 'none',
@@ -95,15 +129,15 @@ const CustomerHome = () => {
                             onChange={handleChange}
                             options={[
                                 {
-                                    value: 'Giảm cân',
+                                    value: 'LOSE',
                                     label: 'Giảm cân',
                                 },
                                 {
-                                    value: 'Tăng cân',
+                                    value: 'GAIN',
                                     label: 'Tăng cân',
                                 },
                                 {
-                                    value: 'Duy trì cân nặng',
+                                    value: 'MAINTAIN',
                                     label: 'Duy trì cân nặng',
                                 },
                                 {
@@ -129,7 +163,7 @@ const CustomerHome = () => {
                             fontWeight: 500,
                             fontSize: '14px'
                         }}>
-                            Lượng calo tiêu thụ gợi ý: 2323 - 2424 kcal
+                            Lượng calo tiêu thụ gợi ý: {customerInfo ? `${customerInfo.suggested_calorie_intake} kcal` : 'Loading...'}
                         </span>
                     </div>
                     <div style={{
@@ -152,7 +186,7 @@ const CustomerHome = () => {
 
                 {/* Body indices */}
                 <Col span={8}>
-                    <BodyInformation />
+                    <BodyInformation customerInfo={customerInfo} />
                 </Col>
             </Row>
         </div>
