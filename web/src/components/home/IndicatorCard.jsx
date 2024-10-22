@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import { Button, Input, Modal, Select } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import BloodIcon from '../../assets/svgs/home/blood.svg';
 import BloodChart from '../../assets/svgs/home/bloodChart.svg';
 import GlucoseIcon from '../../assets/svgs/home/glucose.svg';
@@ -61,11 +62,11 @@ function IndicatorCard({ indicator }) {
 
     // List of sports activities for "Lượng calo đốt cháy"
     const sportsActivities = [
-        { label: 'Chạy bộ', value: 300 },
-        { label: 'Đạp xe', value: 250 },
-        { label: 'Bơi lội', value: 400 },
-        { label: 'Yoga', value: 150 },
-        { label: 'Nhảy dây', value: 350 },
+        { label: 'Ít vận động (tập thể dục nhẹ, công việc văn phòng)' },
+        { label: 'Hoạt động nhẹ (tập thể dục 1-3 ngày/tuần)' },
+        { label: 'Hoạt động vừa (tập thể dục 3-5 ngày/tuần)' },
+        { label: 'Hoạt động nặng (tập thể dục 6-7 ngày/tuần)' },
+        { label: 'Hoạt động rất nặng (công việc lao động hoặc tập thể dục 2 lần/ngày)' },
     ];
 
     // Modal content based on indicator type
@@ -79,17 +80,16 @@ function IndicatorCard({ indicator }) {
                     gap: 20
                 }}>
                     <p>Chọn các hoạt động thể thao:</p>
-                    {/* Multiple Select for activities */}
+                    {/*Select for activities */}
                     <Select
-                        mode="multiple"
                         style={{ width: '100%' }}
                         placeholder="Chọn các hoạt động"
                         value={selectedActivities}
                         onChange={handleActivityChange}
                     >
-                        {sportsActivities.map(activity => (
-                            <Option key={activity.label} value={activity.value}>
-                                {activity.label} ({activity.value} calo)
+                        {sportsActivities.map((activity, index) => (
+                            <Option key={activity.label} value={index}>
+                                {activity.label}
                             </Option>
                         ))}
                     </Select>

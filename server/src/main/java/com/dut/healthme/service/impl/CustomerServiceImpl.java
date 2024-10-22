@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerInfo.getWaistMeasurement(), customerInfo.getHipsMeasurement()));
 
         customerInfo.setSuggestedCalorieIntake(calculateCalorieIntake(customerInfo.getWeight(),
-            customerInfo.getHeight(), customerInfo.getHealthGoal(), customerInfo.getDateOfBirth(), customerInfo.getGender()));
+            customerInfo.getHeight(), customerInfo.getHealthGoal(), customerInfo.getDateOfBirth(), customerInfo.getGender(), customerInfo.getActivityIndex()));
 
         return customerInfo;
     }
@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     // Method to calculate suggested calorie intake based on health goals
-    private Double calculateCalorieIntake(Double weight, Double height, HealthGoal healthGoal, Timestamp dateOfBirth, Gender gender) {
+    private Double calculateCalorieIntake(Double weight, Double height, HealthGoal healthGoal, Timestamp dateOfBirth, Gender gender, short activityIndex) {
         int age = calculateAge(dateOfBirth);
         double bmr;
 
@@ -68,19 +68,29 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             bmr = 10 * weight + 6.25 * height - 5 * age - 78;
         }
+        double factorParameter = 1.2;
+        switch (activityIndex) {
+
+            case 1: factorParameter = 1.375; break;
+            case 2: factorParameter = 1.55; break;
+            case 3: factorParameter = 1.725; break;
+            case 4: factorParameter = 1.9; break;
+            default:
+                factorParameter = 1.2; break;
+        }
 
         // Adjust calorie intake based on health goals
         double calorieIntake;
         switch (healthGoal) {
             case GAIN:
-                calorieIntake = bmr * 1.2 + 500;
+                calorieIntake = bmr * factorParameter + 500;
                 break;
             case LOSE:
-                calorieIntake = bmr * 1.2 - 500;
+                calorieIntake = bmr * factorParameter - 500;
                 break;
             case MAINTAIN:
             default:
-                calorieIntake = bmr * 1.2;
+                calorieIntake = bmr * factorParameter;
                 break;
         }
         return calorieIntake;
