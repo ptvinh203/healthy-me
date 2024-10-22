@@ -7,6 +7,7 @@ import GlucoseChart from '../../assets/svgs/home/glucoseChart.svg';
 import HeartIcon from '../../assets/svgs/home/heart.svg';
 import HeartChart from '../../assets/svgs/home/heartChart.svg';
 import colors from '../../constants/Colors';
+import PropTypes from 'prop-types';
 
 const { Option } = Select;
 
@@ -189,5 +190,14 @@ function IndicatorCard({ indicator }) {
         </>
     );
 }
+
+IndicatorCard.propTypes = {
+    indicator: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        unit: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+    }).isRequired,
+};
 
 export default IndicatorCard;
