@@ -2,9 +2,7 @@ import { Layout } from 'antd';
 import { Outlet } from "react-router-dom";
 import Sidebar from '../components/Sidebar';
 import colors from '../constants/Colors';
-
 const { Content } = Layout;
-
 const CustomerLayout = () => {
     return (
         <Layout style={{
@@ -32,5 +30,4 @@ const CustomerLayout = () => {
         </Layout>
     );
 };
-
 export default CustomerLayout;

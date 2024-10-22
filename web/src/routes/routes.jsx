@@ -4,9 +4,14 @@ import CustomerDetail from "../pages/customer/CustomerOrderDetail";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import Login from "../pages/Login";
+import LandingPage from "../pages/guess/LandingPage";
 
 export const routes = {
     common: [
+        {
+            path: "/",
+            element: <LandingPage />,
+        },
         {
             path: "/login",
             element: <Login />

@@ -3,9 +3,7 @@ import { Outlet } from "react-router-dom";
 import bellIcon from '../assets/svgs/res/bellIcon.svg';
 import Sidebar from '../components/Sidebar';
 import colors from '../constants/Colors';
-
 const { Content } = Layout;
-
 const RestaurantLayout = () => {
     return (
         <Layout style={{
@@ -55,5 +53,4 @@ const RestaurantLayout = () => {
         </Layout>
     );
 };
-
 export default RestaurantLayout;
