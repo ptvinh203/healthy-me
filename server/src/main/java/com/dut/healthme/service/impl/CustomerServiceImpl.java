@@ -25,9 +25,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerInfoResponse getCustomerInfo(Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
-            .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + customerId));
+    public CustomerInfoResponse getCustomerInfo(Long accountId) {
+        Customer customer = customerRepository.findByAccountId(accountId);
+
+        if (customer == null)
+            throw new IllegalArgumentException("Customer not found with account's id: " + accountId);
 
         CustomerInfoResponse customerInfo = new CustomerInfoResponse().fromEntity(customer);
 
@@ -71,12 +73,21 @@ public class CustomerServiceImpl implements CustomerService {
         double factorParameter = 1.2;
         switch (activityIndex) {
 
-            case 1: factorParameter = 1.375; break;
-            case 2: factorParameter = 1.55; break;
-            case 3: factorParameter = 1.725; break;
-            case 4: factorParameter = 1.9; break;
+            case 1:
+                factorParameter = 1.375;
+                break;
+            case 2:
+                factorParameter = 1.55;
+                break;
+            case 3:
+                factorParameter = 1.725;
+                break;
+            case 4:
+                factorParameter = 1.9;
+                break;
             default:
-                factorParameter = 1.2; break;
+                factorParameter = 1.2;
+                break;
         }
 
         // Adjust calorie intake based on health goals

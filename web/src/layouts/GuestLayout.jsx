@@ -1,5 +1,4 @@
-import { Button, Layout } from "antd";
-// import bellIcon from "../assets/svgs/res/bellIcon.svg";
+import { Layout } from "antd";
 import colors from "../constants/Colors";
 import { Outlet } from "react-router-dom";
 
@@ -15,30 +14,9 @@ function LandingPage() {
                 height: "100%",
             }}
         >
-            <Content >
+            <Content>
                 <Outlet />
             </Content>
-
-            {/* <Button
-                type="primary"
-                style={{
-                    position: "absolute",
-                    top: "20px",
-                    right: "20px",
-                    zIndex: 20,
-                    background: "white",
-                    width: "50px",
-                    height: "50px",
-                    boxShadow: `0 2px 4px ${colors.shadow}`,
-                }}
-                onClick={() => { }}
-            >
-                <img
-                    src={bellIcon}
-                    alt="Notification"
-                    style={{ width: "24px", height: "24px" }}
-                />
-            </Button> */}
         </Layout>
     );
 }

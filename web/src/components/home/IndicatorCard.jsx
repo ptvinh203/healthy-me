@@ -8,12 +8,12 @@ import GlucoseChart from '../../assets/svgs/home/glucoseChart.svg';
 import HeartIcon from '../../assets/svgs/home/heart.svg';
 import HeartChart from '../../assets/svgs/home/heartChart.svg';
 import colors from '../../constants/Colors';
-import PropTypes from 'prop-types';
 
 const { Option } = Select;
 
-function IndicatorCard({ indicator }) {
-    const { name, value, unit, type } = indicator;
+function IndicatorCard({ indicator, activity_index }) {
+    const { name, unit, type } = indicator;
+    const value = indicator.value || '0';
 
     // Icon mapping with background and square dimensions
     const iconData = {
@@ -39,7 +39,7 @@ function IndicatorCard({ indicator }) {
     // State for controlling modal visibility
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editedValue, setEditedValue] = useState(value);
-    const [selectedActivities, setSelectedActivities] = useState([]);
+    const [selectedActivities, setSelectedActivities] = useState(activity_index || 0);
 
     // Function to show modal
     const showModal = () => {
@@ -191,14 +191,5 @@ function IndicatorCard({ indicator }) {
         </>
     );
 }
-
-IndicatorCard.propTypes = {
-    indicator: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-        unit: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-    }).isRequired,
-};
 
 export default IndicatorCard;
