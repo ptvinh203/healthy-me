@@ -20,17 +20,17 @@ public class CustomerController {
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(customerInfo));
     }
 
-    @PutMapping("/{id}/health-goal")
-    public ResponseEntity<AbstractResponse> updateHealthGoal(@PathVariable Long id,
+    @PutMapping("/{accountId}/health-goal")
+    public ResponseEntity<AbstractResponse> updateHealthGoal(@PathVariable Long accountId,
                                                              @RequestBody HealthGoalRequest request) {
-        CustomerInfoResponse updatedCustomer = customerService.updateHealthGoal(id, request.getHealthGoal());
+        CustomerInfoResponse updatedCustomer = customerService.updateHealthGoal(accountId, request.getHealthGoal());
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedCustomer));
     }
 
-    @PutMapping("/{id}/activity-index/{index}")
-    public ResponseEntity<AbstractResponse> updateHealthGoal(@PathVariable Long id,
+    @PutMapping("/{accountId}/activity-index/{index}")
+    public ResponseEntity<AbstractResponse> updateHealthGoal(@PathVariable Long accountId,
                                                              @PathVariable short index) {
-        CustomerInfoResponse updatedCustomer = customerService.updateActivityIndex(id, index);
+        CustomerInfoResponse updatedCustomer = customerService.updateActivityIndex(accountId, index);
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedCustomer));
     }
 

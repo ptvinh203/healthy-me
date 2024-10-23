@@ -4,9 +4,9 @@ import BodyInformation from '../../components/home/BodyInformation';
 import IndicatorCard from '../../components/home/IndicatorCard';
 import LeftHeader from '../../components/home/LeftHeader';
 import colors from '../../constants/Colors';
+import { ReducerCases } from '../../constants/ReducerCases';
 import { useStateContext } from '../../context/StateContext';
 import customerService from '../../services/customerService';
-import { ReducerCases } from '../../constants/ReducerCases';
 import { getAccountFromSession } from '../../utils/sessionUtils';
 
 const CustomerHome = () => {
@@ -25,18 +25,6 @@ const CustomerHome = () => {
 
         fetchCustomerInfo();
     }, [account, dispatch, customerInfo]);
-
-    const handleHealthGoalChange = async (value) => {
-        if (profile && profile.id) {
-            try {
-                const response = await customerService.updateHealthGoal(profile.id, value);
-                console.log(response.data);
-                setCustomerInfo(response.data);
-            } catch (error) {
-                console.error('Error updating health goal:', error);
-            }
-        }
-    };
 
     // Get calories burned based on activity index
     const getCaloriesBurned = activity_index => {
@@ -84,10 +72,19 @@ const CustomerHome = () => {
     ] : [];
 
     // Handle change for the Select component
-    const handleChange = (value) => {
-        console.log(`Selected: ${value}`);
-        handleHealthGoalChange(value);
+    const handleChange = async (value) => {
+        if (account) {
+            const response = await customerService.updateHealthGoal(account.id, value);
+            setCustomerInfo(response.data);
+        }
     };
+
+    const handleChangeActivityIndex = async (value) => {
+        if (account) {
+            const response = await customerService.updateActivityIndex(account.id, value);
+            setCustomerInfo(response.data);
+        }
+    }
 
     return (
         <div style={{ height: '100%', overflowX: 'auto' }}> {/* Enable horizontal scrolling */}
@@ -118,7 +115,7 @@ const CustomerHome = () => {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <IndicatorCard indicator={indicator} activity_index={customerInfo.activity_index} />
+                                    <IndicatorCard indicator={indicator} activity_index={customerInfo.activity_index} onChangeActivityIndex={handleChangeActivityIndex}/>
                                 </div>
                             ))}
                         </div>
