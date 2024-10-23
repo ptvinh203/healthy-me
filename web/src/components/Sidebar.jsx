@@ -8,7 +8,7 @@ import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import colors from '../constants/Colors';
 import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const { Sider } = Layout;
 
@@ -112,15 +112,17 @@ const Sidebar = () => {
             }}
         >
             {/* Logo */}
-            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white' }}>
-                <img
-                    src={logo}
-                    alt="Logo"
-                    style={{
-                        width: '30%',
-                        borderRadius: '10px',
-                    }}
-                />
+            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white', cursor: 'pointer' }}>
+                <Link to='/'>
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        style={{
+                            width: '30%',
+                            borderRadius: '10px',
+                        }}
+                    />
+                </Link>
             </div>
 
             {/* Custom selected menu item */}

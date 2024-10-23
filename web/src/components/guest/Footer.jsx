@@ -1,4 +1,4 @@
-import { Col, Typography, List, Flex } from "antd";
+import { Typography, List, Flex } from "antd";
 const { Text, Paragraph } = Typography;
 import Logo from "../../assets/images/logo.png";
 import Facebook from "../../assets/images/Facebook.png";
@@ -91,7 +91,7 @@ function Footer() {
                     />
                 </Flex>
 
-                <Col>
+                <Flex>
                     <table style={{ borderCollapse: 'collapse', width: '100%', backgroundColor: 'white' }}>
                         <thead>
                             <tr>
@@ -112,7 +112,7 @@ function Footer() {
                             ))}
                         </tbody>
                     </table>
-                </Col>
+                </Flex>
             </Flex>
         </div>
     );

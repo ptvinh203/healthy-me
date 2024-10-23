@@ -39,7 +39,7 @@ function CustomerDetail() {
                             display: 'flex',
                             flexDirection: 'row',
                             width: "40%",
-                            height: '80%',
+                            height: 'calc(100% - 50px)',
                             justifyContent: 'center',
                             alignItems: 'center',
                             padding: 20,

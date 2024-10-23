@@ -1,6 +1,7 @@
 import { Spin, Typography } from "antd";
 import { useState, useEffect } from "react";
 import colors from "../../constants/Colors";
+import itemService from "../../services/itemService";
 const { Text, Paragraph } = Typography;
 
 function SuggestionSection() {
@@ -10,12 +11,8 @@ function SuggestionSection() {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:8000/api/v1/item/landing"
-                );
-                const data = await response.json();
-                // console.log(data);
-                setItems(data.data);
+                const response = await itemService.getLowCalorieItems();
+                setItems(response.data);
             } catch (error) {
                 console.error("Error fetching items:", error);
             } finally {
