@@ -118,9 +118,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerInfoResponse updateHealthGoal(Long customerId, HealthGoal healthGoal) {
-        Customer customer = customerRepository.findById(customerId)
-            .orElseThrow(() -> new NotFoundObjectException("Customer not found with id " + customerId));
+    public CustomerInfoResponse updateHealthGoal(Long accountId, HealthGoal healthGoal) {
+        Customer customer = customerRepository.findByAccountId(accountId);
+
+        if (customer == null)
+            throw new IllegalArgumentException("Customer not found with account's id: " + accountId);
 
         customer.setHealthGoal(healthGoal);
 
@@ -130,9 +132,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerInfoResponse updateActivityIndex(Long customerId, short activityIndex) {
-        Customer customer = customerRepository.findById(customerId)
-            .orElseThrow(() -> new NotFoundObjectException("Customer not found with id " + customerId));
+    public CustomerInfoResponse updateActivityIndex(Long accountId, short activityIndex) {
+        Customer customer = customerRepository.findByAccountId(accountId);
+
+        if (customer == null)
+            throw new IllegalArgumentException("Customer not found with account's id: " + accountId);
 
         customer.setActivityIndex(activityIndex);
 

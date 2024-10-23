@@ -1,5 +1,6 @@
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/svgs/logo.svg';
 import healthIcon from '../assets/svgs/sidebar/healthIcon.svg';
 import historyIcon from '../assets/svgs/sidebar/historyIcon.svg';
@@ -8,7 +9,6 @@ import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import colors from '../constants/Colors';
 import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
-import { Link, useNavigate } from 'react-router-dom';
 
 const { Sider } = Layout;
 
