@@ -10,7 +10,8 @@ import customerService from '../../services/customerService';
 import { getAccountFromSession } from '../../utils/sessionUtils';
 
 const CustomerHome = () => {
-    const [{ profile }, dispatch] = useStateContext()
+    // eslint-disable-next-line no-unused-vars
+    const [_, dispatch] = useStateContext()
     const account = getAccountFromSession()
     const [customerInfo, setCustomerInfo] = useState(null)
 
@@ -115,7 +116,7 @@ const CustomerHome = () => {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    <IndicatorCard indicator={indicator} activity_index={customerInfo.activity_index} onChangeActivityIndex={handleChangeActivityIndex}/>
+                                    <IndicatorCard indicator={indicator} activity_index={customerInfo.activity_index} onChangeActivityIndex={handleChangeActivityIndex} />
                                 </div>
                             ))}
                         </div>
@@ -172,7 +173,7 @@ const CustomerHome = () => {
                                 fontWeight: 500,
                                 fontSize: '14px'
                             }}>
-                                Lượng calo tiêu thụ gợi ý: {customerInfo ? `${customerInfo.suggested_calorie_intake} kcal` : 'Loading...'}
+                                Lượng calo hấp thụ gợi ý: {customerInfo ? `${customerInfo.suggested_calorie_intake} kcal` : 'Loading...'}
                             </span>
                         </div>
                         <div style={{

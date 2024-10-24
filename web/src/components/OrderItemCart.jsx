@@ -43,10 +43,31 @@ export default function OrderItemCart({ item, onOrder, isShowNameOnly }) {
                     />
                 </Flex>
                 <Flex gap={4} vertical align="center">
-                    <p style={{ fontSize: '16px' }}>{item.name}</p>
+                    <p style={{
+                        fontSize: '16px',
+                        textAlign: 'center',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        maxWidth: 150
+                    }}
+                    >
+                        {item.name}
+                    </p>
                     {!isShowNameOnly &&
                         <Flex gap={4} vertical align="center">
-                            <p style={{ fontSize: '16px', textAlign: 'center' }}>{item.restaurant.account.name}</p>
+                            <p
+                                style={{
+                                    fontSize: '16px',
+                                    textAlign: 'center',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    maxWidth: 150
+                                }}
+                            >
+                                {item.restaurant.account.name}
+                            </p>
                             <p style={{ fontSize: '16px', textAlign: 'center', color: '#FFCA42', fontWeight: 'bold' }}>{handlePrice(item.price)}</p>
                             <Button
                                 style={{ border: '1px solid #FFCA42', fontSize: '19px' }}

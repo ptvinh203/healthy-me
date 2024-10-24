@@ -1,4 +1,4 @@
-import { Layout, Card, Rate, Button } from 'antd';
+import { Layout, Card, Rate, Button, Flex, Spin } from 'antd';
 import orderIcon from '../../assets/svgs/orderDetail/order.svg';
 import { useEffect, useState } from 'react';
 import itemService from '../../services/itemService';
@@ -32,7 +32,7 @@ function CustomerDetail() {
         <Layout style={{ padding: '20px', overflowY: 'auto', height: '100%', backgroundColor: 'white' }}>
             {/* Search field and shopping cart icon */}
             <ItemSearchHeader icon={shoppingCartIcon} />
-            {item &&
+            {item ?
                 <Content style={{ display: 'flex', flexDirection: 'row', height: '100%', backgroundColor: 'white', overflowY: 'auto' }}>
                     <div className='img'
                         style={{
@@ -112,13 +112,16 @@ function CustomerDetail() {
                             className="scrollable-container"
                         >
                             {(recommendItems ?? []).map((item, index) => (
-                                <div key={index} style={{ maxWidth: '160px' }}>
+                                <div key={index} style={{ maxWidth: '160px' }} onClick={() => setItem(null)}>
                                     <OrderItemCart item={item} isShowNameOnly={true} />
                                 </div>
                             ))}
                         </div>
                     </Card>
                 </Content>
+                : <Flex justify='center' align="center" style={{ height: '100%', width: '100%' }}>
+                    <Spin size="large" />
+                </Flex>
             }
         </Layout>
     );
