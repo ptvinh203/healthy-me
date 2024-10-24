@@ -1,5 +1,6 @@
 import { Layout, Menu } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/svgs/logo.svg';
 import healthIcon from '../assets/svgs/sidebar/healthIcon.svg';
 import historyIcon from '../assets/svgs/sidebar/historyIcon.svg';
@@ -14,9 +15,12 @@ const { Sider } = Layout;
 const Sidebar = () => {
     const userRole = ROLE_CUSTOMER
     const [selectedKey, setSelectedKey] = useState('1');
+    const navigate = useNavigate();
 
-    const handleMenuClick = (key) => {
-        setSelectedKey(key);
+    const handleMenuClick = (item) => {
+        setSelectedKey(item.key);
+        // Navigate to the selected path
+        navigate(item.path);
     };
 
     // Menu items for customer
@@ -25,26 +29,31 @@ const Sidebar = () => {
             key: '1',
             icon: <img src={healthIcon} alt="Health" style={{ width: '16px', height: '16px' }} />,
             label: 'Quản lý sức khoẻ',
+            path: '/cus/home'
         },
         {
             key: '2',
             icon: <img src={orderIcon} alt="Order" style={{ width: '16px', height: '16px' }} />,
             label: 'Đặt hàng',
+            path: '/cus/order'
         },
         {
             key: '3',
             icon: <img src={historyIcon} alt="History" style={{ width: '16px', height: '16px' }} />,
             label: 'Lịch sử đặt hàng',
+            path: '/cus' // TODO: update path
         },
         {
             key: '4',
             icon: <img src={settingsIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
             label: 'Cài đặt',
+            path: '/cus' // TODO: update path
         },
         {
             key: '5',
             icon: <img src={logoutIcon} alt="Logout" style={{ width: '16px', height: '16px' }} />,
             label: 'Thoát',
+            path: '/cus' // TODO: update path
         },
     ];
 
@@ -88,7 +97,7 @@ const Sidebar = () => {
                 </span>
             </div>
         ),
-        onClick: () => handleMenuClick(item.key),
+        onClick: () => handleMenuClick(item),
     }));
 
     return (
@@ -103,15 +112,17 @@ const Sidebar = () => {
             }}
         >
             {/* Logo */}
-            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white' }}>
-                <img
-                    src={logo}
-                    alt="Logo"
-                    style={{
-                        width: '30%',
-                        borderRadius: '10px',
-                    }}
-                />
+            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white', cursor: 'pointer' }}>
+                <Link to='/'>
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        style={{
+                            width: '30%',
+                            borderRadius: '10px',
+                        }}
+                    />
+                </Link>
             </div>
 
             {/* Custom selected menu item */}

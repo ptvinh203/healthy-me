@@ -1,20 +1,17 @@
-/* eslint-disable react-refresh/only-export-components */
-import { lazy } from "react";
+import CustomerHome from "../pages/customer/CustomerHome";
+import CustomerOrder from "../pages/customer/CustomerOrder";
+import CustomerDetail from "../pages/customer/CustomerOrderDetail";
+import PageNotFound from "../pages/error/PageNotFound";
+import Unauthorized from "../pages/error/Unauthorized";
+import Login from "../pages/Login";
+import LandingPage from "../pages/guess/LandingPage";
 
-//---------------------------
-// imports
-//---------------------------
-const Login = lazy(() => import("../pages/Login"));
-const Unauthorized = lazy(() => import("../pages/error/Unauthorized"));
-const PageNotFound = lazy(() => import("../pages/error/PageNotFound"));
-const CustomerHome = lazy(() => import("../pages/customer/CustomerHome"));
-
-
-//---------------------------
-// exports
-//---------------------------
 export const routes = {
     common: [
+        {
+            path: "/",
+            element: <LandingPage />,
+        },
         {
             path: "/login",
             element: <Login />
@@ -32,7 +29,15 @@ export const routes = {
         {
             path: "/cus/home",
             element: <CustomerHome />
-        }
+        },
+        {
+            path: "/cus/item/:itemId",
+            element: <CustomerDetail />
+        },
+        {
+            path: "/cus/order",
+            element: <CustomerOrder />
+        },
     ],
     restaurant: [],
     admin: []
