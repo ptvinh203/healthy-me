@@ -5,6 +5,8 @@ import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import Login from "../pages/Login";
 import LandingPage from "../pages/guess/LandingPage";
+import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
+import CustomerPayment from "../pages/customer/CustomerPayment";
 
 export const routes = {
     common: [
@@ -38,6 +40,14 @@ export const routes = {
             path: "/cus/order",
             element: <CustomerOrder />
         },
+        {
+            path: "/cus/cart",
+            element: <CustomerShoppingCart />
+        },
+        {
+            path: "/cus/payment",
+            element: <CustomerPayment />
+        }
     ],
     restaurant: [],
     admin: []

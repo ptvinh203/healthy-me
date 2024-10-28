@@ -5,7 +5,6 @@ import LogoText from "../../assets/images/logo_text.png";
 import authService from "../../services/authService";
 import { useStateContext } from "../../context/StateContext";
 import { ReducerCases } from "../../constants/ReducerCases";
-import { setAccountToSession } from "../../utils/sessionUtils";
 import { useNavigate } from "react-router-dom";
 function Header() {
     // eslint-disable-next-line no-unused-vars
@@ -20,7 +19,6 @@ function Header() {
         const response = await authService.getAccountInfo()
         if (response.is_success) {
             dispatch({ type: ReducerCases.SET_ACCOUNT_INFO, data: response.data })
-            setAccountToSession(response.data) // Save account to session storage
         }
     }
 

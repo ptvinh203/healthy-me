@@ -8,13 +8,11 @@ import OrderItemCart from "../../components/OrderItemCart"
 import ItemSearchHeader from "../../components/ItemSearchHeader"
 import recommendService from "../../services/recommendService"
 import { ReducerCases } from "../../constants/ReducerCases"
-import { getAccountFromSession } from "../../utils/sessionUtils"
 
 export default function CustomerOrder() {
-    const [{ recommendItems, highRatingItems }, dispatch] = useStateContext();
+    const [{ recommendItems, highRatingItems, account }, dispatch] = useStateContext();
     const [isShowAllRecommendItems, setIsShowAllRecommendItems] = useState(false)
     const [isShowAllHighRatingItems, setIsShowAllHighRatingItems] = useState(false)
-    const account = getAccountFromSession()
 
 
     useEffect(() => {

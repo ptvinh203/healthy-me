@@ -4,7 +4,8 @@ export const initialState = {
     account: undefined,
     profile: undefined,
     recommendItems: undefined,
-    highRatingItems: undefined
+    highRatingItems: undefined,
+    selectedCartIds: [],
 }
 
 const reducer = (state, action) => {
@@ -28,6 +29,11 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 highRatingItems: action.data
+            }
+        case ReducerCases.SET_SELECTED_CART_IDS:
+            return {
+                ...state,
+                selectedCartIds: action.reset ? [] : action.data
             }
     }
 }
