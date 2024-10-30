@@ -9,11 +9,10 @@ import { useStateContext } from '../../context/StateContext';
 import customerService from '../../services/customerService';
 
 const CustomerHome = () => {
-    const [{ account, selectedCartIds }, dispatch] = useStateContext()
+    const [{ account }, dispatch] = useStateContext()
     const [customerInfo, setCustomerInfo] = useState(null)
 
     useEffect(() => {
-        console.log('CustomerHome useEffect', selectedCartIds);
 
         const fetchCustomerInfo = async () => {
             if (account && !customerInfo) {
@@ -24,7 +23,7 @@ const CustomerHome = () => {
         };
 
         fetchCustomerInfo();
-    }, [account, dispatch, customerInfo, selectedCartIds]);
+    }, [account, dispatch, customerInfo]);
 
     // Get calories burned based on activity index
     const getCaloriesBurned = activity_index => {

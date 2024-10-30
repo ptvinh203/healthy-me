@@ -4,21 +4,18 @@ import { Button, Checkbox, Col, Flex, Row } from "antd";
 import ItemSearchHeader from "../../components/ItemSearchHeader";
 import colors from "../../constants/Colors";
 import { useNavigate } from "react-router-dom";
-import { useStateContext } from "../../context/StateContext";
-import { ReducerCases } from "../../constants/ReducerCases";
-import { DeleteOutlined, HomeTwoTone } from "@ant-design/icons";
+import { DeleteOutlined, HomeTwoTone, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import "../../assets/css/ant_checkbox.css";
 import { handlePrice } from "../../utils/commonUtils";
 
 export default function CustomerShoppingCart() {
-    const [{ selectedCartIds }, dispatch] = useStateContext();
-    const [goToPayment, setGoToPayment] = useState(false);
     const [carts, setCarts] = useState([]);
+    const [selectedCartIds, setSelectedCartIds] = useState([]);
     const checkAll = (carts?.length ?? 0) !== 0 && selectedCartIds.length === carts.length;
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('CustomerShoppingCart useEffect', goToPayment);
+        if (carts.length > 0) return
         setCarts([
             {
                 id: 1,
@@ -37,45 +34,40 @@ export default function CustomerShoppingCart() {
                 image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlMyzfmXp2bWMGCMLw2JC4uXpXR1qEGTCBvw&s"
             },
         ]);
-
-        return () => {
-            // Reset selectedCartIds when leave page
-            dispatch({
-                type: ReducerCases.SET_SELECTED_CART_IDS,
-                reset: true
-            })
-        }
-    }, [dispatch, goToPayment]);
+    }, [carts]);
 
     const handleDeleteCart = (cart) => {
         console.log('Delete cart', cart);
-
     }
 
-    const handleOrder = () => {
-        setGoToPayment(true)
-        navigate('/cus/payment')
+    const increaseQuantity = (cart) => {
+        setCarts(carts.map((c) => {
+            if (c.id === cart.id && c.quantity + 1 < 100) {
+                return { ...c, quantity: c.quantity + 1 }
+            }
+            return c
+        }))
+    }
+
+    const decreaseQuantity = (cart) => {
+        setCarts(carts.map((c) => {
+            if (c.id === cart.id && c.quantity - 1 > 0) {
+                return { ...c, quantity: c.quantity - 1 }
+            }
+            return c
+        }))
     }
 
     const onCheckAllChange = (e) => {
-        dispatch({
-            type: ReducerCases.SET_SELECTED_CART_IDS,
-            data: e.target.checked ? carts.map((cart) => cart.id) : []
-        })
+        setSelectedCartIds(e.target.checked ? carts.map((cart) => cart.id) : [])
     };
 
     const onCheckCartChange = (cart) => {
         if (selectedCartIds.includes(cart.id)) {
-            dispatch({
-                type: ReducerCases.SET_SELECTED_CART_IDS,
-                data: selectedCartIds.filter((id) => id !== cart.id)
-            })
+            setSelectedCartIds(selectedCartIds.filter((id) => id !== cart.id))
         }
         else {
-            dispatch({
-                type: ReducerCases.SET_SELECTED_CART_IDS,
-                data: [...selectedCartIds, cart.id]
-            })
+            setSelectedCartIds([...selectedCartIds, cart.id])
         }
 
     };
@@ -150,8 +142,22 @@ export default function CustomerShoppingCart() {
                                     <Col span={5} style={{ fontSize: 20 }}>
                                         <Flex justify="center" align="center" style={{ height: '100%' }}>{handlePrice(cart.price)}</Flex>
                                     </Col>
-                                    <Col span={5} style={{ fontSize: 20 }}>
-                                        <Flex justify="center" align="center" style={{ height: '100%' }}>{cart.quantity}</Flex>
+                                    <Col span={5}>
+                                        <Row justify="center" align="center" style={{ height: '100%', width: '100%' }}>
+                                            <Col span={8} style={{ display: 'flex', justifyContent: 'end', alignItems: 'center', fontSize: 20 }}>
+                                                <Button type="text" onClick={() => decreaseQuantity(cart)}>
+                                                    <MinusOutlined />
+                                                </Button>
+                                            </Col>
+                                            <Col span={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 20 }}>
+                                                {cart.quantity}
+                                            </Col>
+                                            <Col span={8} style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', fontSize: 20 }}>
+                                                <Button type="text" onClick={() => increaseQuantity(cart)}>
+                                                    <PlusOutlined />
+                                                </Button>
+                                            </Col>
+                                        </Row>
                                     </Col>
                                     <Col span={5} style={{ fontSize: 20 }}>
                                         <Flex justify="center" align="center" style={{ height: '100%' }}>{handlePrice(cart.price * cart.quantity)}</Flex>
@@ -185,7 +191,7 @@ export default function CustomerShoppingCart() {
                         </div>
                         <Button
                             type='primary' size="large" style={{ backgroundColor: colors.highlight, color: 'black' }}
-                            onClick={handleOrder}
+                            onClick={() => navigate('/cus/payment', { state: { selectedCartIds } })}
                         >
                             Đặt hàng
                         </Button>
