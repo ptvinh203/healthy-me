@@ -1,6 +1,6 @@
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/svgs/logo.svg';
 import healthIcon from '../assets/svgs/sidebar/healthIcon.svg';
 import historyIcon from '../assets/svgs/sidebar/historyIcon.svg';
@@ -13,16 +13,6 @@ import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
 const { Sider } = Layout;
 
 const Sidebar = () => {
-    const userRole = ROLE_CUSTOMER
-    const [selectedKey, setSelectedKey] = useState('1');
-    const navigate = useNavigate();
-
-    const handleMenuClick = (item) => {
-        setSelectedKey(item.key);
-        // Navigate to the selected path
-        navigate(item.path);
-    };
-
     // Menu items for customer
     const customerMenuItems = [
         {
@@ -75,6 +65,17 @@ const Sidebar = () => {
             label: 'Thoát',
         },
     ];
+
+    const userRole = ROLE_CUSTOMER
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [selectedKey, setSelectedKey] = useState(customerMenuItems.find(item => item.path === location.pathname)?.key ?? '1');
+
+    const handleMenuClick = (item) => {
+        setSelectedKey(item.key);
+        // Navigate to the selected path
+        navigate(item.path);
+    };
 
     const menuItems = userRole === ROLE_RESTAURANT ? restaurantMenuItems : customerMenuItems;
 

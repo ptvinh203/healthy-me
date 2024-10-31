@@ -4,7 +4,7 @@ export const initialState = {
     account: undefined,
     profile: undefined,
     recommendItems: undefined,
-    highRatingItems: undefined
+    highRatingItems: undefined,
 }
 
 const reducer = (state, action) => {

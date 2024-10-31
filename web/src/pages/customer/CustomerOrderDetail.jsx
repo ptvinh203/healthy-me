@@ -1,4 +1,4 @@
-import { Layout, Card, Rate, Button, Flex, Spin } from 'antd';
+import { Layout, Card, Rate, Button } from 'antd';
 import orderIcon from '../../assets/svgs/orderDetail/order.svg';
 import { useEffect, useState } from 'react';
 import itemService from '../../services/itemService';
@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { handlePrice } from '../../utils/commonUtils';
 import { useStateContext } from '../../context/StateContext';
 import OrderItemCart from '../../components/OrderItemCart';
+import Loading from '../../components/Loading';
 
 const { Content } = Layout;
 
@@ -119,9 +120,7 @@ function CustomerDetail() {
                         </div>
                     </Card>
                 </Content>
-                : <Flex justify='center' align="center" style={{ height: '100%', width: '100%' }}>
-                    <Spin size="large" />
-                </Flex>
+                : <Loading />
             }
         </Layout>
     );

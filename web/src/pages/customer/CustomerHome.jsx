@@ -7,15 +7,13 @@ import colors from '../../constants/Colors';
 import { ReducerCases } from '../../constants/ReducerCases';
 import { useStateContext } from '../../context/StateContext';
 import customerService from '../../services/customerService';
-import { getAccountFromSession } from '../../utils/sessionUtils';
 
 const CustomerHome = () => {
-    // eslint-disable-next-line no-unused-vars
-    const [_, dispatch] = useStateContext()
-    const account = getAccountFromSession()
+    const [{ account }, dispatch] = useStateContext()
     const [customerInfo, setCustomerInfo] = useState(null)
 
     useEffect(() => {
+
         const fetchCustomerInfo = async () => {
             if (account && !customerInfo) {
                 const data = await customerService.getCustomerInfo(account.id);

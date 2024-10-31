@@ -12,6 +12,7 @@ public final class ErrorMessageConstants {
     public static final String PAGE_NOT_FOUND = "page_not_found";
     public static final String FORBIDDEN = "forbidden";
     public static final String UNAUTHORIZED = "unauthorized";
+    public static final String ACTION_IS_NOT_ALLOWED = "action_is_not_allowed";
 
 
     /**
@@ -48,6 +49,13 @@ public final class ErrorMessageConstants {
     public static final String ACCOUNT_IS_DISABLED = "account_is_disabled";
     public static final String ACCOUNT_ID_IS_REQUIRED = "account_id_is_required";
     public static final String ACCOUNT_IS_NOT_AVAILABLE = "account_is_not_available";
+
+
+    /**
+     * Shopping Cart
+     */
+    public static final String CART_NOT_FOUND = "shopping_cart_not_found";
+    public static final String ITEM_NOT_FOUND = "item_not_found";
 
     private ErrorMessageConstants() {
     }
