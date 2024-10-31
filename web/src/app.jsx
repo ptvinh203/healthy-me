@@ -15,6 +15,7 @@ const renderApp = () => {
     )
 }
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     STRICT_MODE
         ? <StrictMode>{renderApp()}</StrictMode>

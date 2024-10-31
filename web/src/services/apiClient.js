@@ -43,7 +43,7 @@ apiClient.interceptors.response.use(
             return Promise.reject('Unknown error occurred.')
         }
 
-        return Promise.reject(errorResponse.data)
+        return Promise.reject(errorResponse.data.errors[0])
     }
 )
 

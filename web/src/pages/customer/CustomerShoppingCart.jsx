@@ -1,61 +1,78 @@
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
-import { Button, Checkbox, Col, Flex, Row } from "antd";
+import { Modal, Button, Checkbox, Col, Flex, Row } from "antd";
 import ItemSearchHeader from "../../components/ItemSearchHeader";
 import colors from "../../constants/Colors";
 import { useNavigate } from "react-router-dom";
-import { DeleteOutlined, HomeTwoTone, MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, ExclamationCircleOutlined, HomeTwoTone, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import "../../assets/css/ant_checkbox.css";
-import { handlePrice } from "../../utils/commonUtils";
+import { handlePrice, showErrorNotification } from "../../utils/commonUtils";
+import shoppingCartService from "../../services/shoppingCartService";
 
 export default function CustomerShoppingCart() {
-    const [carts, setCarts] = useState([]);
+    const [modal, modalContextHolder] = Modal.useModal();
+    const [carts, setCarts] = useState(null);
     const [selectedCartIds, setSelectedCartIds] = useState([]);
-    const checkAll = (carts?.length ?? 0) !== 0 && selectedCartIds.length === carts.length;
+    const checkAll = (carts?.length ?? 0) !== 0 && selectedCartIds.length === carts?.length;
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (carts.length > 0) return
-        setCarts([
-            {
-                id: 1,
-                name: "Nuoc chanh",
-                price: 50000,
-                quantity: 1,
-                restaurant_name: "Nhà hàng 1",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQPpgLRrL9bKqzsKtMkWR_ggjPlVdWXh0kXQ&s"
-            },
-            {
-                id: 2,
-                name: "Mi ga Da Nang",
-                price: 100000,
-                quantity: 2,
-                restaurant_name: "Nhà hàng 2",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlMyzfmXp2bWMGCMLw2JC4uXpXR1qEGTCBvw&s"
-            },
-        ]);
+        const fetchCarts = async () => {
+            try {
+                const response = await shoppingCartService.getShoppingCarts();
+                setCarts(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        if ((carts?.length ?? 0) <= 0) fetchCarts();
     }, [carts]);
 
     const handleDeleteCart = (cart) => {
-        console.log('Delete cart', cart);
+        modal.confirm({
+            title: 'Xác nhận xóa',
+            icon: <ExclamationCircleOutlined />,
+            centered: true,
+            content: 'Bạn có chắc chắn muốn xóa món ăn này khỏi giỏ hàng?',
+            okText: 'Xóa',
+            cancelText: 'Hủy',
+            onOk() {
+                shoppingCartService.deleteShoppingCart(cart.id)
+                    .then(() => { setCarts(carts.filter((c) => c.id !== cart.id)); })
+                    .catch((error) => { showErrorNotification("Xóa thất bại", error.message); })
+            }
+        });
     }
 
     const increaseQuantity = (cart) => {
-        setCarts(carts.map((c) => {
-            if (c.id === cart.id && c.quantity + 1 < 100) {
-                return { ...c, quantity: c.quantity + 1 }
-            }
-            return c
-        }))
+        if (!cart) return
+        shoppingCartService.updateShoppingCart(cart.id, { item_id: cart.item.id, quantity: cart.quantity + 1 })
+            .then(() => {
+                setCarts(carts.map((c) => {
+                    if (c.id === cart.id && c.quantity + 1 < 100) {
+                        return { ...c, quantity: c.quantity + 1 }
+                    }
+                    return c
+                }))
+            })
+            .catch((error) => { showErrorNotification("Cập nhật thất bại", error.message); })
+
     }
 
     const decreaseQuantity = (cart) => {
-        setCarts(carts.map((c) => {
-            if (c.id === cart.id && c.quantity - 1 > 0) {
-                return { ...c, quantity: c.quantity - 1 }
-            }
-            return c
-        }))
+        if (!cart) return
+        shoppingCartService.updateShoppingCart(cart.id, { item_id: cart.item.id, quantity: cart.quantity - 1 })
+            .then(() => {
+                setCarts(carts.map((c) => {
+                    if (c.id === cart.id && c.quantity - 1 > 0) {
+                        return { ...c, quantity: c.quantity - 1 }
+                    }
+                    return c
+                }))
+            })
+            .catch((error) => { showErrorNotification("Cập nhật thất bại", error.message); })
+
     }
 
     const onCheckAllChange = (e) => {
@@ -69,13 +86,11 @@ export default function CustomerShoppingCart() {
         else {
             setSelectedCartIds([...selectedCartIds, cart.id])
         }
-
     };
 
     return (
         <Flex vertical justify='space-between' style={{ height: '100%', width: '100%', padding: 20 }}>
             <ItemSearchHeader />
-
             <Flex vertical gap={12} style={{ height: 'calc(100% - 75px)', width: '100%', border: '1px solid black', borderRadius: 12, padding: 10 }}>
 
                 {/* Titles */}
@@ -89,8 +104,8 @@ export default function CustomerShoppingCart() {
 
 
                 {/* Carts */}
-                <Flex vertical gap={12} style={{ height: '100%', width: '100%', overflowY: 'auto' }}>
-                    {carts
+                <Flex vertical justify={carts?.length == 0 ? 'center' : 'start'} gap={12} style={{ height: '100%', width: '100%', overflowY: 'auto' }}>
+                    {carts?.length > 0
                         ? carts.map((cart, index) =>
                             // Cart detail
                             <Flex key={index} vertical gap={12} style={{ padding: 12, borderRadius: 16, border: '1px solid black' }}>
@@ -103,7 +118,7 @@ export default function CustomerShoppingCart() {
                                             textOverflow: 'ellipsis',
                                         }}
                                     >
-                                        {cart.restaurant_name}
+                                        {cart.item.restaurant.account.name}
                                     </p>
                                 </Flex>
                                 <Row>
@@ -115,8 +130,8 @@ export default function CustomerShoppingCart() {
                                         >
                                             <Flex justify="center" align="center" style={{ width: '100%' }}>
                                                 <img
-                                                    alt={cart.name}
-                                                    src={cart.image}
+                                                    alt={cart.item.name}
+                                                    src={cart.item.image}
                                                     style={{
                                                         height: 85,
                                                         aspectRatio: '1/1',
@@ -134,13 +149,13 @@ export default function CustomerShoppingCart() {
                                                         maxWidth: '230px'
                                                     }}
                                                 >
-                                                    {cart.name}
+                                                    {cart.item.name}
                                                 </p>
                                             </Flex>
                                         </Checkbox>
                                     </Col>
                                     <Col span={5} style={{ fontSize: 20 }}>
-                                        <Flex justify="center" align="center" style={{ height: '100%' }}>{handlePrice(cart.price)}</Flex>
+                                        <Flex justify="center" align="center" style={{ height: '100%' }}>{handlePrice(cart.item.price)}</Flex>
                                     </Col>
                                     <Col span={5}>
                                         <Row justify="center" align="center" style={{ height: '100%', width: '100%' }}>
@@ -160,17 +175,21 @@ export default function CustomerShoppingCart() {
                                         </Row>
                                     </Col>
                                     <Col span={5} style={{ fontSize: 20 }}>
-                                        <Flex justify="center" align="center" style={{ height: '100%' }}>{handlePrice(cart.price * cart.quantity)}</Flex>
+                                        <Flex justify="center" align="center" style={{ height: '100%' }}>{handlePrice(cart.item.price * cart.quantity)}</Flex>
                                     </Col>
                                     <Col span={4} style={{ fontSize: 20 }}>
                                         <Flex justify="center" align="center" style={{ height: '100%' }}>
-                                            <DeleteOutlined style={{ cursor: 'pointer', fontSize: 30 }} onClick={() => handleDeleteCart(cart)} />
+                                            <Button type="text" onClick={() => handleDeleteCart(cart)}>
+                                                <DeleteOutlined style={{ fontSize: 30 }} />
+                                            </Button>
                                         </Flex>
                                     </Col>
                                 </Row>
                             </Flex>
                         )
-                        : <Loading />}
+                        : carts?.length == 0
+                            ? <div style={{ fontSize: 30, textAlign: 'center' }}>Giỏ hàng trống</div>
+                            : <Loading />}
                 </Flex>
 
                 {/* Footer */}
@@ -184,8 +203,9 @@ export default function CustomerShoppingCart() {
                             <span>
                                 {handlePrice(
                                     carts
-                                        .filter(cart => selectedCartIds.includes(cart.id))
-                                        .reduce((sum, cart) => sum + cart.price * cart.quantity, 0)
+                                        ?.filter(cart => selectedCartIds.includes(cart.id))
+                                        ?.reduce((sum, cart) => sum + cart.item.price * cart.quantity, 0)
+                                    ?? 0
                                 )}
                             </span>
                         </div>
@@ -198,6 +218,7 @@ export default function CustomerShoppingCart() {
                     </Flex>
                 </Flex>
             </Flex>
+            {modalContextHolder}
         </Flex >
     )
 }
