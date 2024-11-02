@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { handlePrice } from '../../utils/commonUtils';
 import { useStateContext } from '../../context/StateContext';
 import OrderItemCart from '../../components/OrderItemCart';
+import Loading from '../../components/Loading';
 
 const { Content } = Layout;
 
@@ -32,14 +33,14 @@ function CustomerDetail() {
         <Layout style={{ padding: '20px', overflowY: 'auto', height: '100%', backgroundColor: 'white' }}>
             {/* Search field and shopping cart icon */}
             <ItemSearchHeader icon={shoppingCartIcon} />
-            {item &&
+            {item ?
                 <Content style={{ display: 'flex', flexDirection: 'row', height: '100%', backgroundColor: 'white', overflowY: 'auto' }}>
                     <div className='img'
                         style={{
                             display: 'flex',
                             flexDirection: 'row',
                             width: "40%",
-                            height: '80%',
+                            height: 'calc(100% - 50px)',
                             justifyContent: 'center',
                             alignItems: 'center',
                             padding: 20,
@@ -112,13 +113,14 @@ function CustomerDetail() {
                             className="scrollable-container"
                         >
                             {(recommendItems ?? []).map((item, index) => (
-                                <div key={index} style={{ maxWidth: '160px' }}>
+                                <div key={index} style={{ maxWidth: '160px' }} onClick={() => setItem(null)}>
                                     <OrderItemCart item={item} isShowNameOnly={true} />
                                 </div>
                             ))}
                         </div>
                     </Card>
                 </Content>
+                : <Loading />
             }
         </Layout>
     );

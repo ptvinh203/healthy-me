@@ -11,8 +11,9 @@ import colors from '../../constants/Colors';
 
 const { Option } = Select;
 
-function IndicatorCard({ indicator }) {
-    const { name, value, unit, type } = indicator;
+function IndicatorCard({ indicator, activity_index, onChangeActivityIndex }) {
+    const { name, unit, type } = indicator;
+    const value = indicator.value || '0';
 
     // Icon mapping with background and square dimensions
     const iconData = {
@@ -38,7 +39,8 @@ function IndicatorCard({ indicator }) {
     // State for controlling modal visibility
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editedValue, setEditedValue] = useState(value);
-    const [selectedActivities, setSelectedActivities] = useState([]);
+    const [selectedActivities, setSelectedActivities] = useState(activity_index || 0);
+    const [tempSelectedActivities, setTempSelectedActivities] = useState(activity_index || 0); // Temporary state for modal changes
 
     // Function to show modal
     const showModal = () => {
@@ -55,9 +57,16 @@ function IndicatorCard({ indicator }) {
         setEditedValue(e.target.value);
     };
 
-    // Function to handle selected activities
+    // Function to handle temporary selected activities in modal
     const handleActivityChange = (selectedItems) => {
-        setSelectedActivities(selectedItems);
+        setTempSelectedActivities(selectedItems);
+    };
+
+    // Function to save changes and call onChangeActivityIndex
+    const handleSaveChanges = () => {
+        setSelectedActivities(tempSelectedActivities);
+        onChangeActivityIndex(tempSelectedActivities); // Only update when Save button is clicked
+        setIsModalVisible(false);
     };
 
     // List of sports activities for "Lượng calo đốt cháy"
@@ -84,7 +93,7 @@ function IndicatorCard({ indicator }) {
                     <Select
                         style={{ width: '100%' }}
                         placeholder="Chọn các hoạt động"
-                        value={selectedActivities}
+                        value={tempSelectedActivities} // Use temporary state
                         onChange={handleActivityChange}
                     >
                         {sportsActivities.map((activity, index) => (
@@ -181,7 +190,7 @@ function IndicatorCard({ indicator }) {
                 visible={isModalVisible}
                 onCancel={handleCloseModal}
                 footer={
-                    <Button type="primary" onClick={handleCloseModal}>Lưu thay đổi</Button>
+                    <Button type="primary" onClick={handleSaveChanges}>Lưu thay đổi</Button>
                 }
                 centered
             >

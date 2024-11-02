@@ -78,6 +78,9 @@ permission_not_found:
 permission_is_require:
   code: ERR_PER0103
   message: Yêu cầu có quyền!
+action_is_not_allowed:
+  code: ERR_PER0104
+  message: Bạn không có quyền thực hiện hành động này!
 
 # Account
 account_not_found:
@@ -116,3 +119,11 @@ delete_file_failed:
 file_size_limit_exceeded:
   code: ERR_FIL0104
   message: Kích thước tệp tin quá lớn, phải nhỏ hơn 100MB!
+
+# Shopping cart
+shopping_cart_not_found:
+  code: ERR_SHO0101
+  message: Không tìm thấy giỏ hàng!
+item_not_found:
+  code: ERR_SHO0102
+  message: Không tìm thấy sản phẩm!

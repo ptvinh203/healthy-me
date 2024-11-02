@@ -1,6 +1,7 @@
 import { Spin, Typography } from "antd";
 import { useState, useEffect } from "react";
 import colors from "../../constants/Colors";
+import itemService from "../../services/itemService";
 const { Text, Paragraph } = Typography;
 
 function SuggestionSection() {
@@ -10,12 +11,8 @@ function SuggestionSection() {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await fetch(
-                    "http://localhost:8000/api/v1/item/low-calorie?limit=10"
-                );
-                const data = await response.json();
-                console.log(data);
-                setItems(data);
+                const response = await itemService.getLowCalorieItems();
+                setItems(response.data);
             } catch (error) {
                 console.error("Error fetching items:", error);
             } finally {
@@ -46,6 +43,7 @@ function SuggestionSection() {
                 padding: "20px 80px",
                 display: "flex",
                 flexDirection: "column",
+
             }}
         >
             <Paragraph strong style={{ width: "150px" }}>
@@ -60,6 +58,7 @@ function SuggestionSection() {
 
             <div
                 style={{
+                    marginTop: "40px",
                     padding: "20px 80px",
                     display: "grid",
                     gridTemplateColumns: "repeat(4, 1fr)",

@@ -1,8 +1,11 @@
 import { Button, Col, Flex, Input, Row } from "antd";
 import searchIcon from '../assets/svgs/orderDetail/search.svg';
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-export default function ItemSearchHeader({ icon, iconOnClick, onItemSearch }) {
+export default function ItemSearchHeader({ icon, onItemSearch }) {
+    const navigate = useNavigate();
+
     return (
         <Row justify='space-between' align='middle'>
             <Col xs={{ span: 21 }} md={{ span: 10 }}>
@@ -35,23 +38,25 @@ export default function ItemSearchHeader({ icon, iconOnClick, onItemSearch }) {
                     </Button>
                 </Flex>
             </Col>
-            <Col xs={{ span: 2 }} md={{ span: 2 }}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end'
-                }}
-            >
-                <img
-                    src={icon} alt="icon"
+            {icon &&
+                <Col xs={{ span: 2 }} md={{ span: 2 }}
                     style={{
-                        height: '40px',
-                        width: '40px',
-                        cursor: 'pointer'
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end'
                     }}
-                    onClick={iconOnClick}
-                />
-            </Col>
+                >
+                    <img
+                        src={icon} alt="icon"
+                        style={{
+                            height: '40px',
+                            width: '40px',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => navigate('/cus/cart')}
+                    />
+                </Col>
+            }
         </Row>
     );
 

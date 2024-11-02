@@ -1,9 +1,35 @@
 import { Col, Divider, Progress, Row } from 'antd'
+import PropTypes from 'prop-types'
 import BodyIcon from '../../assets/svgs/home/body.svg'
 import LineIcon from '../../assets/svgs/home/line.svg'
 import colors from '../../constants/Colors'
 
-function BodyInformation() {
+// Add this function at the top of your file, outside the BodyInformation component
+const getTimeSinceLastCheck = (updatedAt) => {
+    // Tách chuỗi theo định dạng 'dd-MM-yyyy HH:mm:ss.SSS'
+    const [datePart, timePart] = updatedAt.split(' ');
+    const [day, month, year] = datePart.split('-');
+    const [hours, minutes, seconds] = timePart.split(':');
+    const [sec, millis] = seconds.split('.');
+
+    // Tạo đối tượng Date
+    const lastCheck = new Date(
+        year,                // Năm
+        month - 1,           // Tháng (trong JavaScript tháng bắt đầu từ 0)
+        day,                 // Ngày
+        hours,               // Giờ
+        minutes,             // Phút
+        sec,                 // Giây
+        millis               // Mili giây
+    );
+
+    const now = new Date();
+    const diffTime = Math.abs(now - lastCheck);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `${diffDays} ngày trước`;
+};
+
+function BodyInformation({ customerInfo }) {
 
     const fourColors = {
         '0%': '#B5D4F1',
@@ -40,13 +66,14 @@ function BodyInformation() {
                         padding: 8,
                         borderRadius: 8,
                         marginBottom: 10,
+                        // height: '50%',
                         height: 'calc(50% - 5px)'
                     }}>
                         <Row style={{ justifyContent: 'flex-end' }}>
                             <img src={LineIcon} alt="Line" style={{ width: '60%', height: '100%' }} />
                         </Row>
                         <Row style={{ justifyContent: 'flex-start' }}>
-                            <span style={{ fontSize: '10px', padding: '6px 0' }}>Chiều cao 170cm</span>
+                            <span style={{ fontSize: '10px', padding: '6px 0' }}>Chiều cao {customerInfo.height} cm</span>
                         </Row>
                     </div>
                     {/* Width */}
@@ -60,7 +87,7 @@ function BodyInformation() {
                             <img src={LineIcon} alt="Line" style={{ width: '60%', height: '100%' }} />
                         </Row>
                         <Row style={{ justifyContent: 'flex-start' }}>
-                            <span style={{ fontSize: '10px', padding: '6px 0' }}>Cân nặng 72kg</span>
+                            <span style={{ fontSize: '10px', padding: '6px 0' }}>Cân nặng {customerInfo.weight} kg</span>
                         </Row>
                     </div>
                 </Col>
@@ -90,7 +117,7 @@ function BodyInformation() {
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
-                                24.9
+                                {customerInfo.bmi}
                             </span>
                             <span style={{
                                 fontSize: '8px',
@@ -101,7 +128,7 @@ function BodyInformation() {
                                 alignItems: 'center',
                                 padding: 4
                             }}>
-                                Bạn khoẻ mạnh
+                                {customerInfo.bmi >= 18.5 && customerInfo.bmi <= 24.9 ? 'Bạn khoẻ mạnh' : customerInfo.bmi >= 25 && customerInfo.bmi <= 29.9 ? 'Bạn thừa cân' : 'Bạn béo phì'}
                             </span>
                         </Row>
                         <Row style={{ width: '100%' }}>
@@ -126,7 +153,8 @@ function BodyInformation() {
                             Số đo cơ thể
                         </div>
                         <div style={{ marginBottom: 10, fontSize: '12px', color: 'white', fontWeight: 200 }}>
-                            Đã kiểm tra lần cuối 2 ngày trước
+                            {/* TODO: Get last check by get distance from updatedAt to now */}
+                            Lần kiểm tra gần nhất: {getTimeSinceLastCheck(customerInfo.updated_at)}
                         </div>
                         <div style={{
                             display: 'flex',
@@ -139,7 +167,7 @@ function BodyInformation() {
                             padding: 8,
                             borderRadius: 8
                         }}>
-                            Hình dạng cơ thể tam giác ngược
+                            Hình dạng cơ thể {customerInfo.body_shape}
                         </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -155,7 +183,7 @@ function BodyInformation() {
                             gap: 10
                         }}>
                             <span style={{ color: colors.grayDark, fontSize: '10px' }}>Ngực</span>
-                            <span style={{ fontSize: '16px' }}>44.5</span>
+                            <span style={{ fontSize: '16px' }}>{customerInfo.chest_measurement}</span>
                         </div>
                         <div style={{
                             display: 'flex',
@@ -169,7 +197,7 @@ function BodyInformation() {
                             gap: 10
                         }}>
                             <span style={{ color: colors.grayDark, fontSize: '10px' }}>Eo</span>
-                            <span style={{ fontSize: '16px' }}>34</span>
+                            <span style={{ fontSize: '16px' }}>{customerInfo.waist_measurement}</span>
                         </div>
                         <div style={{
                             display: 'flex',
@@ -183,7 +211,7 @@ function BodyInformation() {
                             gap: 10
                         }}>
                             <span style={{ color: colors.grayDark, fontSize: '10px' }}>Mông</span>
-                            <span style={{ fontSize: '16px' }}>42.5</span>
+                            <span style={{ fontSize: '16px' }}>{customerInfo.hips_measurement}</span>
                         </div>
                     </div>
                 </Col>
@@ -193,6 +221,19 @@ function BodyInformation() {
             </Row>
         </div>
     )
+}
+
+BodyInformation.propTypes = {
+    customerInfo: PropTypes.shape({
+        height: PropTypes.number.isRequired,
+        weight: PropTypes.number.isRequired,
+        bmi: PropTypes.number.isRequired,
+        body_shape: PropTypes.string.isRequired,
+        updated_at: PropTypes.string.isRequired,
+        chest_measurement: PropTypes.number.isRequired,
+        waist_measurement: PropTypes.number.isRequired,
+        hips_measurement: PropTypes.number.isRequired,
+    }).isRequired,
 }
 
 export default BodyInformation

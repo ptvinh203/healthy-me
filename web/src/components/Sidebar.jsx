@@ -1,5 +1,6 @@
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/svgs/logo.svg';
 import healthIcon from '../assets/svgs/sidebar/healthIcon.svg';
 import historyIcon from '../assets/svgs/sidebar/historyIcon.svg';
@@ -8,21 +9,10 @@ import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import colors from '../constants/Colors';
 import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
-import { useNavigate } from 'react-router-dom';
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-    const userRole = ROLE_CUSTOMER
-    const [selectedKey, setSelectedKey] = useState('1');
-    const navigate = useNavigate();
-
-    const handleMenuClick = (item) => {
-        setSelectedKey(item.key);
-        // Navigate to the selected path
-        navigate(item.path);
-    };
-
     // Menu items for customer
     const customerMenuItems = [
         {
@@ -76,6 +66,17 @@ const Sidebar = () => {
         },
     ];
 
+    const userRole = ROLE_CUSTOMER
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [selectedKey, setSelectedKey] = useState(customerMenuItems.find(item => item.path === location.pathname)?.key ?? '1');
+
+    const handleMenuClick = (item) => {
+        setSelectedKey(item.key);
+        // Navigate to the selected path
+        navigate(item.path);
+    };
+
     const menuItems = userRole === ROLE_RESTAURANT ? restaurantMenuItems : customerMenuItems;
 
     const menuItemsWithStyles = menuItems.map(item => ({
@@ -112,15 +113,17 @@ const Sidebar = () => {
             }}
         >
             {/* Logo */}
-            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white' }}>
-                <img
-                    src={logo}
-                    alt="Logo"
-                    style={{
-                        width: '30%',
-                        borderRadius: '10px',
-                    }}
-                />
+            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white', cursor: 'pointer' }}>
+                <Link to='/'>
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        style={{
+                            width: '30%',
+                            borderRadius: '10px',
+                        }}
+                    />
+                </Link>
             </div>
 
             {/* Custom selected menu item */}

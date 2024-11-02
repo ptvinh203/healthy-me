@@ -10,7 +10,7 @@ import recommendService from "../../services/recommendService"
 import { ReducerCases } from "../../constants/ReducerCases"
 
 export default function CustomerOrder() {
-    const [{ account, recommendItems, highRatingItems }, dispatch] = useStateContext();
+    const [{ recommendItems, highRatingItems, account }, dispatch] = useStateContext();
     const [isShowAllRecommendItems, setIsShowAllRecommendItems] = useState(false)
     const [isShowAllHighRatingItems, setIsShowAllHighRatingItems] = useState(false)
 
