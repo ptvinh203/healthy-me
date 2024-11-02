@@ -8,11 +8,9 @@ import com.dut.healthme.dto.response.ListRecommendResponse;
 import com.dut.healthme.entity.Account;
 import com.dut.healthme.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/item")
@@ -44,4 +42,10 @@ public class ItemController {
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta( listRecommend1));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<AbstractResponse> GetFindItem(@Param("keyword") String keyword) {
+        System.out.println(keyword);
+        var result = this.itemService.getItemsByNameOrIngredients(keyword);
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(result));
+    }
 }

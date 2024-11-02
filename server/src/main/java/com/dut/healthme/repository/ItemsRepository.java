@@ -17,4 +17,11 @@ public interface ItemsRepository extends JpaRepository<Item, Long> {
 
     @Query("SELECT new com.dut.healthme.dto.response.ItemResponse(i) FROM Item i WHERE i.id = :id")
     ItemResponse findItemById(Long id);
+
+    @Query(value = "SELECT * FROM items i " +
+        "WHERE LOWER(i.name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+        "OR EXISTS (SELECT 1 FROM unnest(i.ingredients) AS ingredient WHERE LOWER(ingredient) LIKE LOWER(CONCAT('%', :keyword, '%')))",
+        nativeQuery = true)
+    List<Item> findByNameOrIngredient(@Param("keyword") String keyword);
+
 }
