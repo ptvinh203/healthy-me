@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const { Content } = Layout;
 
-function LandingPage() {
+function LandingPage() {    
     return (
         <Layout
             style={{
