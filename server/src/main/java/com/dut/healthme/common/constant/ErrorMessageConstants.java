@@ -22,6 +22,7 @@ public final class ErrorMessageConstants {
     public static final String FILE_NOT_FOUND = "file_not_found";
     public static final String DELETE_FILE_FAILED = "delete_file_failed";
     public static final String FILE_SIZE_LIMIT_EXCEEDED = "file_size_limit_exceeded";
+    public static final String SAVE_FILE_FAILED = "save_file_failed";
 
     /**
      * Authentication
@@ -49,13 +50,18 @@ public final class ErrorMessageConstants {
     public static final String ACCOUNT_IS_DISABLED = "account_is_disabled";
     public static final String ACCOUNT_ID_IS_REQUIRED = "account_id_is_required";
     public static final String ACCOUNT_IS_NOT_AVAILABLE = "account_is_not_available";
-
+    public static final String ACCOUNT_SAVE_FAILED = "account_save_failed";
 
     /**
      * Shopping Cart
      */
     public static final String CART_NOT_FOUND = "shopping_cart_not_found";
     public static final String ITEM_NOT_FOUND = "item_not_found";
+
+    /**
+     * Restaurant
+     */
+    public static final String RESTAURANT_NOT_FOUND = "restaurant_not_found";
 
     private ErrorMessageConstants() {
     }

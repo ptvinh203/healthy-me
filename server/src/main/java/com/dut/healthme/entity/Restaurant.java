@@ -1,6 +1,8 @@
 package com.dut.healthme.entity;
 
 import com.dut.healthme.common.model.AbstractEntity;
+import com.dut.healthme.entity.enums.AccountRole;
+import com.dut.healthme.entity.enums.RestaurantStatus;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -11,7 +13,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcType;
 import org.hibernate.annotations.Type;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.util.List;
 
@@ -36,6 +40,11 @@ public class Restaurant extends AbstractEntity {
 
     @Column(nullable = false)
     private String address;
+
+    @Column(nullable = false, columnDefinition = "restaurant_status DEFAULT 'AWAITING_APPROVAL'")
+    @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    private RestaurantStatus status = RestaurantStatus.AWAITING_APPROVAL;
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
 //    @JsonManagedReference
