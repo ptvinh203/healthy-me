@@ -1,12 +1,15 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import Input from 'antd/es/input/Input';
-import { useState } from 'react';
+import { Input } from 'antd';
+import { useState, forwardRef } from 'react';
 import colors from '../../constants/Colors';
-function InputFieldPassword({ placeholder }) {
+
+const InputFieldPassword = forwardRef(function InputFieldPassword(
+    { placeholder, onChange, value }, ref) {
     const [passwordVisible, setPasswordVisible] = useState(false);
 
-    return (<>
+    return (
         <Input.Password
+            ref={ref}
             placeholder={placeholder}
             iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             visibilityToggle={{ visible: passwordVisible, onVisibleChange: setPasswordVisible }}
@@ -16,8 +19,10 @@ function InputFieldPassword({ placeholder }) {
                 width: "100%",
                 backgroundColor: colors.lightBackground
             }}
+            onChange={onChange}
+            value={value}
         />
-    </>);
-}
+    );
+});
 
 export default InputFieldPassword;

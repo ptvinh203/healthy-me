@@ -6,8 +6,8 @@ import CustomerPayment from "../pages/customer/CustomerPayment";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import Login from "../pages/Login";
-import LandingPage from "../pages/guess/LandingPage";
-import RegisterPage from "../pages/guess/RegisterPage";
+import LandingPage from "../pages/guest/LandingPage";
+import RegisterPage from "../pages/guest/RegisterPage";
 
 export const routes = {
     common: [

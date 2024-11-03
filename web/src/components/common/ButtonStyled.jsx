@@ -1,8 +1,10 @@
 import { Button } from "antd";
 import { useState } from "react";
 
-function ButtonStyled({ children, cusWidth }) {
+function ButtonStyled({ children, cusWidth, type }) {
     const [width, setWidth] = useState(cusWidth);
+    const [buttonType, setButtonType] = useState(type);
+
     return (
 
         <Button
@@ -12,6 +14,7 @@ function ButtonStyled({ children, cusWidth }) {
                 padding: "20px 30px",
                 backgroundImage: "linear-gradient(to right, #3A8EF6, #6F3AFA)",
             }}
+            htmlType={buttonType ? buttonType : "button"}
             size="large"
         >
             {children}

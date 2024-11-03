@@ -11,7 +11,7 @@ function Header() {
                 <Flex vertical>
                     <Flex justify="flex-end">
                         <ButtonStyled>
-                            <Link to="/register/restaurant">
+                            <Link to="/login">
                                 Đăng nhập
                             </Link>
                         </ButtonStyled>

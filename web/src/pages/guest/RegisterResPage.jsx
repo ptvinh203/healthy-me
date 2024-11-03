@@ -8,9 +8,14 @@ import InputFieldPassword from "../../components/guest/InputFieldPassword";
 import "../../constants/Colors"
 import "../../assets/css/ant_select.css"
 import ButtonStyled from "../../components/common/ButtonStyled";
-import Facebook from "../../assets/images/Facebook.png"
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import Facebook from "../../assets/images/fb.png"
+import Iphone from "../../assets/images/iphone.png"
+import Google from "../../assets/images/google.png"
 function RegisterResPage() {
+    const { register } = useForm();
+
     const { Text, Paragraph } = Typography;
     const handleFileUpload = ({ file }) => {
         axios.post("http://localhost:8000/uploadCertificate", file, {
@@ -19,6 +24,7 @@ function RegisterResPage() {
             }
         })
     }
+
     return (
         <>
             <Flex style={{
@@ -31,7 +37,7 @@ function RegisterResPage() {
                     <Flex style={{ padding: "80px 50px" }} vertical>
                         <Paragraph strong style={{ width: "100%", paddingBottom: "30px" }}>
                             <Text style={{ wordBreak: "break-word", fontSize: "xx-large" }}>
-                                Đăng ký để nhận chất dinh dưỡng của bạn
+                                Đăng ký để cung cấp chất dinh dưỡng cho mọi người
                             </Text>
                         </Paragraph>
                         <Paragraph strong >
@@ -52,25 +58,36 @@ function RegisterResPage() {
                             <Flex style={{ justifyContent: "center" }}>
                                 <Paragraph strong style={{ display: "flex", flexDirection: "row", paddingBottom: "10px" }} >
                                     <Text style={{ fontSize: "x-large" }}>
-                                        Đăng ký người dùng
+                                        Đăng ký cho nhà hàng/quán ăn
                                     </Text>
                                 </Paragraph>
                             </Flex>
-                            <div style={{ width: "100%" }}>
-                                <InputFieldText placeholder={"Nhập email"}  ></InputFieldText>
-                                <InputFieldPassword placeholder={"Nhập mật khẩu"}  ></InputFieldPassword>
+                            <form style={{ width: "100%" }}>
+
+                                <InputFieldText  {...register("email")} placeholder={"Nhập email"}  ></InputFieldText>
+                                <InputFieldPassword {...register("password")} placeholder={"Nhập mật khẩu"}  ></InputFieldPassword>
                                 <InputFieldPassword placeholder={"Nhập lại mật khẩu"}  ></InputFieldPassword>
-                                <InputFieldText placeholder={"Tên"}  ></InputFieldText>
-                                <InputFieldText placeholder={"Địa chỉ"}  ></InputFieldText>
-                                <Flex>
-                                    <Input type="files" placeholder={"Giấy chứng nhận an toàn thực phẩm"}  ></Input>
+                                <InputFieldText {...register("name")} placeholder={"Tên"}  ></InputFieldText>
+                                <InputFieldText {...register("name")} placeholder={"Địa chỉ"}  ></InputFieldText>
+                                <Flex style={{ marginBottom: "20px" }}>
+                                    <Input type="files" style={{
+                                        padding: "10px",
+                                        marginBottom: "10px",
+                                        width: "100%",
+                                        backgroundColor: colors.lightBackground,
+                                    }} placeholder={"Giấy chứng nhận"}  ></Input>
                                     <Upload
                                         customRequest={handleFileUpload}
-                                        listType=""
                                         multiple
                                     >
-                                        <Button>
-                                            <img src={UploadOutlined}></img>
+                                        <Button style={{
+                                            marginLeft: "5px", padding: "10px",
+                                            marginBottom: "10px",
+                                            width: "100%",
+                                            height: "auto",
+                                            backgroundColor: colors.lightBackground,
+                                        }}>
+                                            Nhấn để tải lên
                                         </Button>
                                     </Upload>
                                 </Flex>
@@ -82,17 +99,23 @@ function RegisterResPage() {
                                     </ButtonStyled>
                                 </Flex>
                                 <Flex style={{ justifyContent: 'space-evenly', margin: "20px 0px" }} >
-                                    <Flex style={{ justifyContent: "center", alignItems: "center", width: "80px", height: "40px", background: colors.grayLight, border: `${colors.borderlight} solid 0.3px`, borderRadius: "5px" }}>
-                                        <img src={Facebook} alt="Google Icon" style={{ width: '24px', height: '24px' }} />
+                                    <Flex style={{ justifyContent: "center", alignItems: "center", width: "80px", height: "40px", borderRadius: "5px", border: `${colors.borderlight} solid 0.3px` }}>
+                                        <Button style={{ background: colors.grayLight, width: "100%", height: "100%", border: "none" }}>
+                                            <img src={Google} alt="Google Icon" style={{ width: '24px', height: '24px' }} />
+                                        </Button>
                                     </Flex>
-                                    <Flex style={{ justifyContent: "center", alignItems: "center", width: "80px", height: "40px", background: colors.grayLight, border: `${colors.borderlight} solid 0.3px`, borderRadius: "5px" }}>
-                                        <img src={Facebook} alt="Apple Icon" style={{ width: '24px', height: '24px' }} />
+                                    <Flex style={{ justifyContent: "center", alignItems: "center", width: "80px", height: "40px", borderRadius: "5px", border: `${colors.borderlight} solid 0.3px` }}>
+                                        <Button style={{ background: colors.grayLight, width: "100%", height: "100%", border: "none" }}>
+                                            <img src={Iphone} alt="Apple Icon" style={{ width: '24px', height: '24px' }} />
+                                        </Button>
                                     </Flex>
-                                    <Flex style={{ justifyContent: "center", alignItems: "center", width: "80px", height: "40px", background: colors.grayLight, border: `${colors.borderlight} solid 0.3px`, borderRadius: "5px" }}>
-                                        <img src={Facebook} alt="Facebook Icon" style={{ width: '24px', height: '24px' }} />
+                                    <Flex style={{ justifyContent: "center", alignItems: "center", width: "80px", height: "40px", borderRadius: "5px", border: `${colors.borderlight} solid 0.3px` }}>
+                                        <Button style={{ background: colors.grayLight, width: "100%", height: "100%", border: "none" }}>
+                                            <img src={Facebook} alt="Facebook Icon" style={{ width: '24px', height: '24px' }} />
+                                        </Button>
                                     </Flex>
                                 </Flex>
-                            </div>
+                            </form>
                         </Flex>
                     </Flex>
                 </Flex>

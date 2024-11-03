@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Layout, Input, Button, Typography, Space, Row, Col, Flex } from 'antd';
 import { CloseOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import Logo from "../assets/images/logo.png";
@@ -13,7 +13,7 @@ import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
 import { useStateContext } from '../context/StateContext';
 import { ReducerCases } from '../constants/ReducerCases';
 
-const { Title, Text, Link } = Typography;
+const { Title, Text } = Typography;
 
 function scrollToTop() {
     window.scrollTo(0, 0)
@@ -91,11 +91,15 @@ function LoginPage() {
                                 Nếu bạn chưa có tài khoản, bạn có thể Đăng ký tại đây với tư cách là người dùng hoặc là nhà hàng/quán ăn!
                             </Text>
                             <div style={{ marginTop: '40px' }}>
-                                <Button type="primary" shape="round" size="large" style={{ marginRight: '50px' }}>
-                                    Người dùng
-                                </Button>
+                                <Link to="/register/customer">
+                                    <Button type="primary" shape="round" size="large" style={{ marginRight: '50px' }}>
+                                        Người dùng
+                                    </Button>
+                                </Link>
                                 <Button type="primary" shape="round" size="large" style={{ marginRight: '16px' }}>
-                                    Nhà hàng/Quán ăn
+                                    <Link to="/register/restaurant">
+                                        Nhà hàng/Quán ăn
+                                    </Link>
                                 </Button>
                             </div>
                         </div>

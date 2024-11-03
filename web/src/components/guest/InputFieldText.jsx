@@ -1,27 +1,28 @@
 import Input from "antd/es/input/Input";
 import colors from "../../constants/Colors";
-import { useState } from "react";
-// eslint-disable-next-line react/prop-types
-function InputFieldText({ placeholder, value, onChange, icon, suffix }) {
-    const [inputSuffix, setinputSuffix] = useState(suffix)
+import { forwardRef } from "react";
+
+const InputFieldText = forwardRef(function InputFieldText(
+    { placeholder, icon, suffix, ...props },
+    ref
+) {
     return (
         <div>
             <Input
+                ref={ref}
                 placeholder={placeholder}
-                value={value}
-                onChange={onChange}
                 icon={icon}
                 style={{
                     padding: "10px",
                     marginBottom: "10px",
                     width: "100%",
-                    backgroundColor: colors.lightBackground
+                    backgroundColor: colors.lightBackground,
                 }}
-                suffix={inputSuffix ? inputSuffix : ""}
+                suffix={suffix}
+                {...props}
             />
-
         </div>
     );
-}
+});
 
 export default InputFieldText;
