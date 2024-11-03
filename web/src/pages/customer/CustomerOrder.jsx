@@ -13,6 +13,7 @@ export default function CustomerOrder() {
     const [{ recommendItems, highRatingItems, account }, dispatch] = useStateContext();
     const [isShowAllRecommendItems, setIsShowAllRecommendItems] = useState(false)
     const [isShowAllHighRatingItems, setIsShowAllHighRatingItems] = useState(false)
+    const [isShowSearchItems, setIsShowSearchItems] = useState(false)
 
 
     useEffect(() => {
@@ -38,9 +39,12 @@ export default function CustomerOrder() {
         if (account && (recommendItems === undefined || highRatingItems === undefined))
             fetchRecommendAndHighRatingItems()
     }, [highRatingItems, account, recommendItems, dispatch]);
-
+    // TODO: handle search item
     const onSearch = value => {
-        if (value) console.log(value) // TODO: handle search item
+        if (value) {
+            setIsShowSearchItems(true)
+            console.log(value)
+        }
     }
 
     const handleViewAllRecommendItems = () => {
@@ -207,6 +211,33 @@ export default function CustomerOrder() {
                         </div>
                     </Row>
                 </div >
+            }
+
+            {isShowSearchItems &&
+                <div>
+                    <Col style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <span
+                            style={{ fontSize: '18px', fontStyle: 'italic', color: `${colors.primary}`, cursor: 'pointer' }}
+                            onClick={[setIsShowSearchItems(false), handleViewAllHighRatingItems]}
+                        >
+                            Quay lại
+                        </span>
+                    </Col>
+                    {/* <Row style={{ marginTop: '15px' }}>
+                        {highRatingItems !== undefined && highRatingItems?.length === 0 &&
+                            <Flex align="center" justify="center" style={{ fontSize: '30px' }}>
+                                Không có sản phẩm nào
+                            </Flex>
+                        }
+                        <Row gutter={highRatingItems?.length >= 5 ? [10, 20] : [30, 20]} justify={`${highRatingItems?.length >= 5 ? 'space-between' : 'start'}`}>
+                            {highRatingItems.map((item, idx) => (
+                                <Col key={idx} span={4}>
+                                    <OrderItemCart item={item} />
+                                </Col>
+                            ))}
+                        </Row>
+                    </Row> */}
+                </div>
             }
         </Flex>
     )

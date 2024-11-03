@@ -1,4 +1,4 @@
-import { Flex, Select, Typography, DatePicker, Button, message } from "antd";
+import { Flex, Select, Typography, DatePicker, Button } from "antd";
 import Logo from "../../components/guest/Logo";
 import colors from "../../constants/Colors";
 import InputFieldText from "../../components/guest/InputFieldText";
@@ -157,7 +157,7 @@ function RegisterCusPage() {
                                             <>
                                                 <DatePicker
                                                     {...field}
-                                                    onChange={(date, dateString) => {
+                                                    onChange={(date) => {
                                                         field.onChange(date); // Cập nhật giá trị cho react-hook-form
                                                     }}
                                                     style={{
