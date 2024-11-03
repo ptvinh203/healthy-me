@@ -26,6 +26,23 @@ const customerService = {
             console.error('Error updating activity index:', error)
             throw error
         }
+    },
+    getCustomerAddress: async () => {
+        try {
+            const response = await apiClient.get(`/customer/address`)
+            return response.data
+        } catch (error) {
+            console.error('Error updating activity index:', error)
+            throw error
+        }
+    },
+    updateCustomerAddress: async (customerAddress) => {
+        try {
+            const response = await apiClient.put('/customer/address', customerAddress)
+            return response.data
+        } catch (error) {
+            console.error('Error updating customer address:', error)
+        }
     }
 };
 

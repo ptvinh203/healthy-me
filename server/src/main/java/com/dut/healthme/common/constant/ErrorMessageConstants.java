@@ -63,6 +63,11 @@ public final class ErrorMessageConstants {
      */
     public static final String RESTAURANT_NOT_FOUND = "restaurant_not_found";
 
+    /**
+     * Payment
+     */
+    public static final String ADDRESS_INVALID = "address_invalid";
+
     private ErrorMessageConstants() {
     }
 }

@@ -138,3 +138,8 @@ item_not_found:
 restaurant_not_found:
   code: ERR_RSO0101
   message: Không tìm thấy nhà hàng!
+
+# Customer
+address_invalid:
+  code: ERR_ADD101
+  message: Địa chỉ phải lớn hơn 10 kí tự!

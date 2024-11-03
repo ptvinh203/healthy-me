@@ -1,21 +1,24 @@
-import { Layout, Card, Rate, Button } from 'antd';
+import { Layout, Card, Rate, Button, InputNumber } from 'antd';
 import orderIcon from '../../assets/svgs/orderDetail/order.svg';
 import { useEffect, useState } from 'react';
 import itemService from '../../services/itemService';
 import ItemSearchHeader from '../../components/ItemSearchHeader';
 import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg"
-import { useParams } from 'react-router-dom';
-import { handlePrice } from '../../utils/commonUtils';
+import { useNavigate, useParams } from 'react-router-dom';
+import { handlePrice, showErrorNotification, showSuccessNotification } from '../../utils/commonUtils';
 import { useStateContext } from '../../context/StateContext';
 import OrderItemCart from '../../components/OrderItemCart';
 import Loading from '../../components/Loading';
+import shoppingCartService from '../../services/shoppingCartService';
 
 const { Content } = Layout;
 
 function CustomerDetail() {
     const { itemId } = useParams();
     const [item, setItem] = useState(null);
+    const [quantity, setQuantity] = useState(1);
     const [{ recommendItems }] = useStateContext();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getItemInfo = async () => {
@@ -28,6 +31,28 @@ function CustomerDetail() {
         }
         getItemInfo()
     }, [itemId]);
+
+    const handleAddToCart = async () => {
+        try {
+            const { is_success } = await shoppingCartService.addShoppingCart({ item_id: itemId, quantity })
+            if (is_success) {
+                setQuantity(1)
+                showSuccessNotification('Thêm vào giỏ hàng thành công')
+            }
+        } catch (error) {
+            showErrorNotification(error.message)
+        }
+    }
+
+    const handBuyItem = async () => {
+        try {
+            const { data } = await shoppingCartService.addShoppingCart({ item_id: itemId, quantity })
+            if (data)
+                navigate('/cus/payment', { state: { selectedCartIds: [data.id] } })
+        } catch (error) {
+            showErrorNotification(error.message)
+        }
+    }
 
     return (
         <Layout style={{ padding: '20px', overflowY: 'auto', height: '100%', backgroundColor: 'white' }}>
@@ -81,20 +106,26 @@ function CustomerDetail() {
                         <p style={{ padding: '10px 0px' }}>Lượng calo: {item.calo} kcal</p>
                         <p style={{ padding: '10px 0px' }}>Thành phần chính: {item.ingredients.join(', ')}</p>
                         <div className='order' style={{ display: 'flex', flexDirection: 'row', height: 50, alignItems: 'center' }}>
-                            <div className='quantity' style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: 80,
-                                height: 45,
-                                border: '1px solid #3A8EF6',
-                                marginLeft: 10,
-                                color: '#969AA0',
-                                fontSize: 20
-                            }}
-                            >1</div>
-                            <Button type="primary" style={{ borderRadius: 0, width: 80, height: 45, marginLeft: 10 }}>Mua</Button>
-                            <Button type="primary" style={{ borderRadius: 0, height: 45, marginLeft: 10 }}>
+                            <InputNumber
+                                className='quantity'
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    width: 80,
+                                    height: 45,
+                                    border: '1px solid #3A8EF6',
+                                    color: '#969AA0',
+                                    fontSize: 20,
+                                    borderRadius: 0
+                                }}
+                                min={1}
+                                max={100}
+                                value={quantity}
+                                onChange={(value) => setQuantity(value)}
+                            />
+                            <Button type="primary" style={{ borderRadius: 0, width: 80, height: 45, marginLeft: 10 }} onClick={handBuyItem}>Mua</Button>
+                            <Button type="primary" style={{ borderRadius: 0, height: 45, marginLeft: 10 }} onClick={handleAddToCart}>
                                 Thêm vào giỏ hàng
                                 <img src={orderIcon} style={{ width: 20, height: 20 }} />
                             </Button>
