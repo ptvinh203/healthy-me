@@ -13,6 +13,9 @@ const shoppingCartService = {
     updateShoppingCart: async (id, cart) => {
         return await apiClient.patch(`/cart/${id}`, cart)
     },
+    getShoppingCartById: async (id) => {
+        return await apiClient.get(`/cart/${id}`)
+    }
 }
 
 export default shoppingCartService

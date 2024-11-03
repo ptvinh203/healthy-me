@@ -1,7 +1,10 @@
 package com.dut.healthme.service.impl;
 
+import com.dut.healthme.common.constant.ErrorMessageConstants;
+import com.dut.healthme.common.exception.BadRequestException;
 import com.dut.healthme.common.exception.NotFoundObjectException;
 import com.dut.healthme.dto.response.CustomerInfoResponse;
+import com.dut.healthme.entity.Account;
 import com.dut.healthme.entity.Customer;
 import com.dut.healthme.entity.enums.Gender;
 import com.dut.healthme.entity.enums.HealthGoal;
@@ -16,7 +19,6 @@ import java.time.Period;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-
     private final CustomersRepository customerRepository;
 
     @Autowired
@@ -122,7 +124,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findByAccountId(accountId);
 
         if (customer == null)
-            throw new IllegalArgumentException("Customer not found with account's id: " + accountId);
+            throw new BadRequestException(ErrorMessageConstants.ACCOUNT_NOT_FOUND);
 
         customer.setHealthGoal(healthGoal);
 
@@ -136,7 +138,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findByAccountId(accountId);
 
         if (customer == null)
-            throw new IllegalArgumentException("Customer not found with account's id: " + accountId);
+            throw new BadRequestException(ErrorMessageConstants.ACCOUNT_NOT_FOUND);
 
         customer.setActivityIndex(activityIndex);
 
@@ -144,4 +146,32 @@ public class CustomerServiceImpl implements CustomerService {
 
         return new CustomerInfoResponse().fromEntity(customer);
     }
+
+    @Override
+    public String getCustomerAddress(Account account) {
+        Customer customer = customerRepository.findByAccountId(account.getId());
+
+        if (customer == null)
+            throw new BadRequestException(ErrorMessageConstants.ACCOUNT_NOT_FOUND);
+
+        return customer.getAddress();
+    }
+
+    @Override
+    public String updateAddress(Account account, String address) {
+        if (address == null || address.length() <= 10) {
+            throw new BadRequestException(ErrorMessageConstants.ADDRESS_INVALID);
+        }
+
+        Customer customer = customerRepository.findByAccountId(account.getId());
+        if (customer == null) {
+            throw new BadRequestException(ErrorMessageConstants.ACCOUNT_NOT_FOUND);
+        }
+
+        customer.setAddress(address);
+        customer = customerRepository.save(customer);
+
+        return customer.getAddress();
+    }
+
 }

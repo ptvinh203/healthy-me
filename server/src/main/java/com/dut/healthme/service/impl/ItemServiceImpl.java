@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
@@ -33,5 +35,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemResponse getItemById(Long id){
         return this.itemsRepository.findItemById(id);
+    }
+
+    @Override
+    public List<ItemResponse> getItemsByNameOrIngredients(String key) {
+        List<Item> items = this.itemsRepository.findByNameOrIngredient(key);
+        return items.stream()
+            .map(item -> new ItemResponse(item))
+            .collect(Collectors.toList());
     }
 }

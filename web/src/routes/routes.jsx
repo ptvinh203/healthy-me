@@ -1,8 +1,9 @@
 import CustomerHome from "../pages/customer/CustomerHome";
 import CustomerOrder from "../pages/customer/CustomerOrder";
 import CustomerDetail from "../pages/customer/CustomerOrderDetail";
-import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
 import CustomerPayment from "../pages/customer/CustomerPayment";
+import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
+import OrderSuccess from "../pages/customer/OrderSuccess";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import Login from "../pages/Login";
@@ -52,6 +53,10 @@ export const routes = {
         {
             path: "/cus/payment",
             element: <CustomerPayment />
+        },
+        {
+            path: "/cus/order-success",
+            element: <OrderSuccess />
         }
     ],
     restaurant: [],

@@ -11,6 +11,8 @@ public interface ShoppingCartService {
 
     List<ShoppingCartResponse> getCarts(Account account);
 
+    ShoppingCartResponse getCartById(Account account, Long cartId);
+
     void deleteCart(Account account, Long cartId);
 
     ShoppingCartResponse editItemQuantity(Account account, Long cartId, ShoppingCartRequest request);
