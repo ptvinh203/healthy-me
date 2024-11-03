@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 const { Content } = Layout;
 
-function LandingPage() {
+function GuestLayout() {
     return (
         <Layout
             style={{
@@ -21,4 +21,4 @@ function LandingPage() {
     );
 }
 
-export default LandingPage;
+export default GuestLayout;
