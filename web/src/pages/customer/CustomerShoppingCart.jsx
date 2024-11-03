@@ -6,7 +6,7 @@ import colors from "../../constants/Colors";
 import { useNavigate } from "react-router-dom";
 import { DeleteOutlined, ExclamationCircleOutlined, HomeTwoTone, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import "../../assets/css/ant_checkbox.css";
-import { handlePrice, showErrorNotification } from "../../utils/commonUtils";
+import { handlePrice, showErrorNotification, showInfoNotification } from "../../utils/commonUtils";
 import shoppingCartService from "../../services/shoppingCartService";
 
 export default function CustomerShoppingCart() {
@@ -28,6 +28,14 @@ export default function CustomerShoppingCart() {
 
         if ((carts?.length ?? 0) <= 0) fetchCarts();
     }, [carts]);
+
+    const handleOrder = () => {
+        if (selectedCartIds.length > 0) {
+            navigate('/cus/payment', { state: { selectedCartIds } })
+        } else {
+            showInfoNotification("Chưa chọn món ăn nào", "Vui lòng chọn ít nhất một món ăn để đặt hàng")
+        }
+    }
 
     const handleDeleteCart = (cart) => {
         modal.confirm({
@@ -211,7 +219,7 @@ export default function CustomerShoppingCart() {
                         </div>
                         <Button
                             type='primary' size="large" style={{ backgroundColor: colors.highlight, color: 'black' }}
-                            onClick={() => navigate('/cus/payment', { state: { selectedCartIds } })}
+                            onClick={handleOrder}
                         >
                             Đặt hàng
                         </Button>
