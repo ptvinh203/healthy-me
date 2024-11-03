@@ -1,10 +1,33 @@
 import { Layout } from "antd";
 import colors from "../constants/Colors";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useStateContext } from "../context/StateContext";
+import { useEffect } from "react";
+import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_RESTAURANT } from "../constants/Role";
 
 const { Content } = Layout;
 
-function GuestLayout() {
+function LandingPage() {
+    const [{ account }] = useStateContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (account) {
+            switch (account?.role) {
+                case ROLE_CUSTOMER:
+                    navigate('/cus/home');
+                    break;
+                case ROLE_RESTAURANT:
+                    navigate('/res/home');
+                    break;
+                case ROLE_ADMIN:
+                    navigate('/admin/home');
+                    break;
+            }
+        }
+    }, [account, navigate])
+
+
     return (
         <Layout
             style={{
@@ -21,4 +44,4 @@ function GuestLayout() {
     );
 }
 
-export default GuestLayout;
+export default LandingPage;
