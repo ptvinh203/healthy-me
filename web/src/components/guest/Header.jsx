@@ -2,9 +2,7 @@ import { Flex } from "antd";
 import { Button } from "antd";
 import Logo from "../../assets/images/logo.png";
 import LogoText from "../../assets/images/logo_text.png";
-import authService from "../../services/authService";
 import { useStateContext } from "../../context/StateContext";
-import { ReducerCases } from "../../constants/ReducerCases";
 import { useNavigate } from "react-router-dom";
 function Header() {
     // eslint-disable-next-line no-unused-vars
@@ -15,21 +13,8 @@ function Header() {
         window.scrollTo(0, 0)
     }
 
-    const getAccountViaToken = async () => {
-        const response = await authService.getAccountInfo()
-        if (response.is_success) {
-            dispatch({ type: ReducerCases.SET_ACCOUNT_INFO, data: response.data })
-        }
-    }
-
     const handleLogin = async () => {
-        try {
-            await authService.login({ email: 'customer@gmail.com', password: '123456Aa' })
-            await getAccountViaToken()
-            navigate('/cus/home')
-        } catch (err) {
-            console.log(err)
-        }
+        navigate('/login')
     }
 
     return (
