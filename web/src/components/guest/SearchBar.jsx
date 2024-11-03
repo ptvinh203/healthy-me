@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { Input, Button, Flex, Typography } from "antd";
 import { HeartTwoTone, SearchOutlined, CloseCircleFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
@@ -120,11 +121,44 @@ const CustomSearchBar = () => {
             </Flex>
 
             {/* route res */}
+=======
+import { Input, Button } from "antd";
+import { HeartTwoTone, CloseCircleFilled, SearchOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import colors from "../../constants/Colors";
+
+const SearchBar = ({ onSearch }) => {
+    const [query, setQuery] = useState("");
+    const suffix = <HeartTwoTone twoToneColor="#eb2f96" />;
+
+    const clearQuery = () => {
+        setQuery("");
+        onSearch(""); // Call the onSearch prop to reset the search
+    };
+
+    return (
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
+            <Input
+                placeholder="Vấn đề sức khỏe"
+                suffix={suffix}
+                onChange={(e) => {
+                    setQuery(e.target.value);
+                    onSearch(e.target.value);
+                }}
+                value={query}
+                style={{
+                    borderRadius: "20px",
+                    padding: "5px 10px",
+                    borderColor: colors.border,
+                }}
+            />
+>>>>>>> Stashed changes
             {query.length > 0 ? (
                 <Button
                     type="primary"
                     shape="circle"
                     icon={<CloseCircleFilled />}
+<<<<<<< Updated upstream
                     style={{
                         cursor: "pointer",
                     }}
@@ -132,20 +166,27 @@ const CustomSearchBar = () => {
                         event.preventDefault(); // Prevent input blur
                     }}
                     onClick={clearQuery} // Call clearQuery directly
+=======
+                    onClick={clearQuery}
+>>>>>>> Stashed changes
                 />
             ) : (
                 <Button
                     type="primary"
                     shape="circle"
                     icon={<SearchOutlined />}
+<<<<<<< Updated upstream
                     style={{
                         cursor: query.length > 0 ? "pointer" : "auto",
                         marginLeft: "10px",
                     }}
+=======
+                    disabled
+>>>>>>> Stashed changes
                 />
             )}
         </div>
     );
 };
 
-export default CustomSearchBar;
+export default SearchBar;
