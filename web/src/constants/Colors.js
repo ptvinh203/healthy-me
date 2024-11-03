@@ -9,10 +9,12 @@ const colors = {
 
     muted: '#F3E7E9',
     background: '#F3F3FD',
+    lightBackground: '#EAF0F7',
     darkBackground: '#303030',
     textPrimary: '#303030',
     textSecondary: '#969AA0',
     border: '#d9d9d9',
+    borderlight: "#DDDFDD",
     highlight: '#FFCA42',
     shadow: 'rgba(0, 0, 0, 0.1)',
     gradientStart: '#E3EEFF',

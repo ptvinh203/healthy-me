@@ -1,18 +1,24 @@
 import CustomerHome from "../pages/customer/CustomerHome";
 import CustomerOrder from "../pages/customer/CustomerOrder";
 import CustomerDetail from "../pages/customer/CustomerOrderDetail";
+import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
+import CustomerPayment from "../pages/customer/CustomerPayment";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import Login from "../pages/Login";
-import LandingPage from "../pages/guess/LandingPage";
-import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
-import CustomerPayment from "../pages/customer/CustomerPayment";
+import LandingPage from "../pages/guest/LandingPage";
+import RegisterPage from "../pages/guest/RegisterPage";
+
 
 export const routes = {
     common: [
         {
             path: "/",
             element: <LandingPage />,
+        },
+        {
+            path: "/register/:type",
+            element: <RegisterPage />,
         },
         {
             path: "/login",
