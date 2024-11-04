@@ -10,16 +10,37 @@ import Facebook from "../../assets/images/fb.png";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import moment from 'moment'
+import authService from "../../services/authService";
 const { Option } = Select;
 
 function RegisterCusPage() {
-    const { control, handleSubmit, setValue, watch } = useForm();
+    const { control, handleSubmit, watch } = useForm();
     const passwordValue = watch('password');
+    const onSubmit = async (credentials) => {
+        try {
+            if (credentials.height) {
+                credentials.height = credentials.height / 100;
+            }
 
-    const onSubmit = (data) => {
-        console.log(data);
-    };
+            if (credentials.weight) {
+                credentials.weight = credentials.weight * 1;
+            }
 
+            if (credentials.dateOfBirth) {
+                const date = new Date(credentials.dateOfBirth);
+                const timestamp = date.getTime();
+                credentials.dateOfBirth = timestamp;
+            }
+
+            console.log(" credentials:", credentials);
+            const res = await authService.register(credentials);
+            console.log("Success:", res);
+            return res.data;
+        } catch (error) {
+            console.log("Error:", error);
+        }
+
+    }
     return (
         <>
             <Flex style={{
@@ -110,11 +131,11 @@ function RegisterCusPage() {
                                                 </span>
                                             )}
                                         </>
-
                                     )}
                                 />
+
                                 <Controller
-                                    name="confirmPassword"
+                                    name="confirm_password"
                                     control={control}
                                     rules={{
                                         required: {
@@ -153,10 +174,11 @@ function RegisterCusPage() {
                                         }}
                                         render={({ field, fieldState: { error } }) => (
                                             <>
+                                                {/* <Flex vertical> */}
                                                 <DatePicker
                                                     {...field}
                                                     onChange={(date) => {
-                                                        field.onChange(date); // Cập nhật giá trị cho react-hook-form
+                                                        field.onChange(date);
                                                     }}
                                                     style={{
                                                         padding: "10px",
@@ -172,28 +194,45 @@ function RegisterCusPage() {
                                                         {error.message}
                                                     </span>
                                                 )}
+                                                {/* </Flex> */}
                                             </>
-
                                         )}
                                     />
-
-                                    <Select
-                                        onChange={(data, gender) => {
-                                            setValue("gender", gender.value)
+                                    <Controller
+                                        name="gender"
+                                        control={control}
+                                        rules={{
+                                            required: {
+                                                value: true,
+                                                message: "Hãy chọn giới tính"
+                                            }
                                         }}
-                                        placeholder="giới tính"
-                                        style={{
-                                            margin: "0px 0px 10px 10px",
-                                            height: "auto",
-                                            width: "60%",
-                                            backgroundColor: colors.lightBackground
-                                        }}
-                                    >
-                                        <Option value="Nam">Nam</Option>
-                                        <Option value="Nữ">Nữ</Option>
-                                        <Option value="Khác">Khác</Option>
-                                    </Select>
-
+                                        render={({ field, fieldState: { error } }) => (
+                                            <>
+                                                <Select
+                                                    {...field}
+                                                    onChange={(gender) => {
+                                                        field.onChange(gender);
+                                                    }}
+                                                    placeholder="giới tính"
+                                                    style={{
+                                                        margin: "0px 0px 10px 10px",
+                                                        height: "auto",
+                                                        width: "60%",
+                                                    }}
+                                                >
+                                                    <Option value="MALE">Nam</Option>
+                                                    <Option value="FEMALE">Nữ</Option>
+                                                    <Option value="OTHER">Khác</Option>
+                                                </Select>
+                                                {error && (
+                                                    <span style={{ color: "red", fontSize: "12px" }}>
+                                                        {error.message}
+                                                    </span>
+                                                )}
+                                            </>
+                                        )}
+                                    />
                                 </Flex>
                                 <Flex style={{ width: "100%", justifyContent: "space-between" }}>
                                     <div style={{ width: "45%" }}>
@@ -210,7 +249,7 @@ function RegisterCusPage() {
                                                     message: "Phải là số"
                                                 },
                                                 min: {
-                                                    value: 100,
+                                                    value: 0,
                                                     message: "Chiều cao phải cao hơn 100cm"
                                                 },
                                                 max: {
@@ -302,7 +341,7 @@ function RegisterCusPage() {
                         </Flex>
                     </Flex>
                 </Flex>
-            </Flex >
+            </Flex>
         </>
     );
 }
