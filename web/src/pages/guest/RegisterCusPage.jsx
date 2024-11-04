@@ -113,8 +113,6 @@ function RegisterCusPage() {
 
                                     )}
                                 />
-
-
                                 <Controller
                                     name="confirmPassword"
                                     control={control}

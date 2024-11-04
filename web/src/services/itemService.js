@@ -6,6 +6,11 @@ const itemService = {
     },
     getLowCalorieItems: async () => {
         return await apiClient.get(`/item/landing`)
+    },
+    getItemByNameOrIngredients: async (keyword) => {
+        return await apiClient.get(`/item/search`, {
+            params: { keyword }
+        })
     }
 }
 
