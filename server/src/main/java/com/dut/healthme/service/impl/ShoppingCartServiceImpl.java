@@ -46,6 +46,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public ShoppingCartResponse getCartById(Account account, Long cartId) {
+        var cart = shoppingCartsRepository.findById(cartId)
+            .orElseThrow(() -> new BadRequestException(ErrorMessageConstants.CART_NOT_FOUND));
+        return new ShoppingCartResponse().fromEntity(cart);
+    }
+
+    @Override
     public void deleteCart(Account account, Long cartId) {
         var cart = shoppingCartsRepository.findById(cartId)
             .orElseThrow(() -> new BadRequestException(ErrorMessageConstants.CART_NOT_FOUND));

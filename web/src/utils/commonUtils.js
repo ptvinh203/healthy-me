@@ -25,5 +25,5 @@ export const showWarningNotification = (message, description) => {
 }
 
 export const showInfoNotification = (message, description) => {
-    showErrorNotification('info', message, description);
+    showNotification('info', message, description);
 }

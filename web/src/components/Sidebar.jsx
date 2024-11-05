@@ -9,10 +9,16 @@ import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import colors from '../constants/Colors';
 import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
+import { clearTokensFromStorage } from '../utils/storageUtils';
+import { useStateContext } from '../context/StateContext';
+import { ReducerCases } from '../constants/ReducerCases';
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
+    // eslint-disable-next-line no-unused-vars
+    const [_, dispatch] = useStateContext();
+
     // Menu items for customer
     const customerMenuItems = [
         {
@@ -43,7 +49,7 @@ const Sidebar = () => {
             key: '5',
             icon: <img src={logoutIcon} alt="Logout" style={{ width: '16px', height: '16px' }} />,
             label: 'Thoát',
-            path: '/cus' // TODO: update path
+            logout: true
         },
     ];
 
@@ -63,6 +69,7 @@ const Sidebar = () => {
             key: '3',
             icon: <img src={logoutIcon} alt="Logout" style={{ width: '16px', height: '16px' }} />,
             label: 'Thoát',
+            logout: true
         },
     ];
 
@@ -72,6 +79,12 @@ const Sidebar = () => {
     const [selectedKey, setSelectedKey] = useState(customerMenuItems.find(item => item.path === location.pathname)?.key ?? '1');
 
     const handleMenuClick = (item) => {
+        if (item.logout) {
+            clearTokensFromStorage();
+            dispatch({ type: ReducerCases.SET_ACCOUNT_INFO, data: null });
+            navigate('/');
+            return;
+        }
         setSelectedKey(item.key);
         // Navigate to the selected path
         navigate(item.path);

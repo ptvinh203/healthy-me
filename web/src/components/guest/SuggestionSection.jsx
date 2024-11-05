@@ -13,6 +13,7 @@ function SuggestionSection() {
             try {
                 const response = await itemService.getLowCalorieItems();
                 setItems(response.data);
+                console.log(response)
             } catch (error) {
                 console.error("Error fetching items:", error);
             } finally {

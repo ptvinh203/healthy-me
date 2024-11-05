@@ -1,6 +1,7 @@
 package com.dut.healthme.repository;
 
 import com.dut.healthme.entity.Account;
+import com.dut.healthme.entity.Item;
 import com.dut.healthme.entity.ShoppingCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -23,6 +23,11 @@ public class ShoppingCartController {
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(shoppingCartService.getCarts(account)));
     }
 
+    @GetMapping("/{cartId}")
+    public ResponseEntity<AbstractResponse> getCartById(@CurrentAccount Account account, @PathVariable Long cartId) {
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(shoppingCartService.getCartById(account, cartId)));
+    }
+
     @PostMapping
     public ResponseEntity<AbstractResponse> addCart(
         @CurrentAccount Account account,

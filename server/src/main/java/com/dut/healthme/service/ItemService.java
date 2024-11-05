@@ -10,4 +10,5 @@ public interface ItemService {
     List<ItemResponse> getItemsByEvaluate();
     List<ItemResponse> getItemsByCaloRec(Account account);
     ItemResponse getItemById(Long id);
+    List<ItemResponse> getItemsByNameOrIngredients(String key);
 }
