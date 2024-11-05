@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Typography, Upload, Button, Input, Space } from "antd";
+import { Flex, Typography, Upload, Button, Input, message } from "antd";
 import { Link } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Logo from "../../components/guest/Logo";
@@ -12,7 +12,7 @@ import Iphone from "../../assets/images/iphone.png";
 import Google from "../../assets/images/google.png";
 import authService from "../../services/authService";
 import uploadCertificateService from "../../services/uploadCertificateService";
-import { DeleteFilled, UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 
 function RegisterResPage() {
     const { control, handleSubmit } = useForm();
@@ -21,27 +21,21 @@ function RegisterResPage() {
     const onSubmit = async (credentials) => {
         try {
             const res = await authService.registerRestaurant(credentials);
-            const userId = res.data.id;
+            const resId = res.data.id;
             console.log("User registered successfully:", res.data);
-
-            // Upload each file with the userId
             const formData = new FormData();
-            formData.append("restaurantId", userId); // Append restaurantId to formData
-
+            formData.append("restaurantId", resId);
             for (const file of fileList) {
                 formData.append("files", file);
-
-                const uploadResponse = await uploadCertificateService.uploadCertificate(userId, formData);
+                const uploadResponse = await uploadCertificateService.uploadCertificate(resId, formData);
                 console.log("File uploaded successfully:", uploadResponse);
             }
-
             return res.data;
         } catch (error) {
             console.error("Error:", error);
         }
     };
     const handleFileChange = (file) => {
-        // Add file to fileList
         setFileList((prevList) => [...prevList, file]);
         return false; // Prevent automatic upload
     };
@@ -108,7 +102,13 @@ function RegisterResPage() {
                                 control={control}
                                 rules={{
                                     required: "Hãy nhập mật khẩu",
-                                    minLength: { value: 8, message: "Mật khẩu phải có ít nhất 8 ký tự" }
+                                    minLength: {
+                                        value: 8,
+                                        message: "Mật khẩu phải có ít nhất 8 ký tự"
+                                    }, pattern: {
+                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,32}$/,
+                                        message: "Mật khẩu phải từ 8 đến 32 ký tự, chứa ít nhất 1 chữ cái viết hoa, 1 chữ cái viết thường, và 1 ký tự số."
+                                    }
                                 }}
                                 render={({ field, fieldState: { error } }) => (
                                     <>
@@ -136,7 +136,24 @@ function RegisterResPage() {
                             <Controller
                                 name="name"
                                 control={control}
-                                rules={{ required: "Hãy nhập tên" }}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Hãy nhập tên"
+                                    },
+                                    pattern: {
+                                        value: /^[a-zA-Zàáảãạăắẳẵặâấầẩẫậêếềểễệôốồổỗộơớờởỡợúùủũụưứừửữựíìỉĩịýỳỷỹỵđ\s]+$/,
+                                        message: "Tên không được chứa ký tự số hoặc ký tự đặc biệt"
+                                    },
+                                    minLength: {
+                                        value: 8,
+                                        message: "Tên phải dài hơn 8 ký tự"
+                                    },
+                                    maxLength: {
+                                        value: 100,
+                                        message: "Tên phải ngắn hơn 100 ký tự"
+                                    }
+                                }}
                                 render={({ field, fieldState: { error } }) => (
                                     <>
                                         <InputFieldText {...field} placeholder="Tên" />
@@ -148,7 +165,24 @@ function RegisterResPage() {
                             <Controller
                                 name="address"
                                 control={control}
-                                rules={{ required: "Hãy nhập địa chỉ" }}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Hãy nhập địa chỉ",
+                                    },
+                                    minLength: {
+                                        value: 9,
+                                        message: "Địa chỉ phải có ít nhất 9 ký tự",
+                                    },
+                                    maxLength: {
+                                        value: 399,
+                                        message: "Địa chỉ không được vượt quá 399 ký tự",
+                                    },
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9àáảãạăắẳẵặâấầẩẫậêếềểễệôốồổỗộơớờởỡợúùủũụưứừửữựíìỉĩịýỳỷỹỵđ\s]+$/,
+                                        message: "Địa chỉ không được chứa ký tự đặc biệt",
+                                    },
+                                }}
                                 render={({ field, fieldState: { error } }) => (
                                     <>
                                         <InputFieldText {...field} placeholder="Địa chỉ" />
@@ -184,6 +218,7 @@ function RegisterResPage() {
                                                 multiple
                                                 beforeUpload={handleFileChange}
                                                 showUploadList={false}
+                                                maxCount={3}
                                             >
                                                 <Button
                                                     icon={<UploadOutlined />}
