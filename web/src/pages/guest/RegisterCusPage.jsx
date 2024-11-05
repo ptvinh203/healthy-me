@@ -7,7 +7,7 @@ import ButtonStyled from "../../components/common/ButtonStyled";
 import Iphone from "../../assets/images/iphone.png";
 import Google from "../../assets/images/google.png";
 import Facebook from "../../assets/images/fb.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import moment from 'moment'
 import authService from "../../services/authService";
@@ -16,6 +16,7 @@ const { Option } = Select;
 function RegisterCusPage() {
     const { control, handleSubmit, watch } = useForm();
     const passwordValue = watch('password');
+    const navigate = useNavigate()
     const onSubmit = async (credentials) => {
         try {
             if (credentials.height) {
@@ -35,6 +36,9 @@ function RegisterCusPage() {
             console.log(" credentials:", credentials);
             const res = await authService.register(credentials);
             console.log("Success:", res);
+            if (res.is_success) {
+                navigate("/login")
+            }
             return res.data;
         } catch (error) {
             console.log("Error:", error);

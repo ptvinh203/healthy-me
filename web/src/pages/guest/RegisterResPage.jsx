@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex, Typography, Upload, Button, Input, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Logo from "../../components/guest/Logo";
 import colors from "../../constants/Colors";
@@ -17,6 +17,7 @@ import { UploadOutlined } from "@ant-design/icons";
 function RegisterResPage() {
     const { control, handleSubmit } = useForm();
     const [fileList, setFileList] = React.useState([]);
+    const navigate = useNavigate();
 
     const onSubmit = async (credentials) => {
         try {
@@ -27,10 +28,14 @@ function RegisterResPage() {
             formData.append("restaurantId", resId);
             for (const file of fileList) {
                 formData.append("files", file);
-                const uploadResponse = await uploadCertificateService.uploadCertificate(resId, formData);
+                const uploadResponse = await uploadCertificateService.uploadCertificate(formData);
                 console.log("File uploaded successfully:", uploadResponse);
             }
+            if (res.is_success) {
+                navigate("/login")
+            }
             return res.data;
+
         } catch (error) {
             console.error("Error:", error);
         }
@@ -39,12 +44,6 @@ function RegisterResPage() {
         setFileList((prevList) => [...prevList, file]);
         return false; // Prevent automatic upload
     };
-
-    // const handleRemoveFile = (fileToRemove) => {
-    //     // Remove file from fileList
-    //     setFileList((prevList) => prevList.filter((file) => file !== fileToRemove));
-    // };
-
 
     return (
         <Flex style={{ padding: "50px", width: "100%", height: "100vh" }} vertical>
