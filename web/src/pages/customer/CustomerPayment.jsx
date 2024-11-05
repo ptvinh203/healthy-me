@@ -36,6 +36,11 @@ export default function CustomerPayment() {
             setLoading(false);
             return;
         }
+        if (!selectedCartIds || selectedCartIds.length === 0) {
+            message.warning("No carts selected.");
+            setLoading(false);
+            return;
+        }
         console.log('selectedCartIds', selectedCartIds);
     }, [selectedCartIds]);
 
@@ -330,3 +335,4 @@ export default function CustomerPayment() {
         </div>
     );
 }
+

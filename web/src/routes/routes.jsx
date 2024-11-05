@@ -57,6 +57,10 @@ export const routes = {
         {
             path: "/cus/order-success",
             element: <OrderSuccess />
+        },
+        {
+            path: "/cus/order-success",
+            element: <OrderSuccess />
         }
     ],
     restaurant: [],
