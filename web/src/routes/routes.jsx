@@ -1,19 +1,24 @@
 import CustomerHome from "../pages/customer/CustomerHome";
 import CustomerOrder from "../pages/customer/CustomerOrder";
 import CustomerDetail from "../pages/customer/CustomerOrderDetail";
-import CustomerPayment from "../pages/customer/CustomerPayment";
 import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
+import CustomerPayment from "../pages/customer/CustomerPayment";
 import OrderSuccess from "../pages/customer/OrderSuccess";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
-import LandingPage from "../pages/guess/LandingPage";
 import Login from "../pages/Login";
+import LandingPage from "../pages/guest/LandingPage";
+import RegisterPage from "../pages/guest/RegisterPage";
 
 export const routes = {
     common: [
         {
             path: "/",
             element: <LandingPage />,
+        },
+        {
+            path: "/register/:type",
+            element: <RegisterPage />,
         },
         {
             path: "/login",
@@ -48,6 +53,10 @@ export const routes = {
         {
             path: "/cus/payment",
             element: <CustomerPayment />
+        },
+        {
+            path: "/cus/order-success",
+            element: <OrderSuccess />
         },
         {
             path: "/cus/order-success",

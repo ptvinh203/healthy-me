@@ -1,4 +1,4 @@
-import { Button, Col, Input, message, Row } from "antd";
+import { Button, Col, Input, message, Row, Flex } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ItemSearchHeader from "../../components/ItemSearchHeader";
@@ -7,6 +7,10 @@ import colors from "../../constants/Colors";
 import customerService from "../../services/customerService";
 import orderService from "../../services/orderService";
 import shoppingCartService from "../../services/shoppingCartService";
+import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg"
+import { searchItems } from "../../services/searchService";
+import Loading from "../../components/Loading";
+import OrderItemCart from "../../components/OrderItemCart";
 
 export default function CustomerPayment() {
     const { state } = useLocation();
@@ -20,7 +24,18 @@ export default function CustomerPayment() {
     const [loading, setLoading] = useState(true);
     const [updatingAddress, setUpdatingAddress] = useState(false);
 
+    const [query, setQuery] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [isShowSearchResults, setIsShowSearchResults] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+
     useEffect(() => {
+        if (!selectedCartIds || selectedCartIds.length === 0) {
+            message.warning("No carts selected.");
+            setLoading(false);
+            return;
+        }
         if (!selectedCartIds || selectedCartIds.length === 0) {
             message.warning("No carts selected.");
             setLoading(false);
@@ -124,7 +139,16 @@ export default function CustomerPayment() {
             message.error("Đặt hàng thất bại.");
         }
     };
-
+    const handleSearch = () => {
+        searchItems(query, setSearchResults, setIsLoading);
+        if (searchResults) {
+            setIsShowSearchResults(true);
+        }
+    };
+    const handleBackToItems = () => {
+        setIsShowSearchResults(false);
+        setSearchResults([]);
+    };
     return (
         <div style={{
             display: "flex",
@@ -134,142 +158,181 @@ export default function CustomerPayment() {
             height: '100%',
             overflowY: 'auto',
         }}>
-            <div style={{ width: '100%' }}><ItemSearchHeader /></div>
+            <ItemSearchHeader
+                icon={shoppingCartIcon}
+                onItemSearch={handleSearch}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+            />
+            {isShowSearchResults && (
+                <div>
+                    <Col style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <span
+                            style={{ fontSize: '18px', fontStyle: 'italic', color: colors.primary, cursor: 'pointer' }}
+                            onClick={handleBackToItems}
+                        >
+                            Quay lại
+                        </span>
+                    </Col>
+                    <Row style={{ marginTop: '15px' }}>
+                        {isLoading ? (
+                            <Loading />
+                        ) : searchResults.length === 0 ? (
+                            <Flex align="center" justify="center" style={{ fontSize: '30px' }}>
+                                Không có sản phẩm nào
+                            </Flex>
+                        ) : (
+                            <Row gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}>
+                                {searchResults.map((item, idx) => (
+                                    <Col key={idx} span={4}>
+                                        <OrderItemCart item={item} />
+                                    </Col>
+                                ))}
+                            </Row>
+                        )}
+                    </Row>
 
-            {/* Address */}
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 10,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '20px 10px',
-                background: '#d9d9d9'
-            }}>
-                <strong style={{ width: '200px' }}>Địa chỉ giao hàng</strong>
-                <Input
-                    placeholder="Nhập địa chỉ của bạn"
-                    value={newAddress}
-                    onChange={handleAddressChange}
-                    style={{
-                        border: 0,
-                        boxShadow: `0 2px 4px ${colors.shadow}`,
-                        flex: 1,
-                    }}
-                />
-                <Button
-                    type="primary"
-                    onClick={updateAddress}
-                    loading={updatingAddress}
-                    disabled={newAddress.trim() === address || newAddress.trim().length <= 10}
-                    style={{
-                        minWidth: 100,
-                        borderRadius: 8,
-                        background: '#65A7FB',
-                        borderColor: '#65A7FB',
-                        color: 'white'
-                    }}
-                >
-                    Thay đổi
-                </Button>
-            </div>
-
-            {/* List card */}
-            <div style={{
-                padding: '20px 10px',
-                background: '#d9d9d9',
-            }}>
-                <Row style={{ fontWeight: 'bold', marginBottom: 10 }}>
-                    <Col span={12}>Món ăn</Col>
-                    <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Giá</Col>
-                    <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Số lượng</Col>
-                    <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Tổng chi phí</Col>
-                </Row>
-                {carts.length > 0 ? (
-                    carts.map((cart, index) => (
-                        <PaymentCard key={index} cart={cart} />
-                    ))
-                ) : (
-                    <div style={{ textAlign: 'center', padding: 20 }}>Không có sản phẩm nào trong giỏ hàng.</div>
-                )}
-            </div>
-
-            {/* Ship method */}
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 10,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '20px 10px',
-                background: '#d9d9d9'
-            }}>
-                <strong>Phương thức vận chuyển</strong>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    boxShadow: `0 2px 4px ${colors.shadow}`,
-                    padding: 10,
-                    background: 'white',
-                    borderRadius: 8
-                }}>
-                    Giao hàng tiêu chuẩn
                 </div>
-            </div>
-
-            {/* Payment method */}
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '20px 10px',
-                background: '#d9d9d9',
-                gap: 20,
-            }}>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                }}>
-                    <strong>Phương thức thanh toán</strong>
+            )}
+            {!isShowSearchResults && (
+                <>
+                    {/* Address */}
                     <div style={{
                         display: 'flex',
-                        justifyContent: 'center',
+                        flexDirection: 'row',
+                        gap: 10,
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        boxShadow: `0 2px 4px ${colors.shadow}`,
-                        padding: 10,
-                        background: 'white',
-                        borderRadius: 8
+                        padding: '20px 10px',
+                        background: '#d9d9d9'
                     }}>
-                        Thanh toán khi nhận hàng (COD)
+                        <strong style={{ width: '200px' }}>Địa chỉ giao hàng</strong>
+                        <Input
+                            placeholder="Nhập địa chỉ của bạn"
+                            value={newAddress}
+                            onChange={handleAddressChange}
+                            style={{
+                                border: 0,
+                                boxShadow: `0 2px 4px ${colors.shadow}`,
+                                flex: 1,
+                            }}
+                        />
+                        <Button
+                            type="primary"
+                            onClick={updateAddress}
+                            loading={updatingAddress}
+                            disabled={newAddress.trim() === address || newAddress.trim().length <= 10}
+                            style={{
+                                minWidth: 100,
+                                borderRadius: 8,
+                                background: '#65A7FB',
+                                borderColor: '#65A7FB',
+                                color: 'white'
+                            }}
+                        >
+                            Thay đổi
+                        </Button>
                     </div>
-                </div>
-                <div style={{
-                    color: colors.grayDark
-                }}>
-                    Nhập vào xác nhận tức là bạn đồng ý tất cả điều khoản và điều kiện
-                </div>
-            </div>
 
-            {/* Order */}
-            <div style={{
-                display: 'flex',
-                gap: 20,
-                justifyContent: 'flex-end'
-            }}>
-                <Button
-                    type="primary"
-                    onClick={handleOrder} // Call the handleOrder function
-                    style={{
-                        minWidth: 100,
-                        borderRadius: 8,
-                    }}
-                >
-                    Đặt hàng
-                </Button>
-                <strong style={{ fontSize: '20px' }}>Tổng: {formatPrice(totalPrice)} VND</strong>
-            </div>
+                    {/* List card */}
+                    <div style={{
+                        padding: '20px 10px',
+                        background: '#d9d9d9',
+                    }}>
+                        <Row style={{ fontWeight: 'bold', marginBottom: 10 }}>
+                            <Col span={12}>Món ăn</Col>
+                            <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Giá</Col>
+                            <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Số lượng</Col>
+                            <Col span={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Tổng chi phí</Col>
+                        </Row>
+                        {carts.length > 0 ? (
+                            carts.map((cart, index) => (
+                                <PaymentCard key={index} cart={cart} />
+                            ))
+                        ) : (
+                            <div style={{ textAlign: 'center', padding: 20 }}>Không có sản phẩm nào trong giỏ hàng.</div>
+                        )}
+                    </div>
+
+                    {/* Ship method */}
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        gap: 10,
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '20px 10px',
+                        background: '#d9d9d9'
+                    }}>
+                        <strong>Phương thức vận chuyển</strong>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            boxShadow: `0 2px 4px ${colors.shadow}`,
+                            padding: 10,
+                            background: 'white',
+                            borderRadius: 8
+                        }}>
+                            Giao hàng tiêu chuẩn
+                        </div>
+                    </div>
+
+                    {/* Payment method */}
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        padding: '20px 10px',
+                        background: '#d9d9d9',
+                        gap: 20,
+                    }}>
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        }}>
+                            <strong>Phương thức thanh toán</strong>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                boxShadow: `0 2px 4px ${colors.shadow}`,
+                                padding: 10,
+                                background: 'white',
+                                borderRadius: 8
+                            }}>
+                                Thanh toán khi nhận hàng (COD)
+                            </div>
+                        </div>
+                        <div style={{
+                            color: colors.grayDark
+                        }}>
+                            Nhập vào xác nhận tức là bạn đồng ý tất cả điều khoản và điều kiện
+                        </div>
+                    </div>
+
+                    {/* Order */}
+                    <div style={{
+                        display: 'flex',
+                        gap: 20,
+                        justifyContent: 'flex-end'
+                    }}>
+                        <Button
+                            type="primary"
+                            onClick={handleOrder} // Call the handleOrder function
+                            style={{
+                                minWidth: 100,
+                                borderRadius: 8,
+                            }}
+                        >
+                            Đặt hàng
+                        </Button>
+                        <strong style={{ fontSize: '20px' }}>Tổng: {formatPrice(totalPrice)} VND</strong>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
+

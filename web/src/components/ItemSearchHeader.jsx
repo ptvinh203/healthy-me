@@ -3,7 +3,7 @@ import searchIcon from '../assets/svgs/orderDetail/search.svg';
 import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-export default function ItemSearchHeader({ icon, onItemSearch }) {
+export default function ItemSearchHeader({ icon, onItemSearch, value, onChange }) {
     const navigate = useNavigate();
 
     return (
@@ -18,8 +18,9 @@ export default function ItemSearchHeader({ icon, onItemSearch }) {
                         placeholder="Tìm kiếm sản phẩm của bạn"
                         allowClear
                         size="large"
+                        value={value}
+                        onChange={onChange}
                         style={{ border: 'none', boxShadow: 'none', backgroundColor: '#F9F7F7' }}
-                        onSubmit={onItemSearch}
                     />
                     <Button
                         style={{
@@ -30,7 +31,7 @@ export default function ItemSearchHeader({ icon, onItemSearch }) {
                             borderRadius: '40px',
                             marginLeft: '10px',
                             padding: 0,
-                            background: 'linear-gradient(to right, #3A8EF6, #6F3AFA)'
+                            background: 'linear-gradient(to right, #3A8EF6, #6F3AFA)',
                         }}
                         onClick={onItemSearch}
                     >
@@ -38,26 +39,20 @@ export default function ItemSearchHeader({ icon, onItemSearch }) {
                     </Button>
                 </Flex>
             </Col>
-            {icon &&
-                <Col xs={{ span: 2 }} md={{ span: 2 }}
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end'
-                    }}
-                >
+            {icon && (
+                <Col xs={{ span: 2 }} md={{ span: 2 }} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
                     <img
                         src={icon} alt="icon"
                         style={{
                             height: '40px',
                             width: '40px',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
                         }}
                         onClick={() => navigate('/cus/cart')}
                     />
                 </Col>
-            }
+            )}
         </Row>
     );
-
 }
+
