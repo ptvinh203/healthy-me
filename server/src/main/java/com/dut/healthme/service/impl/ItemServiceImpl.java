@@ -8,7 +8,6 @@ import com.dut.healthme.repository.ItemsRepository;
 import com.dut.healthme.service.CustomerService;
 import com.dut.healthme.service.ItemService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +19,7 @@ public class ItemServiceImpl implements ItemService {
     private final ItemsRepository itemsRepository;
     private final CustomerService customerService;
     private final CustomersRepository customersRepository;
+
     @Override
     public List<ItemResponse> getItemsByEvaluate() {
         return this.itemsRepository.findAllItemsOrderByAverageReview();
@@ -27,13 +27,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemResponse> getItemsByCaloRec(Account account) {
-        Long idCustomer = this.customersRepository.findByAccountId(account.getId()).getId();
-        double calo = this.customerService.getCustomerInfo(idCustomer).getSuggestedCalorieIntake();
+        double calo = this.customerService.getCustomerInfo(account.getId()).getSuggestedCalorieIntake();
         return this.itemsRepository.findItemsByCaloApproximation(calo);
     }
 
     @Override
-    public ItemResponse getItemById(Long id){
+    public ItemResponse getItemById(Long id) {
         return this.itemsRepository.findItemById(id);
     }
 

@@ -12,6 +12,7 @@ import authService from '../services/authService';
 import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
 import { useStateContext } from '../context/StateContext';
 import { ReducerCases } from '../constants/ReducerCases';
+import { showErrorNotification } from '../utils/commonUtils';
 
 const { Title, Text } = Typography;
 
@@ -56,8 +57,7 @@ function LoginPage() {
                 }
             }
         } catch (error) {
-            console.log(error);
-            setError(error.message);
+            showErrorNotification("Đăng nhập thất bại", error.message);
         } finally {
             setLoading(false);
         }

@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import moment from 'moment'
 import authService from "../../services/authService";
+import { showErrorNotification, showSuccessNotification } from "../../utils/commonUtils";
 const { Option } = Select;
 
 function RegisterCusPage() {
@@ -19,29 +20,25 @@ function RegisterCusPage() {
     const navigate = useNavigate()
     const onSubmit = async (credentials) => {
         try {
-            if (credentials.height) {
+            if (credentials.height)
                 credentials.height = credentials.height / 100;
-            }
 
-            if (credentials.weight) {
+            if (credentials.weight)
                 credentials.weight = credentials.weight * 1;
-            }
 
             if (credentials.dateOfBirth) {
                 const date = new Date(credentials.dateOfBirth);
                 const timestamp = date.getTime();
                 credentials.dateOfBirth = timestamp;
             }
-
-            console.log(" credentials:", credentials);
             const res = await authService.register(credentials);
-            console.log("Success:", res);
             if (res.is_success) {
+                showSuccessNotification("Thành công", "Đăng ký tài khoản người dùng thành công!")
                 navigate("/login")
             }
             return res.data;
         } catch (error) {
-            console.log("Error:", error);
+            showErrorNotification("Đăng ký thất bại", error.message)
         }
 
     }
@@ -178,7 +175,6 @@ function RegisterCusPage() {
                                         }}
                                         render={({ field, fieldState: { error } }) => (
                                             <>
-                                                {/* <Flex vertical> */}
                                                 <DatePicker
                                                     {...field}
                                                     onChange={(date) => {
@@ -188,18 +184,19 @@ function RegisterCusPage() {
                                                         padding: "10px",
                                                         marginBottom: "10px",
                                                         width: "100%",
-                                                        height: "auto", backgroundColor: colors.lightBackground
-
+                                                        height: "auto",
+                                                        backgroundColor: colors.lightBackground
                                                     }}
                                                     format="YYYY-MM-DD"
+                                                    placeholder="Ngày sinh"
                                                 />
                                                 {error && (
                                                     <span style={{ color: "red", fontSize: "12px" }}>
                                                         {error.message}
                                                     </span>
                                                 )}
-                                                {/* </Flex> */}
                                             </>
+
                                         )}
                                     />
                                     <Controller

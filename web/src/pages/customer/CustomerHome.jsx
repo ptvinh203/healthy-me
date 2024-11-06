@@ -7,18 +7,28 @@ import colors from '../../constants/Colors';
 import { ReducerCases } from '../../constants/ReducerCases';
 import { useStateContext } from '../../context/StateContext';
 import customerService from '../../services/customerService';
+import { showErrorNotification } from '../../utils/commonUtils';
+import Loading from '../../components/Loading';
 
 const CustomerHome = () => {
     const [{ account }, dispatch] = useStateContext()
     const [customerInfo, setCustomerInfo] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-
         const fetchCustomerInfo = async () => {
-            if (account && !customerInfo) {
-                const data = await customerService.getCustomerInfo(account.id);
-                setCustomerInfo(data);
-                dispatch({ type: ReducerCases.SET_PROFILE, payload: data });
+            try {
+                if (account && !customerInfo) {
+                    setLoading(true)
+                    const data = await customerService.getCustomerInfo(account.id);
+                    setCustomerInfo(data);
+                    dispatch({ type: ReducerCases.SET_PROFILE, payload: data });
+                }
+            } catch (error) {
+                showErrorNotification("Lỗi", error.message)
+            }
+            finally {
+                setLoading(false)
             }
         };
 
@@ -84,6 +94,9 @@ const CustomerHome = () => {
             setCustomerInfo(response.data);
         }
     }
+
+    if (loading)
+        return <Loading />
 
     return (
         <div style={{ height: '100%', overflowX: 'auto' }}> {/* Enable horizontal scrolling */}

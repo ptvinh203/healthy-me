@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Typography, Upload, Button, Input, message } from "antd";
+import { Flex, Typography, Upload, Button, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Logo from "../../components/guest/Logo";
@@ -13,31 +13,34 @@ import Google from "../../assets/images/google.png";
 import authService from "../../services/authService";
 import uploadCertificateService from "../../services/uploadCertificateService";
 import { UploadOutlined } from "@ant-design/icons";
+import { showErrorNotification, showSuccessNotification } from "../../utils/commonUtils";
 
 function RegisterResPage() {
     const { control, handleSubmit } = useForm();
     const [fileList, setFileList] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
     const navigate = useNavigate();
 
     const onSubmit = async (credentials) => {
         try {
+            setLoading(true);
             const res = await authService.registerRestaurant(credentials);
-            const resId = res.data.id;
-            console.log("User registered successfully:", res.data);
-            const formData = new FormData();
-            formData.append("restaurantId", resId);
-            for (const file of fileList) {
-                formData.append("files", file);
-                const uploadResponse = await uploadCertificateService.uploadCertificate(formData);
-                console.log("File uploaded successfully:", uploadResponse);
-            }
             if (res.is_success) {
-                navigate("/login")
+                const resId = res.data.id;
+                const formData = new FormData();
+                formData.append("restaurantId", resId);
+                for (const file of fileList) {
+                    formData.append("files", file);
+                    await uploadCertificateService.uploadCertificate(formData);
+                    showSuccessNotification("Thành công", "Đăng ký tài khoản nhà hàng/quán ăn thành công");
+                    navigate("/login")
+                }
             }
             return res.data;
-
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification("Đăng ký thất bại", error.message);
+        } finally {
+            setLoading(false);
         }
     };
     const handleFileChange = (file) => {
@@ -140,10 +143,6 @@ function RegisterResPage() {
                                         value: true,
                                         message: "Hãy nhập tên"
                                     },
-                                    pattern: {
-                                        value: /^[a-zA-Zàáảãạăắẳẵặâấầẩẫậêếềểễệôốồổỗộơớờởỡợúùủũụưứừửữựíìỉĩịýỳỷỹỵđ\s]+$/,
-                                        message: "Tên không được chứa ký tự số hoặc ký tự đặc biệt"
-                                    },
                                     minLength: {
                                         value: 8,
                                         message: "Tên phải dài hơn 8 ký tự"
@@ -176,10 +175,6 @@ function RegisterResPage() {
                                     maxLength: {
                                         value: 399,
                                         message: "Địa chỉ không được vượt quá 399 ký tự",
-                                    },
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9àáảãạăắẳẵặâấầẩẫậêếềểễệôốồổỗộơớờởỡợúùủũụưứừửữựíìỉĩịýỳỷỹỵđ\s]+$/,
-                                        message: "Địa chỉ không được chứa ký tự đặc biệt",
                                     },
                                 }}
                                 render={({ field, fieldState: { error } }) => (
