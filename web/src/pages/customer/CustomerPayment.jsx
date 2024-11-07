@@ -23,6 +23,7 @@ export default function CustomerPayment() {
     const [newAddress, setNewAddress] = useState('');
     const [loading, setLoading] = useState(true);
     const [updatingAddress, setUpdatingAddress] = useState(false);
+    const [orderLoading, setOrderLoading] = useState(false);
 
     const [query, setQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
@@ -113,6 +114,11 @@ export default function CustomerPayment() {
     };
 
     const handleOrder = async () => {
+        if (!newAddress) {
+            message.warning("Địa chỉ nhận hàng không được để trống!");
+            return
+        }
+
         if (carts.length === 0) {
             message.warning("Giỏ hàng trống. Không thể đặt hàng.");
             return;
@@ -129,12 +135,15 @@ export default function CustomerPayment() {
         console.log("Order details being sent:", orderDetails);
 
         try {
+            setOrderLoading(true);
             await orderService.placeOrder(orderDetails);
             message.success("Đặt hàng thành công!");
             navigate("/cus/order-success")
         } catch (error) {
             console.error("Error placing order:", error);
             message.error("Đặt hàng thất bại.");
+        } finally {
+            setOrderLoading(false)
         }
     };
 
@@ -323,7 +332,7 @@ export default function CustomerPayment() {
                         background: '#d9d9d9'
                     }}>
                         <strong>Phương thức thanh toán</strong>
-                        <Button type="primary" onClick={handleOrder} style={{ borderRadius: 8 }}>
+                        <Button type="primary" onClick={handleOrder} style={{ borderRadius: 8 }} loading={orderLoading}>
                             Đặt hàng - {formatPrice(totalPrice)} đ
                         </Button>
                     </div>
