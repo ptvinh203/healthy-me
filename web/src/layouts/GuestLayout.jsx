@@ -1,5 +1,4 @@
 import { Layout } from "antd";
-import colors from "../constants/Colors";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useStateContext } from "../context/StateContext";
 import { useEffect } from "react";
@@ -31,7 +30,7 @@ function LandingPage() {
     return (
         <Layout
             style={{
-                background: `linear-gradient(45deg, ${colors.gradientStart}, ${colors.gradientEnd})`,
+                background: "#E3EEFF",
                 margin: "0px",
                 width: "100%",
                 height: "100%",
