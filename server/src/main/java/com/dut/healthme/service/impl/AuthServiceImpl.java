@@ -48,6 +48,17 @@ public class AuthServiceImpl implements AuthService {
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             Account account = (Account) authentication.getPrincipal();
+            // Check if the account is a restaurant account
+            if (account.getRole() == AccountRole.RESTAURANT) {
+                var status = restaurantsRepository.getApprovedStatusByAccountId(account.getId())
+                    .orElseThrow(() -> new BadRequestException(ErrorMessageConstants.ACCOUNT_NOT_FOUND));
+                switch (status) {
+                    case AWAITING_APPROVAL ->
+                        throw new BadRequestException(ErrorMessageConstants.ACCOUNT_WAITING_FOR_APPROVAL);
+                    case APPROVAL_FAILED ->
+                        throw new BadRequestException(ErrorMessageConstants.ACCOUNT_APPROVAL_FAILED);
+                }
+            }
             return jwtUtils.generateToken(account.getId());
         } catch (BadCredentialsException ex) {
             throw new BadRequestException(ErrorMessageConstants.INCORRECT_EMAIL_OR_PASSWORD);

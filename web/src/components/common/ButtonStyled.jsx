@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { useState } from "react";
 
-function ButtonStyled({ children, cusWidth, type }) {
+function ButtonStyled({ children, cusWidth, type, loading }) {
     const [width, setWidth] = useState(cusWidth);
     const [buttonType, setButtonType] = useState(type);
 
@@ -16,6 +16,7 @@ function ButtonStyled({ children, cusWidth, type }) {
             }}
             htmlType={buttonType ? buttonType : "button"}
             size="large"
+            loading={loading}
         >
             {children}
         </Button>

@@ -12,14 +12,17 @@ import { useForm, Controller } from "react-hook-form";
 import moment from 'moment'
 import authService from "../../services/authService";
 import { showErrorNotification, showSuccessNotification } from "../../utils/commonUtils";
+import { useState } from "react";
 const { Option } = Select;
 
 function RegisterCusPage() {
     const { Title } = Typography;
 
     const { control, handleSubmit, watch } = useForm();
+    const [loading, setLoading] = useState(false);
     const passwordValue = watch('password');
     const navigate = useNavigate()
+
     const onSubmit = async (credentials) => {
         try {
             if (credentials.height)
@@ -33,6 +36,7 @@ function RegisterCusPage() {
                 const timestamp = date.getTime();
                 credentials.dateOfBirth = timestamp;
             }
+            setLoading(true);
             const res = await authService.register(credentials);
             if (res.is_success) {
                 showSuccessNotification("Thành công", "Đăng ký tài khoản người dùng thành công!")
@@ -41,8 +45,9 @@ function RegisterCusPage() {
             return res.data;
         } catch (error) {
             showErrorNotification("Đăng ký thất bại", error.message)
+        } finally {
+            setLoading(false);
         }
-
     }
     return (
         <>
@@ -327,7 +332,7 @@ function RegisterCusPage() {
                                     </div>
                                 </Flex>
                                 <Flex style={{ width: "100%", marginTop: "20px" }}>
-                                    <ButtonStyled type={"submit"} cusWidth={"100%"} style={{ width: "100%" }}>
+                                    <ButtonStyled type={"submit"} cusWidth={"100%"} style={{ width: "100%" }} loading={loading}>
                                         Đăng kí
                                     </ButtonStyled>
                                 </Flex>

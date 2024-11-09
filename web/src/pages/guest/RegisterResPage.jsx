@@ -269,13 +269,8 @@ function RegisterResPage() {
                                 </Flex>
                             </Flex>
 
-
-
-
-
-
                             <Flex style={{ width: "100%", marginTop: "20px" }}>
-                                <ButtonStyled type="submit" cusWidth={"100%"} style={{ width: "100%" }}>
+                                <ButtonStyled type="submit" cusWidth={"100%"} style={{ width: "100%" }} loading={loading}>
                                     Đăng kí
                                 </ButtonStyled>
                             </Flex>
