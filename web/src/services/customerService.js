@@ -9,6 +9,16 @@ const customerService = {
             console.error('Error fetching customer info:', error);
         }
     },
+    updateInfo: async (customerInfo) => {
+        const response = await apiClient.put(`/customer`, customerInfo);
+        return response.data;
+    },
+    uploadAvatar: async (avatar) => {
+        const formData = new FormData();
+        formData.append("avatar", avatar);
+        const response = await apiClient.put(`/customer/avatar`, formData);
+        return response.data;
+    },
     updateHealthGoal: async (accountId, healthGoal) => {
         try {
             const response = await apiClient.put(`/customer/${accountId}/health-goal`, { healthGoal })

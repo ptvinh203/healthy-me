@@ -3,12 +3,16 @@ package com.dut.healthme.controller;
 import com.dut.healthme.annotation.auth.CurrentAccount;
 import com.dut.healthme.common.model.AbstractResponse;
 import com.dut.healthme.dto.request.HealthGoalRequest;
+import com.dut.healthme.dto.request.UpdateCustomerInfoRequest;
+import com.dut.healthme.dto.response.AccountInfo;
 import com.dut.healthme.dto.response.CustomerInfoResponse;
 import com.dut.healthme.entity.Account;
 import com.dut.healthme.service.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -51,4 +55,17 @@ public class CustomerController {
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedAddress));
     }
 
+    @PutMapping
+    public ResponseEntity<AbstractResponse> updateInfo(@CurrentAccount Account account,
+                                                       @Valid @RequestBody UpdateCustomerInfoRequest request) {
+        CustomerInfoResponse updatedCustomer = customerService.updateInfo(account, request);
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedCustomer));
+    }
+
+    @PutMapping("/avatar")
+    public ResponseEntity<AbstractResponse> updateAvatar(@CurrentAccount Account account,
+                                                         @RequestParam MultipartFile avatar) {
+        AccountInfo updatedCustomer = customerService.updateAvatar(account, avatar);
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedCustomer));
+    }
 }

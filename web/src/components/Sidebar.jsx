@@ -43,7 +43,7 @@ const Sidebar = () => {
             key: '4',
             icon: <img src={settingsIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
             label: 'Cài đặt',
-            path: '/cus' // TODO: update path
+            path: '/cus/info'
         },
         {
             key: '5',
