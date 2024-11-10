@@ -34,6 +34,8 @@ public class Account extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    private String avatar;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)

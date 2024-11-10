@@ -9,6 +9,7 @@ import Unauthorized from "../pages/error/Unauthorized";
 import Login from "../pages/Login";
 import LandingPage from "../pages/guest/LandingPage";
 import RegisterPage from "../pages/guest/RegisterPage";
+import CustomerInfo from "../pages/customer/CustomerInfo";
 
 export const routes = {
     common: [
@@ -59,9 +60,9 @@ export const routes = {
             element: <OrderSuccess />
         },
         {
-            path: "/cus/order-success",
-            element: <OrderSuccess />
-        }
+            path: "/cus/info",
+            element: <CustomerInfo />
+        },
     ],
     restaurant: [],
     admin: []

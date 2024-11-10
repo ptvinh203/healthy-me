@@ -27,8 +27,9 @@ create type restaurant_status as ENUM ('AWAITING_APPROVAL', 'APPROVED', 'APPROVA
 create table if not exists accounts
 (
     id            bigserial primary key,
-    name      varchar(255) ,
+    name          varchar(255) ,
     email         varchar(255) not null unique,
+    avatar        text,
     password      text         not null,
     role          account_role not null,
     created_at    timestamp    not null default current_timestamp,
