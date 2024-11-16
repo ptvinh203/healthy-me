@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollTop from "../components/ScrollTop";
-import { ROLE_CUSTOMER, ROLE_RESTAURANT } from "../constants/Role";
+import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_RESTAURANT } from "../constants/Role";
 import CustomerLayout from "../layouts/CustomerLayout";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import GuestLayout from "../layouts/GuestLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import { routes } from "./routes";
+import AdminLayout from "../layouts/AdminLayout";
 
 export default function AppRoutes() {
     return (
@@ -28,6 +29,13 @@ export default function AppRoutes() {
                 <Route path="/res" element={<RestaurantLayout />}>
                     <Route element={<ProtectedRoute allowedRoles={[ROLE_RESTAURANT]} />}>
                         {renderRoute(routes.restaurant)}
+                    </Route>
+                </Route>
+
+                {/* All admin route */}
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route element={<ProtectedRoute allowedRoles={[ROLE_ADMIN]} />}>
+                        {renderRoute(routes.admin)}
                     </Route>
                 </Route>
             </Routes>

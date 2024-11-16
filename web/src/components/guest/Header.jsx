@@ -5,16 +5,17 @@ import Logo from '../../components/guest/Logo'
 
 function Header() {
     return (
-        <div style={{ padding: "50px" }}>
+        <div style={{ padding: "50px 50px 0px 50px" }}>
             <Flex justify="space-between" style={{ width: "100%" }}>
-                <Logo ></Logo>
+                <Logo linkto={"/"}></Logo>
                 <Flex vertical>
                     <Flex justify="flex-end">
-                        <ButtonStyled>
-                            <Link to="/login">
+                        <Link to="/login">
+                            <ButtonStyled>
                                 Đăng nhập
-                            </Link>
-                        </ButtonStyled>
+                            </ButtonStyled>
+                        </Link>
+
                     </Flex>
                 </Flex>
             </Flex>

@@ -1,14 +1,15 @@
 import CustomerHome from "../pages/customer/CustomerHome";
 import CustomerOrder from "../pages/customer/CustomerOrder";
 import CustomerDetail from "../pages/customer/CustomerOrderDetail";
-import CustomerPayment from "../pages/customer/CustomerPayment";
 import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
+import CustomerPayment from "../pages/customer/CustomerPayment";
 import OrderSuccess from "../pages/customer/OrderSuccess";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import Login from "../pages/Login";
 import LandingPage from "../pages/guest/LandingPage";
 import RegisterPage from "../pages/guest/RegisterPage";
+import CustomerInfo from "../pages/customer/CustomerInfo";
 
 export const routes = {
     common: [
@@ -57,7 +58,11 @@ export const routes = {
         {
             path: "/cus/order-success",
             element: <OrderSuccess />
-        }
+        },
+        {
+            path: "/cus/info",
+            element: <CustomerInfo />
+        },
     ],
     restaurant: [],
     admin: []

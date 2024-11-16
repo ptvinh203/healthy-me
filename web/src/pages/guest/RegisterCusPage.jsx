@@ -11,78 +11,90 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import moment from 'moment'
 import authService from "../../services/authService";
+import { showErrorNotification, showSuccessNotification } from "../../utils/commonUtils";
+import { useState } from "react";
 const { Option } = Select;
 
 function RegisterCusPage() {
+    const { Title } = Typography;
+
     const { control, handleSubmit, watch } = useForm();
+    const [loading, setLoading] = useState(false);
     const passwordValue = watch('password');
     const navigate = useNavigate()
+
     const onSubmit = async (credentials) => {
         try {
-            if (credentials.height) {
+            if (credentials.height)
                 credentials.height = credentials.height / 100;
-            }
 
-            if (credentials.weight) {
+            if (credentials.weight)
                 credentials.weight = credentials.weight * 1;
-            }
 
             if (credentials.dateOfBirth) {
                 const date = new Date(credentials.dateOfBirth);
                 const timestamp = date.getTime();
                 credentials.dateOfBirth = timestamp;
             }
-
-            console.log(" credentials:", credentials);
+            setLoading(true);
             const res = await authService.register(credentials);
-            console.log("Success:", res);
             if (res.is_success) {
+                showSuccessNotification("Thành công", "Đăng ký tài khoản người dùng thành công!")
                 navigate("/login")
             }
             return res.data;
         } catch (error) {
-            console.log("Error:", error);
+            showErrorNotification("Đăng ký thất bại", error.message)
+        } finally {
+            setLoading(false);
         }
-
     }
     return (
         <>
             <Flex style={{
-                padding: "50px",
                 width: "100%",
                 height: "100vh"
             }} vertical>
-                <Logo />
-                <Flex style={{ width: "100%", justifyContent: "space-between" }}>
-                    <Flex style={{ padding: "80px 50px" }} vertical>
-                        <Typography.Paragraph strong style={{ width: "100%", paddingBottom: "30px" }}>
-                            <Typography.Text style={{ wordBreak: "break-word", fontSize: "xx-large" }}>
-                                Đăng ký để nhận chất dinh dưỡng của bạn
-                            </Typography.Text>
-                        </Typography.Paragraph>
-                        <Typography.Paragraph strong>
-                            <Typography.Text style={{ wordBreak: "break-word" }}>
-                                Nếu bạn đã có tài khoản
-                                <br />
-                                <span>
-                                    bạn có thể
-                                    <Link to={"/login"}>
-                                        <p style={{ color: colors.secondary, display: "inline" }}> Đăng nhập tại đây! </p>
-                                    </Link>
-                                </span>
-                            </Typography.Text>
-                        </Typography.Paragraph>
+                <div style={{ padding: "50px" }}>
+                    <Flex justify="space-between" style={{ width: "100%" }}>
+                        <Flex vertical
+                            style={{ marginBottom: '10px' }}
+                        >
+                            <Logo linkto={"/"}></Logo>
+                        </Flex>
                     </Flex>
-                    <Flex style={{ width: "100%", padding: "0px 100px", alignItems: "flex-end" }} vertical>
-                        <Flex style={{ width: "50%" }} vertical>
-                            <Flex style={{ justifyContent: "center" }}>
-                                <Typography.Paragraph strong style={{ display: "flex", flexDirection: "row", paddingBottom: "10px" }}>
-                                    <Typography.Text style={{ fontSize: "x-large" }}>
-                                        Đăng ký người dùng
-                                    </Typography.Text>
-                                </Typography.Paragraph>
+                </div>
+                <Flex style={{ width: "100%", justifyContent: "space-between" }}>
+                    <Flex style={{ width: "55%", height: "100%", padding: "50px" }} vertical>
+                        <Flex style={{ marginLeft: "auto" }} vertical>
+                            <Flex style={{ marginBottom: "40px" }}>
+                                <Title level={1} style={{ width: 600, fontSize: 50, fontWeight: 'bold', marginBottom: '16px', color: '#333' }}>
+                                    Đăng ký để nhận chế độ dinh dưỡng của bạn
+                                </Title>
                             </Flex>
-                            <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+                            <Typography.Paragraph strong >
+                                <Typography.Text style={{ wordBreak: "break-word", fontSize: 25 }}>
+                                    Nếu bạn đã có tài khoản
+                                    <br />
+                                    <span>
+                                        bạn có thể
+                                        <Link to={"/login"}>
+                                            <p style={{ color: colors.secondary, display: "inline" }}> Đăng nhập tại đây! </p>
+                                        </Link>
+                                    </span>
+                                </Typography.Text>
+                            </Typography.Paragraph>
+                        </Flex>
+                    </Flex>
+                    <Flex style={{ width: "45%", height: "100%", alignItems: "flex-start", justifyContent: "center" }} >
+                        <Flex style={{ width: "100%", justifyContent: "center", alignItems: "center" }} vertical>
+
+                            <Flex >
+                                <Title level={2} style={{ marginBottom: 24, fontSize: 40 }}>
+                                    Đăng ký người dùng
+                                </Title>
+                            </Flex>
+                            <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }}>
                                 <Controller
                                     name="email"
                                     control={control}
@@ -178,7 +190,6 @@ function RegisterCusPage() {
                                         }}
                                         render={({ field, fieldState: { error } }) => (
                                             <>
-                                                {/* <Flex vertical> */}
                                                 <DatePicker
                                                     {...field}
                                                     onChange={(date) => {
@@ -188,18 +199,19 @@ function RegisterCusPage() {
                                                         padding: "10px",
                                                         marginBottom: "10px",
                                                         width: "100%",
-                                                        height: "auto", backgroundColor: colors.lightBackground
-
+                                                        height: "auto",
+                                                        backgroundColor: colors.lightBackground
                                                     }}
                                                     format="YYYY-MM-DD"
+                                                    placeholder="Ngày sinh"
                                                 />
                                                 {error && (
                                                     <span style={{ color: "red", fontSize: "12px" }}>
                                                         {error.message}
                                                     </span>
                                                 )}
-                                                {/* </Flex> */}
                                             </>
+
                                         )}
                                     />
                                     <Controller
@@ -319,8 +331,8 @@ function RegisterCusPage() {
                                         />
                                     </div>
                                 </Flex>
-                                <Flex style={{ width: "100%" }}>
-                                    <ButtonStyled type={"submit"} cusWidth={"100%"} style={{ width: "100%" }}>
+                                <Flex style={{ width: "100%", marginTop: "20px" }}>
+                                    <ButtonStyled type={"submit"} cusWidth={"100%"} style={{ width: "100%" }} loading={loading}>
                                         Đăng kí
                                     </ButtonStyled>
                                 </Flex>

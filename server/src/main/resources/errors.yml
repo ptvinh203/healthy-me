@@ -107,6 +107,12 @@ account_id_is_required:
 account_save_failed:
   code: ERR_ACC0109
   message: Lưu tài khoản không thành công!
+account_waiting_for_approval:
+  code: ERR_ACC0110
+  message: Tài khoản của bạn đang chờ phê duyệt!
+account_approval_failed:
+  code: ERR_ACC0111
+  message: Tài khoản của bạn chưa được phê duyệt!
 
 
 # File

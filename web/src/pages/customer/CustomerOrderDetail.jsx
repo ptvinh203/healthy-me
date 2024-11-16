@@ -25,6 +25,8 @@ function CustomerDetail() {
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isShowSearchResults, setIsShowSearchResults] = useState(false);
+    const [addToCartLoading, setAddToCartLoading] = useState(false);
+    const [buyItemLoading, setBuyItemLoading] = useState(false);
 
     useEffect(() => {
         const getItemInfo = async () => {
@@ -40,6 +42,7 @@ function CustomerDetail() {
 
     const handleAddToCart = async () => {
         try {
+            setAddToCartLoading(true)
             const { is_success } = await shoppingCartService.addShoppingCart({ item_id: itemId, quantity })
             if (is_success) {
                 setQuantity(1)
@@ -47,16 +50,21 @@ function CustomerDetail() {
             }
         } catch (error) {
             showErrorNotification(error.message)
+        } finally {
+            setAddToCartLoading(false)
         }
     }
 
     const handBuyItem = async () => {
         try {
+            setBuyItemLoading(true)
             const { data } = await shoppingCartService.addShoppingCart({ item_id: itemId, quantity })
             if (data)
                 navigate('/cus/payment', { state: { selectedCartIds: [data.id] } })
         } catch (error) {
             showErrorNotification(error.message)
+        } finally {
+            setBuyItemLoading(false)
         }
     }
 
@@ -179,8 +187,8 @@ function CustomerDetail() {
                                         value={quantity}
                                         onChange={(value) => setQuantity(value)}
                                     />
-                                    <Button type="primary" style={{ borderRadius: 0, width: 80, height: 45, marginLeft: 10 }} onClick={handBuyItem}>Mua</Button>
-                                    <Button type="primary" style={{ borderRadius: 0, height: 45, marginLeft: 10 }} onClick={handleAddToCart}>
+                                    <Button type="primary" style={{ borderRadius: 0, width: 80, height: 45, marginLeft: 10 }} onClick={handBuyItem} loading={buyItemLoading}>Mua</Button>
+                                    <Button type="primary" style={{ borderRadius: 0, height: 45, marginLeft: 10 }} onClick={handleAddToCart} loading={addToCartLoading}>
                                         Thêm vào giỏ hàng
                                         <img src={orderIcon} style={{ width: 20, height: 20 }} />
                                     </Button>

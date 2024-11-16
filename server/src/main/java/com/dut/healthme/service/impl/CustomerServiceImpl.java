@@ -2,29 +2,32 @@ package com.dut.healthme.service.impl;
 
 import com.dut.healthme.common.constant.ErrorMessageConstants;
 import com.dut.healthme.common.exception.BadRequestException;
-import com.dut.healthme.common.exception.NotFoundObjectException;
+import com.dut.healthme.common.util.CommonUtils;
+import com.dut.healthme.dto.request.UpdateCustomerInfoRequest;
+import com.dut.healthme.dto.response.AccountInfo;
 import com.dut.healthme.dto.response.CustomerInfoResponse;
 import com.dut.healthme.entity.Account;
 import com.dut.healthme.entity.Customer;
 import com.dut.healthme.entity.enums.Gender;
 import com.dut.healthme.entity.enums.HealthGoal;
+import com.dut.healthme.repository.AccountsRepository;
 import com.dut.healthme.repository.CustomersRepository;
+import com.dut.healthme.service.CloudinaryService;
 import com.dut.healthme.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Period;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomersRepository customerRepository;
-
-    @Autowired
-    public CustomerServiceImpl(CustomersRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+    private final AccountsRepository accountRepository;
+    private final CloudinaryService cloudinaryService;
 
     @Override
     public CustomerInfoResponse getCustomerInfo(Long accountId) {
@@ -72,41 +75,20 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             bmr = 10 * weight + 6.25 * height - 5 * age - 78;
         }
-        double factorParameter = 1.2;
-        switch (activityIndex) {
-
-            case 1:
-                factorParameter = 1.375;
-                break;
-            case 2:
-                factorParameter = 1.55;
-                break;
-            case 3:
-                factorParameter = 1.725;
-                break;
-            case 4:
-                factorParameter = 1.9;
-                break;
-            default:
-                factorParameter = 1.2;
-                break;
-        }
+        double factorParameter = switch (activityIndex) {
+            case 1 -> 1.375;
+            case 2 -> 1.55;
+            case 3 -> 1.725;
+            case 4 -> 1.9;
+            default -> 1.2;
+        };
 
         // Adjust calorie intake based on health goals
-        double calorieIntake;
-        switch (healthGoal) {
-            case GAIN:
-                calorieIntake = bmr * factorParameter + 500;
-                break;
-            case LOSE:
-                calorieIntake = bmr * factorParameter - 500;
-                break;
-            case MAINTAIN:
-            default:
-                calorieIntake = bmr * factorParameter;
-                break;
-        }
-        return calorieIntake;
+        return switch (healthGoal) {
+            case GAIN -> bmr * factorParameter + 500;
+            case LOSE -> bmr * factorParameter - 500;
+            default -> bmr * factorParameter;
+        };
     }
 
     // Method to calculate age based on date of birth
@@ -145,6 +127,29 @@ public class CustomerServiceImpl implements CustomerService {
         customer = customerRepository.save(customer);
 
         return new CustomerInfoResponse().fromEntity(customer);
+    }
+
+    @Override
+    public CustomerInfoResponse updateInfo(Account account, UpdateCustomerInfoRequest request) {
+        Customer customer = customerRepository.findByAccountId(account.getId());
+        account = request.toAccountEntity(account);
+        customer = request.toCustomerEntity(customer);
+        customer.setAccount(account);
+        accountRepository.save(account);
+        customerRepository.save(customer);
+        return new CustomerInfoResponse().fromEntity(customer);
+    }
+
+    @Override
+    public AccountInfo updateAvatar(Account account, MultipartFile avatar) {
+        if (CommonUtils.String.isNotEmptyOrNull(account.getAvatar())) {
+            cloudinaryService.deleteFileByUrl(account.getAvatar());
+        }
+
+        String avatarUrl = cloudinaryService.uploadFile(avatar);
+        account.setAvatar(avatarUrl);
+        accountRepository.save(account);
+        return new AccountInfo().fromEntity(account);
     }
 
     @Override

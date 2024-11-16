@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Layout, Input, Button, Typography, Space, Row, Col, Flex } from 'antd';
 import { CloseOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import Logo from "../assets/images/logo.png";
-import LogoText from "../assets/images/logo_text.png";
 import google_icon from "../assets/images/google.png";
 import fb_icon from "../assets/images/fb.png";
 import iphone_icon from "../assets/images/iphone.png";
@@ -12,6 +10,8 @@ import authService from '../services/authService';
 import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
 import { useStateContext } from '../context/StateContext';
 import { ReducerCases } from '../constants/ReducerCases';
+import { showErrorNotification } from '../utils/commonUtils';
+import Logo from '../components/guest/Logo';
 
 const { Title, Text } = Typography;
 
@@ -56,8 +56,7 @@ function LoginPage() {
                 }
             }
         } catch (error) {
-            console.log(error);
-            setError(error.message);
+            showErrorNotification("Đăng nhập thất bại", error.message);
         } finally {
             setLoading(false);
         }
@@ -65,18 +64,12 @@ function LoginPage() {
 
     return (
         <Layout style={{ minHeight: '100vh', display: 'flex', backgroundColor: '#E3EEFF' }}>
-            <div style={{ padding: 50 }}>
+            <div style={{ padding: "50px" }}>
                 <Flex justify="space-between" style={{ width: "100%" }}>
-                    <Flex vertical>
-                        <Flex
-                            style={{ marginBottom: '10px', cursor: "pointer" }}
-                            align="center"
-                            gap={12}
-                            onClick={() => scrollToTop()}
-                        >
-                            <img className="logo" src={Logo} alt="Logo" style={{ height: "100px" }} />
-                            <img className="logo_text" src={LogoText} style={{ height: "80px" }} alt="Logo Text" />
-                        </Flex>
+                    <Flex vertical
+                        style={{ marginBottom: '10px' }}
+                    >
+                        <Logo linkto={"/"}></Logo>
                     </Flex>
                 </Flex>
             </div>

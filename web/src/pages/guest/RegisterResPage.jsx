@@ -1,5 +1,5 @@
-import React from "react";
-import { Flex, Typography, Upload, Button, Input, message } from "antd";
+import { useState } from "react";
+import { Flex, Typography, Upload, Button, Input, Tag } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import Logo from "../../components/guest/Logo";
@@ -13,31 +13,35 @@ import Google from "../../assets/images/google.png";
 import authService from "../../services/authService";
 import uploadCertificateService from "../../services/uploadCertificateService";
 import { UploadOutlined } from "@ant-design/icons";
+import { showErrorNotification, showSuccessNotification } from "../../utils/commonUtils";
 
 function RegisterResPage() {
     const { control, handleSubmit } = useForm();
-    const [fileList, setFileList] = React.useState([]);
+    const { Title } = Typography;
+    const [fileList, setFileList] = useState([]);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const onSubmit = async (credentials) => {
         try {
+            setLoading(true);
             const res = await authService.registerRestaurant(credentials);
-            const resId = res.data.id;
-            console.log("User registered successfully:", res.data);
-            const formData = new FormData();
-            formData.append("restaurantId", resId);
-            for (const file of fileList) {
-                formData.append("files", file);
-                const uploadResponse = await uploadCertificateService.uploadCertificate(formData);
-                console.log("File uploaded successfully:", uploadResponse);
-            }
             if (res.is_success) {
                 navigate("/login")
+                showSuccessNotification("Thành công", "Đăng ký tài khoản nhà hàng/quán ăn thành công");
+                const resId = res.data.id;
+                const formData = new FormData();
+                formData.append("restaurantId", resId);
+                for (const file of fileList) {
+                    formData.append("files", file);
+                    await uploadCertificateService.uploadCertificate(formData);
+                }
             }
             return res.data;
-
         } catch (error) {
-            console.error("Error:", error);
+            showErrorNotification("Đăng ký thất bại", error.message);
+        } finally {
+            setLoading(false);
         }
     };
     const handleFileChange = (file) => {
@@ -45,39 +49,51 @@ function RegisterResPage() {
         return false; // Prevent automatic upload
     };
 
+    const handleRemoveFile = (fileToRemove) => {
+        setFileList((prevList) => prevList.filter((file) => file !== fileToRemove));
+    };
+    console.log(fileList)
     return (
-        <Flex style={{ padding: "50px", width: "100%", height: "100vh" }} vertical>
-            <Logo />
-            <Flex style={{ width: "100%", justifyContent: "space-between" }}>
-                <Flex style={{ padding: "80px 50px" }} vertical>
-                    <Typography.Paragraph strong style={{ width: "100%", paddingBottom: "30px" }}>
-                        <Typography.Text style={{ wordBreak: "break-word", fontSize: "xx-large" }}>
-                            Đăng ký để cung cấp chất dinh dưỡng cho mọi người
-                        </Typography.Text>
-                    </Typography.Paragraph>
-                    <Typography.Paragraph strong>
-                        <Typography.Text style={{ wordBreak: "break-word" }}>
-                            Nếu bạn đã có tài khoản
-                            <br />
-                            <span>
-                                bạn có thể
-                                <Link to={"/login"}>
-                                    <p style={{ color: colors.secondary, display: "inline" }}> Đăng nhập tại đây! </p>
-                                </Link>
-                            </span>
-                        </Typography.Text>
-                    </Typography.Paragraph>
+        <Flex style={{ width: "100%", height: "100vh" }} vertical>
+            <div style={{ padding: "50px" }}>
+                <Flex justify="space-between" style={{ width: "100%" }}>
+                    <Flex vertical
+                        style={{ marginBottom: '10px' }}
+                    >
+                        <Logo linkto={"/"}></Logo>
+                    </Flex>
                 </Flex>
-                <Flex style={{ width: "100%", padding: "0px 100px", alignItems: "flex-end" }} vertical>
-                    <Flex style={{ width: "50%" }} vertical>
-                        <Flex style={{ justifyContent: "center" }}>
-                            <Typography.Paragraph strong style={{ display: "flex", flexDirection: "row", paddingBottom: "10px" }}>
-                                <Typography.Text style={{ fontSize: "x-large" }}>
-                                    Đăng ký cho nhà hàng/quán ăn
-                                </Typography.Text>
-                            </Typography.Paragraph>
+            </div>
+            <Flex style={{ width: "100%", justifyContent: "space-between" }}>
+                <Flex style={{ width: "55%", height: "100%", padding: "50px" }} vertical>
+                    <Flex style={{ marginLeft: "auto" }} vertical>
+                        <Flex style={{ marginBottom: "40px" }}>
+                            <Title level={1} style={{ width: 600, fontSize: 50, fontWeight: 'bold', marginBottom: '16px', color: '#333' }}>
+                                Đăng ký để cung cấp dinh dưỡng
+                            </Title>
                         </Flex>
-                        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+                        <Typography.Paragraph strong >
+                            <Typography.Text style={{ wordBreak: "break-word", fontSize: 25 }}>
+                                Nếu bạn đã có tài khoản
+                                <br />
+                                <span>
+                                    bạn có thể
+                                    <Link to={"/login"}>
+                                        <p style={{ color: colors.secondary, display: "inline" }}> Đăng nhập tại đây! </p>
+                                    </Link>
+                                </span>
+                            </Typography.Text>
+                        </Typography.Paragraph>
+                    </Flex>
+                </Flex>
+                <Flex style={{ width: "45%", height: "100%", alignItems: "flex-start", justifyContent: "center" }} >
+                    <Flex style={{ width: "100%", justifyContent: "center", alignItems: "center" }} vertical>
+                        <Flex >
+                            <Title level={2} style={{ marginBottom: 24, fontSize: 40 }}>
+                                Đăng ký nhà hàng/quán ăn
+                            </Title>
+                        </Flex>
+                        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }}>
                             <Controller
                                 name="email"
                                 control={control}
@@ -140,10 +156,6 @@ function RegisterResPage() {
                                         value: true,
                                         message: "Hãy nhập tên"
                                     },
-                                    pattern: {
-                                        value: /^[a-zA-Zàáảãạăắẳẵặâấầẩẫậêếềểễệôốồổỗộơớờởỡợúùủũụưứừửữựíìỉĩịýỳỷỹỵđ\s]+$/,
-                                        message: "Tên không được chứa ký tự số hoặc ký tự đặc biệt"
-                                    },
                                     minLength: {
                                         value: 8,
                                         message: "Tên phải dài hơn 8 ký tự"
@@ -177,10 +189,6 @@ function RegisterResPage() {
                                         value: 399,
                                         message: "Địa chỉ không được vượt quá 399 ký tự",
                                     },
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9àáảãạăắẳẵặâấầẩẫậêếềểễệôốồổỗộơớờởỡợúùủũụưứừửữựíìỉĩịýỳỷỹỵđ\s]+$/,
-                                        message: "Địa chỉ không được chứa ký tự đặc biệt",
-                                    },
                                 }}
                                 render={({ field, fieldState: { error } }) => (
                                     <>
@@ -189,25 +197,51 @@ function RegisterResPage() {
                                     </>
                                 )}
                             />
-                            <Flex style={{ marginBottom: "20px" }}>
-                                <Flex style={{ width: "100%", alignItems: "center", marginTop: "10px" }}>
-                                    <></>
-                                    <Input
-                                        readOnly
-                                        value={fileList.map(file => file.name).join(", ")}
-                                        style={{
-                                            padding: "10px",
-                                            marginBottom: "10px",
-                                            width: "100%",
-                                            backgroundColor: colors.lightBackground,
-                                            cursor: "default",
-                                            overflow: "hidden",
-                                            whiteSpace: "nowrap",
-                                            textOverflow: "ellipsis",
-                                            flex: 1,
-                                            maxWidth: 'calc(100% - 50px)'
-                                        }}
-                                    />
+                            <Flex>
+                                <Flex style={{ width: '100%', alignItems: 'center' }}>
+                                    {fileList.length === 0 ? (
+                                        <Input
+                                            readOnly
+                                            value=""
+                                            style={{
+                                                height: "100%",
+                                                backgroundColor: colors.lightBackground,
+                                            }}
+                                        />
+                                    ) : (
+                                        <div
+                                            style={{
+                                                height: "43px",
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                width: '310px',
+                                                overflowX: 'auto',
+                                                overflowY: 'hidden',
+                                                whiteSpace: 'nowrap',
+                                                border: "1px solid #d9d9d9",
+                                                padding: "4px 11px",
+                                                zIndex: "1000",
+                                                borderRadius: "5px",
+                                                backgroundColor: colors.lightBackground,
+                                            }}
+                                        >
+                                            {fileList.map((file) => (
+                                                <Tag
+                                                    key={file.uid}
+                                                    closable
+                                                    onClose={() => handleRemoveFile(file)}
+                                                    style={{
+                                                        height: "30px",
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        marginRight: "8px", // Space between tags
+                                                    }}
+                                                >
+                                                    {file.name.length > 15 ? `${file.name.slice(0, 12)}...` : file.name}
+                                                </Tag>
+                                            ))}
+                                        </div>
+                                    )}
 
                                     <Controller
                                         name="certificate"
@@ -222,12 +256,9 @@ function RegisterResPage() {
                                                 <Button
                                                     icon={<UploadOutlined />}
                                                     style={{
-                                                        padding: "10px",
-                                                        marginLeft: "10px",
                                                         backgroundColor: colors.lightBackground,
-                                                        height: "auto",
-                                                        marginBottom: "10px",
-                                                        width: "100%",
+                                                        marginLeft: "16px",
+                                                        width: '90%',
                                                     }}
                                                 >
                                                     Nhấn để tải lên
@@ -236,14 +267,10 @@ function RegisterResPage() {
                                         )}
                                     />
                                 </Flex>
-
-
-
                             </Flex>
 
-
-                            <Flex style={{ width: "100%" }}>
-                                <ButtonStyled type="submit" cusWidth={"100%"} style={{ width: "100%" }}>
+                            <Flex style={{ width: "100%", marginTop: "20px" }}>
+                                <ButtonStyled type="submit" cusWidth={"100%"} style={{ width: "100%" }} loading={loading}>
                                     Đăng kí
                                 </ButtonStyled>
                             </Flex>
@@ -269,7 +296,7 @@ function RegisterResPage() {
                     </Flex>
                 </Flex>
             </Flex>
-        </Flex>
+        </Flex >
     );
 }
 

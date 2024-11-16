@@ -12,6 +12,7 @@ import com.dut.healthme.entity.Account;
 import com.dut.healthme.entity.Customer;
 import com.dut.healthme.entity.Restaurant;
 import com.dut.healthme.entity.enums.AccountRole;
+import com.dut.healthme.entity.enums.HealthGoal;
 import com.dut.healthme.entity.enums.RestaurantStatus;
 import com.dut.healthme.repository.AccountsRepository;
 import com.dut.healthme.repository.CustomersRepository;
@@ -26,12 +27,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
     private final CustomersRepository customersRepository;
     private final CloudinaryService cloudinaryService;
     private final RestaurantsRepository restaurantsRepository;
+
     @Override
     public CredentialResponse login(LoginRequest loginRequest) {
         try {
@@ -50,6 +48,17 @@ public class AuthServiceImpl implements AuthService {
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             Account account = (Account) authentication.getPrincipal();
+            // Check if the account is a restaurant account
+            if (account.getRole() == AccountRole.RESTAURANT) {
+                var status = restaurantsRepository.getApprovedStatusByAccountId(account.getId())
+                    .orElseThrow(() -> new BadRequestException(ErrorMessageConstants.ACCOUNT_NOT_FOUND));
+                switch (status) {
+                    case AWAITING_APPROVAL ->
+                        throw new BadRequestException(ErrorMessageConstants.ACCOUNT_WAITING_FOR_APPROVAL);
+                    case APPROVAL_FAILED ->
+                        throw new BadRequestException(ErrorMessageConstants.ACCOUNT_APPROVAL_FAILED);
+                }
+            }
             return jwtUtils.generateToken(account.getId());
         } catch (BadCredentialsException ex) {
             throw new BadRequestException(ErrorMessageConstants.INCORRECT_EMAIL_OR_PASSWORD);
@@ -73,12 +82,20 @@ public class AuthServiceImpl implements AuthService {
             .password(encodedPassword)
             .name("")
             .build();
-        Customer customer =  Customer.builder()
+        Customer customer = Customer.builder()
             .account(account)
             .dateOfBirth(registerRequest.getDateOfBirth())
             .gender(registerRequest.getGender())
             .height(registerRequest.getHeight())
             .weight(registerRequest.getWeight())
+            .hipsMeasurement(0D)
+            .waistMeasurement(0D)
+            .bloodGlucose(0D)
+            .bloodPressure(0D)
+            .heartRate(0D)
+            .chestMeasurement(0D)
+            .healthGoal(HealthGoal.MAINTAIN)
+            .activityIndex((short) 0)
             .build();
         try {
             this.accountsRepository.save(account);
@@ -90,7 +107,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Restaurant uploadCertificate(List<MultipartFile> files, Long restaurantId) {
-        List<String> listCertificate =  this.cloudinaryService.uploadFiles(files);
+        List<String> listCertificate = this.cloudinaryService.uploadFiles(files);
         if (listCertificate.isEmpty()) {
             throw new BadRequestException(ErrorMessageConstants.UPLOAD_FILE_FAILED);
         }

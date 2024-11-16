@@ -1,11 +1,15 @@
-import { Button, Col, Input, message, Row, Flex } from "antd";
+import { Button, Col, Flex, Input, message, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg";
 import ItemSearchHeader from "../../components/ItemSearchHeader";
+import Loading from "../../components/Loading";
+import OrderItemCart from "../../components/OrderItemCart";
 import PaymentCard from "../../components/PaymentCard";
 import colors from "../../constants/Colors";
 import customerService from "../../services/customerService";
 import orderService from "../../services/orderService";
+import { searchItems } from "../../services/searchService";
 import shoppingCartService from "../../services/shoppingCartService";
 import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg"
 import { searchItems } from "../../services/searchService";
@@ -23,12 +27,12 @@ export default function CustomerPayment() {
     const [newAddress, setNewAddress] = useState('');
     const [loading, setLoading] = useState(true);
     const [updatingAddress, setUpdatingAddress] = useState(false);
+    const [orderLoading, setOrderLoading] = useState(false);
 
     const [query, setQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [isShowSearchResults, setIsShowSearchResults] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
 
     useEffect(() => {
         if (!selectedCartIds || selectedCartIds.length === 0) {
@@ -66,8 +70,13 @@ export default function CustomerPayment() {
         const fetchAddress = async () => {
             try {
                 const addressData = await customerService.getCustomerAddress();
-                setAddress(addressData);
-                setNewAddress(addressData);
+                if (addressData) {
+                    setAddress(addressData);
+                    setNewAddress(addressData);
+                } else {
+                    setAddress('');
+                    setNewAddress('');
+                }
             } catch (error) {
                 console.error("Error fetching address:", error);
             }
@@ -81,12 +90,12 @@ export default function CustomerPayment() {
     };
 
     const updateAddress = async () => {
-        if (newAddress.trim().length <= 10) {
+        if (newAddress?.trim().length <= 10) {
             message.error("Địa chỉ phải dài hơn 10 ký tự.");
             return;
         }
 
-        if (newAddress.trim() === address) {
+        if (newAddress?.trim() === address) {
             message.info("Địa chỉ chưa thay đổi.");
             return;
         }
@@ -108,8 +117,12 @@ export default function CustomerPayment() {
         return price.toLocaleString('vi-VN');
     };
 
-    // New function to handle order submission
     const handleOrder = async () => {
+        if (!newAddress) {
+            message.warning("Địa chỉ nhận hàng không được để trống!");
+            return
+        }
+
         if (carts.length === 0) {
             message.warning("Giỏ hàng trống. Không thể đặt hàng.");
             return;
@@ -126,24 +139,30 @@ export default function CustomerPayment() {
         console.log("Order details being sent:", orderDetails);
 
         try {
+            setOrderLoading(true);
             await orderService.placeOrder(orderDetails);
             message.success("Đặt hàng thành công!");
             navigate("/cus/order-success")
         } catch (error) {
             console.error("Error placing order:", error);
             message.error("Đặt hàng thất bại.");
+        } finally {
+            setOrderLoading(false)
         }
     };
+
     const handleSearch = () => {
         searchItems(query, setSearchResults, setIsLoading);
         if (searchResults) {
             setIsShowSearchResults(true);
         }
     };
+
     const handleBackToItems = () => {
         setIsShowSearchResults(false);
         setSearchResults([]);
     };
+
     return (
         <div style={{
             display: "flex",
@@ -186,7 +205,6 @@ export default function CustomerPayment() {
                             </Row>
                         )}
                     </Row>
-
                 </div>
             )}
             {!isShowSearchResults && (
@@ -307,23 +325,20 @@ export default function CustomerPayment() {
                         </div>
                     </div>
 
-                    {/* Order */}
+                    {/* Ship method */}
                     <div style={{
                         display: 'flex',
-                        gap: 20,
-                        justifyContent: 'flex-end'
+                        flexDirection: 'row',
+                        gap: 10,
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '20px 10px',
+                        background: '#d9d9d9'
                     }}>
-                        <Button
-                            type="primary"
-                            onClick={handleOrder} // Call the handleOrder function
-                            style={{
-                                minWidth: 100,
-                                borderRadius: 8,
-                            }}
-                        >
-                            Đặt hàng
+                        <strong>Phương thức thanh toán</strong>
+                        <Button type="primary" onClick={handleOrder} style={{ borderRadius: 8 }} loading={orderLoading}>
+                            Đặt hàng - {formatPrice(totalPrice)} đ
                         </Button>
-                        <strong style={{ fontSize: '20px' }}>Tổng: {formatPrice(totalPrice)} VND</strong>
                     </div>
                 </>
             )}

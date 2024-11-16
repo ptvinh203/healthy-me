@@ -51,6 +51,8 @@ public final class ErrorMessageConstants {
     public static final String ACCOUNT_ID_IS_REQUIRED = "account_id_is_required";
     public static final String ACCOUNT_IS_NOT_AVAILABLE = "account_is_not_available";
     public static final String ACCOUNT_SAVE_FAILED = "account_save_failed";
+    public static final String ACCOUNT_WAITING_FOR_APPROVAL = "account_waiting_for_approval";
+    public static final String ACCOUNT_APPROVAL_FAILED = "account_approval_failed";
 
     /**
      * Shopping Cart

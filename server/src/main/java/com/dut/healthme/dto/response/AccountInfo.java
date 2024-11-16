@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 public class AccountInfo extends AbstractDTO<Account> {
     private String email;
     private String name;
+    private String avatar;
     private AccountRole role;
 
     @Override
@@ -29,6 +30,7 @@ public class AccountInfo extends AbstractDTO<Account> {
             .email(entity.getEmail())
             .name(entity.getName())
             .role(entity.getRole())
+            .avatar(entity.getAvatar())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
             .deletedAt(entity.getDeletedAt())

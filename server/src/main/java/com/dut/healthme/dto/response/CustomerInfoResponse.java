@@ -1,11 +1,15 @@
 package com.dut.healthme.dto.response;
 
+import com.dut.healthme.annotation.json.JsonDateFormat;
 import com.dut.healthme.annotation.json.JsonSnakeCaseNaming;
 import com.dut.healthme.common.model.AbstractDTO;
 import com.dut.healthme.entity.Customer;
 import com.dut.healthme.entity.enums.Gender;
 import com.dut.healthme.entity.enums.HealthGoal;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
@@ -29,9 +33,15 @@ public class CustomerInfoResponse extends AbstractDTO<Customer> {
     private HealthGoal healthGoal;
     private String bodyShape;
     private Double suggestedCalorieIntake;
+    @JsonDateFormat
     private Timestamp dateOfBirth;
     private Gender gender;
     private short activityIndex;
+    private String address;
+    private String phone;
+    private String name;
+    private String email;
+    private String avatar;
 
     @Override
     public CustomerInfoResponse fromEntity(Customer entity) {
@@ -52,6 +62,11 @@ public class CustomerInfoResponse extends AbstractDTO<Customer> {
             .dateOfBirth(entity.getDateOfBirth())
             .gender(entity.getGender())
             .activityIndex(entity.getActivityIndex())
+            .name(entity.getAccount().getName())
+            .email(entity.getAccount().getEmail())
+            .avatar(entity.getAccount().getAvatar())
+            .address(entity.getAddress())
+            .phone(entity.getPhoneNumber())
             .build();
     }
 }
