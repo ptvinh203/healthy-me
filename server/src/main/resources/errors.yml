@@ -149,3 +149,11 @@ restaurant_not_found:
 address_invalid:
   code: ERR_ADD101
   message: Địa chỉ phải lớn hơn 10 kí tự!
+
+# Item
+item_name_existed:
+  code: ERR_IT0101
+  message: Tên sản phẩm đã tồn tại trong nhà hàng!
+item_save_failed:
+  code: ERR_IT0102
+  message: Lưu sản phẩm không thành công!

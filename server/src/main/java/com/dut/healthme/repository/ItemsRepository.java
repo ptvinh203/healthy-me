@@ -23,5 +23,5 @@ public interface ItemsRepository extends JpaRepository<Item, Long> {
         "OR EXISTS (SELECT 1 FROM unnest(i.ingredients) AS ingredient WHERE LOWER(ingredient) LIKE LOWER(CONCAT('%', :keyword, '%')))",
         nativeQuery = true)
     List<Item> findByNameOrIngredient(@Param("keyword") String keyword);
-
+    Item findByNameAndRestaurantId(@Param("name") String name, @Param("restaurantId") Long restaurantId);
 }

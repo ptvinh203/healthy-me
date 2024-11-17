@@ -70,6 +70,12 @@ public final class ErrorMessageConstants {
      */
     public static final String ADDRESS_INVALID = "address_invalid";
 
+    /**
+     * Item
+     */
+    public static final String ITEM_NAME_EXISTED = "item_name_existed";
+    public static final String iTEM_SAVE_FAILED = "item_save_failed";
+
     private ErrorMessageConstants() {
     }
 }
