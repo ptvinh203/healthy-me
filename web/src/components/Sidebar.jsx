@@ -81,7 +81,7 @@ const Sidebar = () => {
     const handleMenuClick = (item) => {
         if (item.logout) {
             clearTokensFromStorage();
-            dispatch({ type: ReducerCases.SET_ACCOUNT_INFO, data: null });
+            dispatch({ type: ReducerCases.RESET_STATE });
             navigate('/');
             return;
         }

@@ -117,7 +117,7 @@ export default function CustomerInfo() {
                         { max: 255, message: 'Họ và tên không được vượt quá 255 ký tự' }
                     ]}
                 >
-                    <Input placeholder="Họ và tên" />
+                    <Input placeholder="Nhập họ và tên" />
                 </Form.Item>
 
                 {/* Address */}
@@ -127,7 +127,7 @@ export default function CustomerInfo() {
                         { max: 255, message: 'Địa chỉ không được vượt quá 255 ký tự' }
                     ]}
                 >
-                    <Input placeholder="Địa chỉ" />
+                    <Input placeholder="Nhập địa chỉ" />
                 </Form.Item>
 
                 {/* Date of birth */}
@@ -135,7 +135,7 @@ export default function CustomerInfo() {
                     rules={[{ required: true, message: 'Vui lòng chọn ngày sinh của bạn' }]}
                 >
                     <DatePicker
-                        placeholder="Ngày sinh"
+                        placeholder="Chọn ngày sinh"
                         format={"YYYY-MM-DD"}
                         style={{ width: "100%" }}
                         disabledDate={(current) => current && current.isAfter(dayjs(), 'day')}
@@ -148,7 +148,7 @@ export default function CustomerInfo() {
                 >
                     <Input
                         suffix={<PhoneOutlined />}
-                        placeholder="Số điện thoại"
+                        placeholder="Nhập số điện thoại"
                         onKeyDown={(e) => {
                             if (!/[0-9]/.test(e.key)) {
                                 e.preventDefault();
@@ -188,8 +188,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={300}
+                                    addonBefore="Chiều cao"
                                     addonAfter="Cm"
-                                    placeholder="Chiều cao"
+                                    placeholder="Nhập chiều cao"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>
@@ -207,8 +208,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={300}
+                                    addonBefore="Cân nặng"
                                     addonAfter="Kg"
-                                    placeholder="Cân nặng"
+                                    placeholder="Nhập cân nặng"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>
@@ -232,8 +234,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={220}
+                                    addonBefore="Nhịp tim"
                                     addonAfter="Nhịp / phút"
-                                    placeholder="Nhịp tim"
+                                    placeholder="Nhập nhịp tim"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>
@@ -251,8 +254,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={100}
-                                    addonAfter="Mg/dl"
-                                    placeholder="Đường huyết"
+                                    addonBefore="Đường huyết"
+                                    addonAfter="Mg / dl"
+                                    placeholder="Nhập đường huyết"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>
@@ -270,8 +274,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={300}
+                                    addonBefore="Huyết áp"
                                     addonAfter="MmHg"
-                                    placeholder="Huyết áp"
+                                    placeholder="Nhập huyết áp"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>
@@ -289,8 +294,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={300}
+                                    addonBefore="Vòng ngực"
                                     addonAfter="Cm"
-                                    placeholder="Số đo vòng ngực"
+                                    placeholder="Nhập số đo vòng ngực"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>
@@ -308,8 +314,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={300}
+                                    addonBefore="Vòng eo"
                                     addonAfter="Cm"
-                                    placeholder="Số đo vòng eo"
+                                    placeholder="Nhập số đo vòng eo"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>
@@ -327,8 +334,9 @@ export default function CustomerInfo() {
                                 <InputNumber
                                     min={0}
                                     max={300}
+                                    addonBefore="Vòng mông"
                                     addonAfter="Cm"
-                                    placeholder="Số đo vòng mông"
+                                    placeholder="Nhập số đo vòng mông"
                                     style={{ width: "100%" }}
                                 />
                             </Form.Item>

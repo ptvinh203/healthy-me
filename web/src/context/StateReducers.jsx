@@ -29,6 +29,8 @@ const reducer = (state, action) => {
                 ...state,
                 highRatingItems: action.data
             }
+        case ReducerCases.RESET_STATE:
+            return initialState
     }
 }
 
