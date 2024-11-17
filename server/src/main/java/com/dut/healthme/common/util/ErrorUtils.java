@@ -1,6 +1,5 @@
 package com.dut.healthme.common.util;
 
-import com.dut.healthme.common.constant.ErrorMessageConstants;
 import com.dut.healthme.common.exception.InvalidDataException;
 import com.dut.healthme.common.model.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,12 +57,11 @@ public final class ErrorUtils {
         Map<String, Object> errors = CommonUtils.getValueFromYAMLFile(VALIDATION_FILE);
         Map<String, Object> fields = (Map<String, Object>) errors.get(resource);
         if (fields == null)
-            new ErrorResponse(ErrorMessageConstants.INTERNAL_SERVER_ERROR_CODE,
-                String.format("Don't have resource: {%s} in validation.yml", resource));
+            return null;
         Map<String, Object> objErrors = (Map<String, Object>) Objects.requireNonNull(fields).get(fieldName);
         Map<String, Object> objError = (Map<String, Object>) objErrors.get(error);
         if (objError == null)
-            new ErrorResponse(ErrorMessageConstants.INTERNAL_SERVER_ERROR_CODE, "objError is null");
+            return null;
         String code = (String) Objects.requireNonNull(objError).get("code");
         String message = (String) objError.get("message");
         return new ErrorResponse(code, message);

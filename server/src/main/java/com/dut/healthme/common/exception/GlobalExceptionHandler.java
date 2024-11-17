@@ -185,7 +185,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             String error = CommonUtils.Naming.convertToSnakeCase(Objects.requireNonNull(objectError.getCode()));
             String fieldName = CommonUtils.Naming.convertToSnakeCase(((FieldError) objectError).getField());
             String resource = CommonUtils.Naming.convertToSnakeCase(objectError.getObjectName());
-            errorResponses.add(ErrorUtils.getValidationError(resource, fieldName, error));
+            var errorResponse = ErrorUtils.getValidationError(resource, fieldName, error);
+            errorResponses.add(errorResponse != null
+                ? ErrorUtils.getValidationError(resource, fieldName, error)
+                : new ErrorResponse(ErrorMessageConstants.BAD_REQUEST_ERROR_CODE, objectError.getDefaultMessage()));
         }
         AbstractResponse responseDataAPI = AbstractResponse.errors(errorResponses);
         return new ResponseEntity<>(responseDataAPI, HttpStatus.BAD_REQUEST);
