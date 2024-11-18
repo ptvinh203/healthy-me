@@ -11,10 +11,6 @@ import customerService from "../../services/customerService";
 import orderService from "../../services/orderService";
 import { searchItems } from "../../services/searchService";
 import shoppingCartService from "../../services/shoppingCartService";
-import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg"
-import { searchItems } from "../../services/searchService";
-import Loading from "../../components/Loading";
-import OrderItemCart from "../../components/OrderItemCart";
 
 export default function CustomerPayment() {
     const { state } = useLocation();
