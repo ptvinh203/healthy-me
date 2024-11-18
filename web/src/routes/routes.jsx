@@ -10,7 +10,17 @@ import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import LandingPage from "../pages/guest/LandingPage";
 import RegisterPage from "../pages/guest/RegisterPage";
-import Login from "../pages/Login";
+import AdminHome from '../pages/admin/AdminHome';
+import AdminResManage from '../pages/admin/AdminResManage';
+import AdminCusManage from '../pages/admin/AdminCusManage';
+
+import { element } from "prop-types";
+import ResHome from "../pages/restaurant/ResHome";
+import ResMealManage from "../pages/restaurant/ResMealManage";
+import ResAddMeal from "../pages/restaurant/ResAddMeal";
+import ResOrder from "../pages/restaurant/ResOrder";
+import ResInfo from "../pages/restaurant/ResInfo";
+import LoginPage from "../pages/Login";
 
 export const routes = {
     common: [
@@ -24,7 +34,7 @@ export const routes = {
         },
         {
             path: "/login",
-            element: <Login />
+            element: <LoginPage />
         },
         {
             path: "/unauthorized",
@@ -69,6 +79,40 @@ export const routes = {
             element: <CustomerOrderHistory />
         }
     ],
-    restaurant: [],
-    admin: []
+    restaurant: [
+        {
+            path: "/res/home",
+            element: <ResHome />
+        },
+        {
+            path: "/res/meal-manage",
+            element: <ResMealManage />
+        },
+        {
+            path: "/res/add-manage",
+            element: <ResAddMeal />
+        },
+        {
+            path: "/res/order-manage",
+            element: <ResOrder />
+        },
+        {
+            path: "/res/info",
+            element: <ResInfo />
+        }
+    ],
+    admin: [
+        {
+            path: "/admin/home",
+            element: <AdminHome />
+        },
+        {
+            path: "/admin/res-manage",
+            element: <AdminResManage />
+        },
+        {
+            path: "/admin/cus-manage",
+            element: <AdminCusManage />
+        }
+    ]
 }
