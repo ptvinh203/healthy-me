@@ -57,6 +57,7 @@ public class AccountSeeder implements CommandLineRunner {
                     .bmi(22.86) // weight / (height / 100) ^ 2
                     .heartRate(72.0)
                     .bloodGlucose(90.0)
+                    .bloodPressure(120.0)
                     .chestMeasurement(100.0)
                     .waistMeasurement(85.0)
                     .hipsMeasurement(95.0)

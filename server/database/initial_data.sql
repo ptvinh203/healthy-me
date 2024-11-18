@@ -1,20 +1,20 @@
 -- Accounts
-INSERT INTO public.accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (1, 'customer.it.nihongo', 'customer@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'CUSTOMER', '2024-10-19 10:52:46.960557', '2024-10-19 10:52:46.960650', null);
-INSERT INTO public.accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (3, 'admin.it.nihongo', 'admin@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'ADMIN', '2024-10-19 10:52:48.042455', '2024-10-19 10:52:48.042472', null);
-INSERT INTO public.accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (6, 'Nhà Hàng Ngọc Hương', 'restaurant3@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
-INSERT INTO public.accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (4, 'Nhà Hàng Mộc', 'restaurant1@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
-INSERT INTO public.accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (5, 'Nhà Hàng Làng Nghệ', 'restaurant2@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
-INSERT INTO public.accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (7, 'Nhà Hàng Madame Lân', 'restaurant4@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
-INSERT INTO public.accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (2, 'Nhà Hàng Hải Sản Bé Mặn', 'restaurant@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 10:52:47.534203', '2024-10-19 10:52:47.534220', null);
+INSERT INTO accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (1, 'Nhà Hàng Ngọc Hương', 'restaurant3@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
+INSERT INTO accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (2, 'Nhà Hàng Mộc', 'restaurant1@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
+INSERT INTO accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (3, 'Nhà Hàng Làng Nghệ', 'restaurant2@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
+INSERT INTO accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (4, 'Nhà Hàng Madame Lân', 'restaurant4@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 08:39:36.200345', null, null);
+INSERT INTO accounts (id, name, email, password, role, created_at, updated_at, deleted_at) VALUES (5, 'Nhà Hàng Hải Sản Bé Mặn', 'restaurant@gmail.com', '$2a$10$xsj2Oo1PQtY8ClMBp2joHO9E0JEDPUW8s.tw7NfcgLn8uMe3Hyn..', 'RESTAURANT', '2024-10-19 10:52:47.534203', '2024-10-19 10:52:47.534220', null);
+SELECT setval('accounts_id_seq', (SELECT MAX(id) FROM accounts), true); -- Reset sequence
 
 -- Restaurants
 INSERT INTO restaurants (id, information, certification, phone_number, address, account_id, created_at, updated_at, deleted_at)
 VALUES
-    (1,  'Chuyên hải sản tươi sống, phục vụ các món ăn đậm vị biển', array['Chứng nhận an toàn vệ sinh thực phẩm'], '02363778999', 'Lô 14 Hoàng Sa, Phước Mỹ, Sơn Trà, Đà Nẵng', 2, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (2,  'Nhà hàng sang trọng phục vụ các món ăn truyền thống Việt Nam', array['Chứng nhận nhà hàng tiêu chuẩn 4 sao'], '02363774666', '26 Đống Đa, Thạch Thang, Hải Châu, Đà Nẵng', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (3,  'Chuyên các món đặc sản miền Trung, không gian đậm chất làng quê', array['Chứng nhận chất lượng dịch vụ'], '02363772233', '119 Lê Lợi, Hải Châu 1, Hải Châu, Đà Nẵng', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (4,  'Nhà hàng ven biển chuyên phục vụ hải sản và món Việt', array['Chứng nhận dịch vụ 5 sao'], '02363773111', '54 An Thượng 1, Mỹ An, Ngũ Hành Sơn, Đà Nẵng', 6, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (5,  'Không gian cổ điển phục vụ các món ăn đậm đà hương vị truyền thống Việt', array['Chứng nhận nhà hàng chuẩn 5 sao'], '02363772000', '4 Bạch Đằng, Hải Châu, Đà Nẵng', 7, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL);
+    (1,  'Chuyên hải sản tươi sống, phục vụ các món ăn đậm vị biển', array['Chứng nhận an toàn vệ sinh thực phẩm'], '02363778999', 'Lô 14 Hoàng Sa, Phước Mỹ, Sơn Trà, Đà Nẵng', 1, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (2,  'Nhà hàng sang trọng phục vụ các món ăn truyền thống Việt Nam', array['Chứng nhận nhà hàng tiêu chuẩn 4 sao'], '02363774666', '26 Đống Đa, Thạch Thang, Hải Châu, Đà Nẵng', 2, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (3,  'Chuyên các món đặc sản miền Trung, không gian đậm chất làng quê', array['Chứng nhận chất lượng dịch vụ'], '02363772233', '119 Lê Lợi, Hải Châu 1, Hải Châu, Đà Nẵng', 3, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (4,  'Nhà hàng ven biển chuyên phục vụ hải sản và món Việt', array['Chứng nhận dịch vụ 5 sao'], '02363773111', '54 An Thượng 1, Mỹ An, Ngũ Hành Sơn, Đà Nẵng', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (5,  'Không gian cổ điển phục vụ các món ăn đậm đà hương vị truyền thống Việt', array['Chứng nhận nhà hàng chuẩn 5 sao'], '02363772000', '4 Bạch Đằng, Hải Châu, Đà Nẵng', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL);
+SELECT setval('restaurants_id_seq', (SELECT MAX(id) FROM restaurants), true); -- Reset sequence
 
 -- Items
 INSERT INTO items (id, name, ingredients, description, price, image, calo, type, restaurant_id, created_at, updated_at, deleted_at)
@@ -94,12 +94,14 @@ VALUES
     (75, 'Lẩu Gà', array['Gà', 'rau'], 'Lẩu gà thơm ngon, ấm áp.', 240000, 'https://cdn.tgdd.vn/Files/2021/08/09/1373931/cach-nau-lau-ga-la-que-thom-lung-cuc-hap-dan-tai-nha-202108090309091863.jpg', 650, 'MAIN_FOOD', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
     (76, 'Bánh Mì Kẹp', array['Bánh mì', 'nhân'], 'Bánh mì kẹp nhân hấp dẫn.', 40000, 'https://cdn.tgdd.vn/2021/08/CookProduct/t-1200x676-1.jpg', 220, 'FAST_FOOD', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
     (77, 'Nước Mía', array['Mía'], 'Nước mía tươi, thơm ngon.', 20000, 'https://cdnphoto.dantri.com.vn/4p-2X1OJNf6w8zdlxX5e6JYWwr0=/thumb_w/1020/2023/05/28/nuocmia-12-1616975279087-1685270214183.jpg', 60, 'DRINK', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL);
+SELECT setval('items_id_seq', (SELECT MAX(id) FROM items), true); -- Reset sequence
 
---review
-INSERT INTO public.reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (4, 42, 1, null, 4, '2024-10-19 10:42:18.147503', null, null);
-INSERT INTO public.reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (3, 35, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
-INSERT INTO public.reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (2, 34, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
-INSERT INTO public.reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (5, 18, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
-INSERT INTO public.reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (1, 12, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+-- Reviews
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (4, 42, 1, null, 4, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (3, 35, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (2, 34, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (5, 18, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (1, 12, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+SELECT setval('reviews_id_seq', (SELECT MAX(id) FROM reviews), true); -- Reset sequence
 
 COMMIT;
