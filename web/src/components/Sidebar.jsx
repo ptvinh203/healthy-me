@@ -8,10 +8,10 @@ import logoutIcon from '../assets/svgs/sidebar/logoutIcon.svg';
 import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import colors from '../constants/Colors';
-import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
-import { clearTokensFromStorage } from '../utils/storageUtils';
-import { useStateContext } from '../context/StateContext';
 import { ReducerCases } from '../constants/ReducerCases';
+import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
+import { useStateContext } from '../context/StateContext';
+import { clearTokensFromStorage } from '../utils/storageUtils';
 
 const { Sider } = Layout;
 
@@ -37,7 +37,7 @@ const Sidebar = () => {
             key: '3',
             icon: <img src={historyIcon} alt="History" style={{ width: '16px', height: '16px' }} />,
             label: 'Lịch sử đặt hàng',
-            path: '/cus' // TODO: update path
+            path: '/cus/order/history'
         },
         {
             key: '4',
