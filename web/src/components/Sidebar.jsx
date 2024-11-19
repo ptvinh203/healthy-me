@@ -1,5 +1,6 @@
 import { Layout, Menu } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/svgs/logo.svg';
 import healthIcon from '../assets/svgs/sidebar/healthIcon.svg';
 import historyIcon from '../assets/svgs/sidebar/historyIcon.svg';
@@ -8,16 +9,15 @@ import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import colors from '../constants/Colors';
 import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
+import { clearTokensFromStorage } from '../utils/storageUtils';
+import { useStateContext } from '../context/StateContext';
+import { ReducerCases } from '../constants/ReducerCases';
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-    const userRole = ROLE_CUSTOMER
-    const [selectedKey, setSelectedKey] = useState('1');
-
-    const handleMenuClick = (key) => {
-        setSelectedKey(key);
-    };
+    // eslint-disable-next-line no-unused-vars
+    const [_, dispatch] = useStateContext();
 
     // Menu items for customer
     const customerMenuItems = [
@@ -25,26 +25,31 @@ const Sidebar = () => {
             key: '1',
             icon: <img src={healthIcon} alt="Health" style={{ width: '16px', height: '16px' }} />,
             label: 'Quản lý sức khoẻ',
+            path: '/cus/home'
         },
         {
             key: '2',
             icon: <img src={orderIcon} alt="Order" style={{ width: '16px', height: '16px' }} />,
             label: 'Đặt hàng',
+            path: '/cus/order'
         },
         {
             key: '3',
             icon: <img src={historyIcon} alt="History" style={{ width: '16px', height: '16px' }} />,
             label: 'Lịch sử đặt hàng',
+            path: '/cus' // TODO: update path
         },
         {
             key: '4',
             icon: <img src={settingsIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
             label: 'Cài đặt',
+            path: '/cus/info'
         },
         {
             key: '5',
             icon: <img src={logoutIcon} alt="Logout" style={{ width: '16px', height: '16px' }} />,
             label: 'Thoát',
+            logout: true
         },
     ];
 
@@ -64,8 +69,26 @@ const Sidebar = () => {
             key: '3',
             icon: <img src={logoutIcon} alt="Logout" style={{ width: '16px', height: '16px' }} />,
             label: 'Thoát',
+            logout: true
         },
     ];
+
+    const userRole = ROLE_CUSTOMER
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [selectedKey, setSelectedKey] = useState(customerMenuItems.find(item => item.path === location.pathname)?.key ?? '1');
+
+    const handleMenuClick = (item) => {
+        if (item.logout) {
+            clearTokensFromStorage();
+            dispatch({ type: ReducerCases.RESET_STATE });
+            navigate('/');
+            return;
+        }
+        setSelectedKey(item.key);
+        // Navigate to the selected path
+        navigate(item.path);
+    };
 
     const menuItems = userRole === ROLE_RESTAURANT ? restaurantMenuItems : customerMenuItems;
 
@@ -88,7 +111,7 @@ const Sidebar = () => {
                 </span>
             </div>
         ),
-        onClick: () => handleMenuClick(item.key),
+        onClick: () => handleMenuClick(item),
     }));
 
     return (
@@ -103,15 +126,17 @@ const Sidebar = () => {
             }}
         >
             {/* Logo */}
-            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white' }}>
-                <img
-                    src={logo}
-                    alt="Logo"
-                    style={{
-                        width: '30%',
-                        borderRadius: '10px',
-                    }}
-                />
+            <div style={{ padding: '40px 20px', textAlign: 'center', backgroundColor: 'white', cursor: 'pointer' }}>
+                <Link to='/'>
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        style={{
+                            width: '30%',
+                            borderRadius: '10px',
+                        }}
+                    />
+                </Link>
             </div>
 
             {/* Custom selected menu item */}

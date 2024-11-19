@@ -1,10 +1,12 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollTop from "../components/ScrollTop";
-import { ROLE_CUSTOMER, ROLE_RESTAURANT } from "../constants/Role";
+import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_RESTAURANT } from "../constants/Role";
 import CustomerLayout from "../layouts/CustomerLayout";
 import RestaurantLayout from "../layouts/RestaurantLayout";
+import GuestLayout from "../layouts/GuestLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import { routes } from "./routes";
+import AdminLayout from "../layouts/AdminLayout";
 
 export default function AppRoutes() {
     return (
@@ -12,7 +14,7 @@ export default function AppRoutes() {
             <ScrollTop /> {/* Scroll to top when load a new page */}
             <Routes>
                 {/* All common route */}
-                <Route path="/" element={<Outlet />}>
+                <Route path="/" element={<GuestLayout />}>
                     {renderRoute(routes.common)}
                 </Route>
 
@@ -29,13 +31,20 @@ export default function AppRoutes() {
                         {renderRoute(routes.restaurant)}
                     </Route>
                 </Route>
+
+                {/* All admin route */}
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route element={<ProtectedRoute allowedRoles={[ROLE_ADMIN]} />}>
+                        {renderRoute(routes.admin)}
+                    </Route>
+                </Route>
             </Routes>
         </BrowserRouter>
-    )
+    );
 }
 
 const renderRoute = (routes) => {
-    return routes.map((route, index) =>
+    return routes.map((route, index) => (
         <Route key={index} path={route.path} element={route.element} />
-    )
-}
+    ));
+};

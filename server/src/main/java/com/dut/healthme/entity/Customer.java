@@ -48,6 +48,8 @@ public class Customer extends AbstractEntity {
     private Double chestMeasurement;
     private Double waistMeasurement;
     private Double hipsMeasurement;
+    private Double bloodPressure;
+    private short activityIndex;
 
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)

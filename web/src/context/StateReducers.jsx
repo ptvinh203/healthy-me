@@ -2,7 +2,9 @@ import { ReducerCases } from "../constants/ReducerCases"
 
 export const initialState = {
     account: undefined,
-    profile: undefined
+    profile: undefined,
+    recommendItems: undefined,
+    highRatingItems: undefined,
 }
 
 const reducer = (state, action) => {
@@ -17,6 +19,18 @@ const reducer = (state, action) => {
                 ...state,
                 profile: action.data
             }
+        case ReducerCases.SET_RECOMMEND_ITEMS:
+            return {
+                ...state,
+                recommendItems: action.data
+            }
+        case ReducerCases.SET_HIGH_RATING_ITEMS:
+            return {
+                ...state,
+                highRatingItems: action.data
+            }
+        case ReducerCases.RESET_STATE:
+            return initialState
     }
 }
 

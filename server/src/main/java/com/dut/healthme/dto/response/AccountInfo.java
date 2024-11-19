@@ -19,7 +19,8 @@ import lombok.experimental.SuperBuilder;
 @JsonSnakeCaseNaming
 public class AccountInfo extends AbstractDTO<Account> {
     private String email;
-    private String username;
+    private String name;
+    private String avatar;
     private AccountRole role;
 
     @Override
@@ -27,8 +28,9 @@ public class AccountInfo extends AbstractDTO<Account> {
         return AccountInfo.builder()
             .id(entity.getId())
             .email(entity.getEmail())
-            .username(entity.getDisplayName())
+            .name(entity.getName())
             .role(entity.getRole())
+            .avatar(entity.getAvatar())
             .createdAt(entity.getCreatedAt())
             .updatedAt(entity.getUpdatedAt())
             .deletedAt(entity.getDeletedAt())

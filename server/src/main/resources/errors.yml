@@ -78,6 +78,9 @@ permission_not_found:
 permission_is_require:
   code: ERR_PER0103
   message: Yêu cầu có quyền!
+action_is_not_allowed:
+  code: ERR_PER0104
+  message: Bạn không có quyền thực hiện hành động này!
 
 # Account
 account_not_found:
@@ -101,6 +104,15 @@ account_is_not_active:
 account_id_is_required:
   code: ERR_ACC0108
   message: Yêu cầu phải có id tài khoản!
+account_save_failed:
+  code: ERR_ACC0109
+  message: Lưu tài khoản không thành công!
+account_waiting_for_approval:
+  code: ERR_ACC0110
+  message: Tài khoản của bạn đang chờ phê duyệt!
+account_approval_failed:
+  code: ERR_ACC0111
+  message: Tài khoản của bạn chưa được phê duyệt!
 
 
 # File
@@ -116,3 +128,32 @@ delete_file_failed:
 file_size_limit_exceeded:
   code: ERR_FIL0104
   message: Kích thước tệp tin quá lớn, phải nhỏ hơn 100MB!
+save_file_failed:
+  code: ERR_FIL0101
+  message: Lưu tệp thất bại!
+
+# Shopping cart
+shopping_cart_not_found:
+  code: ERR_SHO0101
+  message: Không tìm thấy giỏ hàng!
+item_not_found:
+  code: ERR_SHO0102
+  message: Không tìm thấy sản phẩm!
+
+# Restaurant
+restaurant_not_found:
+  code: ERR_RSO0101
+  message: Không tìm thấy nhà hàng!
+
+# Customer
+address_invalid:
+  code: ERR_ADD101
+  message: Địa chỉ phải lớn hơn 10 kí tự!
+
+# Item
+item_name_existed:
+  code: ERR_IT0101
+  message: Tên sản phẩm đã tồn tại trong nhà hàng!
+item_save_failed:
+  code: ERR_IT0102
+  message: Lưu sản phẩm không thành công!

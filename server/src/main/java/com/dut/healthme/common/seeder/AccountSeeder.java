@@ -40,7 +40,7 @@ public class AccountSeeder implements CommandLineRunner {
                 .email(customerEmail)
                 .password(passwordHash)
                 .role(AccountRole.CUSTOMER)
-                .displayName("customer.it.nihongo")
+                .name("customer.it.nihongo")
                 .build();
             try {
                 customerAccount = repository.save(customerAccount);
@@ -57,6 +57,7 @@ public class AccountSeeder implements CommandLineRunner {
                     .bmi(22.86) // weight / (height / 100) ^ 2
                     .heartRate(72.0)
                     .bloodGlucose(90.0)
+                    .bloodPressure(120.0)
                     .chestMeasurement(100.0)
                     .waistMeasurement(85.0)
                     .hipsMeasurement(95.0)
@@ -75,14 +76,13 @@ public class AccountSeeder implements CommandLineRunner {
                 .email(restaurantEmail)
                 .password(passwordHash)
                 .role(AccountRole.RESTAURANT)
-                .displayName("restaurant.it.nihongo")
+                .name("Nhà hàng Hải Sản Đà Nẵng")
                 .build();
             try {
                 restaurantAccount = repository.save(restaurantAccount);
 
                 // Restaurant profile
                 restaurantsRepository.save(Restaurant.builder()
-                    .name("Nhà hàng Hải Sản Đà Nẵng")
                     .information("Chuyên phục vụ các món hải sản tươi sống tại Đà Nẵng, không gian thoáng mát và giá cả hợp lý.")
                     .certification(
                         List.of(
@@ -106,7 +106,7 @@ public class AccountSeeder implements CommandLineRunner {
                 .email(adminEmail)
                 .password(passwordHash)
                 .role(AccountRole.ADMIN)
-                .displayName("admin.it.nihongo")
+                .name("admin.it.nihongo")
                 .build();
             try {
                 repository.save(adminAccount);

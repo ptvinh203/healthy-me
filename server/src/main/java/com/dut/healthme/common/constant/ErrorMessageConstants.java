@@ -12,6 +12,7 @@ public final class ErrorMessageConstants {
     public static final String PAGE_NOT_FOUND = "page_not_found";
     public static final String FORBIDDEN = "forbidden";
     public static final String UNAUTHORIZED = "unauthorized";
+    public static final String ACTION_IS_NOT_ALLOWED = "action_is_not_allowed";
 
 
     /**
@@ -21,6 +22,7 @@ public final class ErrorMessageConstants {
     public static final String FILE_NOT_FOUND = "file_not_found";
     public static final String DELETE_FILE_FAILED = "delete_file_failed";
     public static final String FILE_SIZE_LIMIT_EXCEEDED = "file_size_limit_exceeded";
+    public static final String SAVE_FILE_FAILED = "save_file_failed";
 
     /**
      * Authentication
@@ -48,6 +50,31 @@ public final class ErrorMessageConstants {
     public static final String ACCOUNT_IS_DISABLED = "account_is_disabled";
     public static final String ACCOUNT_ID_IS_REQUIRED = "account_id_is_required";
     public static final String ACCOUNT_IS_NOT_AVAILABLE = "account_is_not_available";
+    public static final String ACCOUNT_SAVE_FAILED = "account_save_failed";
+    public static final String ACCOUNT_WAITING_FOR_APPROVAL = "account_waiting_for_approval";
+    public static final String ACCOUNT_APPROVAL_FAILED = "account_approval_failed";
+
+    /**
+     * Shopping Cart
+     */
+    public static final String CART_NOT_FOUND = "shopping_cart_not_found";
+    public static final String ITEM_NOT_FOUND = "item_not_found";
+
+    /**
+     * Restaurant
+     */
+    public static final String RESTAURANT_NOT_FOUND = "restaurant_not_found";
+
+    /**
+     * Payment
+     */
+    public static final String ADDRESS_INVALID = "address_invalid";
+
+    /**
+     * Item
+     */
+    public static final String ITEM_NAME_EXISTED = "item_name_existed";
+    public static final String iTEM_SAVE_FAILED = "item_save_failed";
 
     private ErrorMessageConstants() {
     }
