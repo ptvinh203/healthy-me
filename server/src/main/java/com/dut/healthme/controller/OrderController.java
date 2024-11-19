@@ -9,10 +9,7 @@ import com.dut.healthme.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/order")
@@ -26,8 +23,12 @@ public class OrderController {
         @CurrentAccount Account account,
         @Valid @RequestBody OrderRequest orderRequest
     ) {
-        System.out.println("OREDER: "+ orderRequest);
         orderService.addOrder(account, orderRequest);
         return ResponseEntity.ok(AbstractResponse.successWithoutMetaAndData());
+    }
+
+    @GetMapping
+    public ResponseEntity<AbstractResponse> history(@CurrentAccount Account account) {
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(orderService.getOrdersByAccountId(account)));
     }
 }

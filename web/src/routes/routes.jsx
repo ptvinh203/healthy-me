@@ -1,15 +1,16 @@
 import CustomerHome from "../pages/customer/CustomerHome";
+import CustomerInfo from "../pages/customer/CustomerInfo";
 import CustomerOrder from "../pages/customer/CustomerOrder";
 import CustomerDetail from "../pages/customer/CustomerOrderDetail";
-import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
+import CustomerOrderHistory from "../pages/customer/CustomerOrderHistory";
 import CustomerPayment from "../pages/customer/CustomerPayment";
+import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
 import OrderSuccess from "../pages/customer/OrderSuccess";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
-import Login from "../pages/Login";
 import LandingPage from "../pages/guest/LandingPage";
 import RegisterPage from "../pages/guest/RegisterPage";
-import CustomerInfo from "../pages/customer/CustomerInfo";
+import Login from "../pages/Login";
 
 export const routes = {
     common: [
@@ -63,6 +64,10 @@ export const routes = {
             path: "/cus/info",
             element: <CustomerInfo />
         },
+        {
+            path: "/cus/order/history",
+            element: <CustomerOrderHistory />
+        }
     ],
     restaurant: [],
     admin: []
