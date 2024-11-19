@@ -48,7 +48,7 @@ function LoginPage() {
                         navigate('/cus/home');
                         break;
                     case ROLE_RESTAURANT:
-                        navigate('/res/home');
+                        navigate('/res/add-manage');
                         break;
                     case ROLE_ADMIN:
                         navigate('/admin/home');

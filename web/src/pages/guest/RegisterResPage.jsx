@@ -52,7 +52,6 @@ function RegisterResPage() {
     const handleRemoveFile = (fileToRemove) => {
         setFileList((prevList) => prevList.filter((file) => file !== fileToRemove));
     };
-    console.log(fileList)
     return (
         <Flex style={{ width: "100%", height: "100vh" }} vertical>
             <div style={{ padding: "50px" }}>
