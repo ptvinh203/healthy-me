@@ -47,7 +47,7 @@ export default function RestaurantItemCard({ item}) {
                         {item.name}
                     </p>
                     <p style={{
-                        textAlign: 'left',
+                        textAlign: 'center',
                         margin: 0, 
                         width: '100%', 
                         fontSize: '14px',
@@ -56,7 +56,7 @@ export default function RestaurantItemCard({ item}) {
                         Lượng calo: {item.calo} kcal
                     </p>
                     <p style={{
-                        textAlign: 'left',
+                        textAlign: 'center',
                         margin: 0, 
                         width: '100%', 
                         fontSize: '14px',
