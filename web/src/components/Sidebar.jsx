@@ -6,6 +6,7 @@ import healthIcon from '../assets/svgs/sidebar/healthIcon.svg';
 import historyIcon from '../assets/svgs/sidebar/historyIcon.svg';
 import logoutIcon from '../assets/svgs/sidebar/logoutIcon.svg';
 import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
+import orderManageIcon from '../assets/svgs/sidebar/OrderManageIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import colors from '../constants/Colors';
 import { ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
@@ -13,12 +14,12 @@ import { clearTokensFromStorage } from '../utils/storageUtils';
 import { useStateContext } from '../context/StateContext';
 import { ReducerCases } from '../constants/ReducerCases';
 
+
 const { Sider } = Layout;
 
 const Sidebar = () => {
     // eslint-disable-next-line no-unused-vars
-    const [_, dispatch] = useStateContext();
-
+    const [{ account }, dispatch] = useStateContext();
     // Menu items for customer
     const customerMenuItems = [
         {
@@ -58,25 +59,58 @@ const Sidebar = () => {
         {
             key: '1',
             icon: <img src={orderIcon} alt="Order" style={{ width: '16px', height: '16px' }} />,
-            label: 'Quản lý đơn hàng',
+            label: 'Bảng điều khiển',
+            path: '/res/home'
         },
         {
             key: '2',
-            icon: <img src={settingsIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
-            label: 'Cài đặt nhà hàng',
+            icon: <img src={orderIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
+            label: 'Quản lí món ăn',
+            path: '/res/listfood'
         },
         {
             key: '3',
+            icon: <img src={historyIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
+            label: 'Thêm món ăn',
+            path:'res/home'
+        },
+        {
+            key: '4',
+            icon: <img src={orderManageIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
+            label: 'Quản lí đơn hàng',
+            path:'res/home'
+        },
+        {
+            key: '5',
+            icon: <img src={settingsIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
+            label: 'Cài đặt',
+            path:'res/home'
+        },
+        {
+            key: '6',
             icon: <img src={logoutIcon} alt="Logout" style={{ width: '16px', height: '16px' }} />,
             label: 'Thoát',
             logout: true
         },
     ];
 
-    const userRole = ROLE_CUSTOMER
+    let userRole = '';
+    if( account )
+    {
+        switch(account.role)
+        {
+            case 'CUSTOMER':
+                userRole = ROLE_CUSTOMER
+                break;
+            case 'RESTAURANT':
+                userRole = ROLE_RESTAURANT
+                break;
+        }
+    }
     const navigate = useNavigate();
     const location = useLocation();
-    const [selectedKey, setSelectedKey] = useState(customerMenuItems.find(item => item.path === location.pathname)?.key ?? '1');
+    const menuItems = userRole === ROLE_RESTAURANT ? restaurantMenuItems : customerMenuItems;
+    const [selectedKey, setSelectedKey] = useState(menuItems.find(item => item.path === location.pathname)?.key ?? '1');
 
     const handleMenuClick = (item) => {
         if (item.logout) {
@@ -90,7 +124,7 @@ const Sidebar = () => {
         navigate(item.path);
     };
 
-    const menuItems = userRole === ROLE_RESTAURANT ? restaurantMenuItems : customerMenuItems;
+    
 
     const menuItemsWithStyles = menuItems.map(item => ({
         key: item.key,

@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import LandingPage from "../pages/guest/LandingPage";
 import RegisterPage from "../pages/guest/RegisterPage";
 import CustomerInfo from "../pages/customer/CustomerInfo";
+import ListFood from "../pages/restaurant/ListFood"
 
 export const routes = {
     common: [
@@ -64,6 +65,15 @@ export const routes = {
             element: <CustomerInfo />
         },
     ],
-    restaurant: [],
+    restaurant: [
+        {
+            path: "/res/home",
+            element: null
+        },
+        {
+            path: "/res/listfood",
+            element: <ListFood />
+        },
+    ],
     admin: []
 }
