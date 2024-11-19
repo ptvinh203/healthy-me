@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Card, Flex, Tag } from "antd";
 import defaultAva from "../../assets/images/default_avatar.png";
 import colors from "../../constants/Colors";
@@ -11,7 +10,7 @@ export default function RestaurantItemCard({ item }) {
                 hoverable
                 style={{
                     borderRadius: '30px',
-                    aspectRatio: '1/1'
+                    aspectRatio: '1/1',
                 }}
             ></Card> :
             <Flex style={{ width: "90%", justifyContent: "flex-start" }}>
@@ -51,6 +50,7 @@ export default function RestaurantItemCard({ item }) {
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
+                        fontWeight: "bold"
                     }}
                     >
                         Thông tin chi tiết
@@ -78,9 +78,10 @@ export default function RestaurantItemCard({ item }) {
                         overflow: 'hidden',
                         lineHeight: "30px",
                         textOverflow: 'ellipsis',
+                        fontWeight: "bold"
                     }}
                     >
-                        Giấy chứng nhận an toàn thực phẩn
+                        Giấy chứng nhận an toàn thực phẩm
                     </p>
                     <span style={{
                         backgroundColor: colors.grayLight,
@@ -97,14 +98,15 @@ export default function RestaurantItemCard({ item }) {
                                 textOverflow: 'ellipsis',
                             }}
                             >
-                                Nhà hàng này chưa cung cấp chứng chỉ                    </p>
+                                Nhà hàng này chưa cung cấp chứng chỉ
+                            </p>
                         ) :
                             (
                                 <div
                                     style={{
                                         height: "43px",
                                         display: 'flex',
-                                        alignItems: 'left',
+                                        alignItems: 'center',
                                         width: "100%",
                                         overflowX: 'auto',
                                         overflowY: 'hidden',
@@ -117,24 +119,20 @@ export default function RestaurantItemCard({ item }) {
                                     }}
                                 >
                                     {item.certification.map((file) => (
-                                        <div
-                                            key={file.uid}
-
-                                        >
+                                        <div key={file.uid}>
                                             <Link to={file} target="_blank" >
                                                 <Tag
                                                     style={{
                                                         cursor: "pointer",
                                                         width: "fit-content",
-                                                        height: "30px",
+                                                        padding: "2px 8px",
                                                         display: 'inline-flex',
-                                                        alignItems: 'left',
+                                                        alignItems: 'center',
                                                         marginRight: "8px", // Space between tags
                                                     }}
                                                 >
                                                     {file.length > 30 ? `${file.slice(0, 30)}...` : file}
                                                 </Tag>
-
                                             </Link>
                                         </div>
                                     ))}

@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Modal } from 'antd';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/svgs/logo.svg';
@@ -16,13 +16,13 @@ import { ROLE_ADMIN, ROLE_CUSTOMER, ROLE_RESTAURANT } from '../constants/Role';
 import { clearTokensFromStorage } from '../utils/storageUtils';
 import { ReducerCases } from '../constants/ReducerCases';
 import { useStateContext } from '../context/StateContext';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-    // eslint-disable-next-line no-unused-vars
-    const [_, dispatch] = useStateContext();
-    const [{ userRole }] = useStateContext();
+    const [modal, modalContextHolder] = Modal.useModal();
+    const [{ account }, dispatch] = useStateContext();
 
     // Menu items for customer
     const customerMenuItems = [
@@ -64,13 +64,13 @@ const Sidebar = () => {
             key: '1',
             icon: <img src={healthIcon} alt="Manage" style={{ width: '16px', height: '16px' }} />,
             label: 'Bảng điều kiển',
-            path: "/res/home"
+            path: "/res/add-manage"
         },
         {
             key: '2',
             icon: <img src={calendarIcon} alt="ManageMeal" style={{ width: '16px', height: '16px' }} />,
             label: 'Quản lý món ăn',
-            path: "/res/meal-manage"
+            path: "/res/add-manage",
         },
         {
             key: '3',
@@ -82,13 +82,13 @@ const Sidebar = () => {
             key: '4',
             icon: <img src={chartpieIcon} alt="ManageOrder" style={{ width: '16px', height: '16px' }} />,
             label: 'Quản lý đơn hàng',
-            path: "/res/order-manage",
+            path: "/res/add-manage",
         },
         {
             key: '5',
             icon: <img src={settingsIcon} alt="Settings" style={{ width: '16px', height: '16px' }} />,
             label: 'Cài đặt',
-            path: "/res/info",
+            path: "/res/add-manage",
         },
         {
             key: '6',
@@ -109,13 +109,13 @@ const Sidebar = () => {
             key: '2',
             icon: <img src={messageIcon} alt="RestaurantManagerment" style={{ width: '16px', height: '16px' }} />,
             label: 'Quản lý nhà hàng',
-            path: "/admin/res-manage"
+            path: "/admin/home"
         },
         {
             key: '3',
             icon: <img src={chartpieIcon} alt="CustomerManagerment" style={{ width: '16px', height: '16px' }} />,
             label: 'Quản lý người dùng',
-            path: "/admin/cus-manage"
+            path: "/admin/home"
         },
         {
             key: '4',
@@ -134,14 +134,24 @@ const Sidebar = () => {
         [ROLE_CUSTOMER]: customerMenuItems,
     };
 
-    const menuItems = menuMap[userRole] ?? customerMenuItems;
+    const menuItems = menuMap[account?.role] ?? customerMenuItems;
 
     const [selectedKey, setSelectedKey] = useState(menuItems.find(item => item.path === location.pathname)?.key ?? '1');
     const handleMenuClick = (item) => {
         if (item.logout) {
-            clearTokensFromStorage();
-            dispatch({ type: ReducerCases.RESET_STATE });
-            navigate('/');
+            modal.confirm({
+                title: 'Đăng xuất',
+                icon: <ExclamationCircleOutlined />,
+                centered: true,
+                content: 'Bạn có chắc chắn muốn đăng xuất khỏi hệ thống không?',
+                okText: 'Đăng xuất',
+                cancelText: 'Hủy',
+                onOk() {
+                    clearTokensFromStorage();
+                    dispatch({ type: ReducerCases.RESET_STATE });
+                    navigate('/');
+                }
+            });
             return;
         }
         setSelectedKey(item.key);
@@ -219,6 +229,7 @@ const Sidebar = () => {
                 style={{ height: 'calc(100% - 64px)', border: 'none' }}
                 items={menuItemsWithStyles}
             />
+            {modalContextHolder}
         </Sider>
     );
 };

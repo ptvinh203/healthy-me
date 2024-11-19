@@ -5,7 +5,6 @@ export const initialState = {
     profile: undefined,
     recommendItems: undefined,
     highRatingItems: undefined,
-    userRole: localStorage.getItem("userRole") ?? null
 }
 
 const reducer = (state, action) => {
@@ -29,12 +28,6 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 highRatingItems: action.data
-            }
-
-        case ReducerCases.SET_USER_ROLE:
-            return {
-                ...state,
-                userRole: action.data,
             }
         case ReducerCases.RESET_STATE:
             return initialState

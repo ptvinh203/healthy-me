@@ -14,7 +14,6 @@ import AdminHome from '../pages/admin/AdminHome';
 import AdminResManage from '../pages/admin/AdminResManage';
 import AdminCusManage from '../pages/admin/AdminCusManage';
 
-import { element } from "prop-types";
 import ResHome from "../pages/restaurant/ResHome";
 import ResMealManage from "../pages/restaurant/ResMealManage";
 import ResAddMeal from "../pages/restaurant/ResAddMeal";

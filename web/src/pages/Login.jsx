@@ -45,18 +45,12 @@ function LoginPage() {
                 dispatch({ type: ReducerCases.SET_ACCOUNT_INFO, data });
                 switch (data?.role) {
                     case ROLE_CUSTOMER:
-                        dispatch({ type: ReducerCases.SET_USER_ROLE, data: data?.role })
-                        localStorage.setItem("userRole", data.role)
                         navigate('/cus/home');
                         break;
                     case ROLE_RESTAURANT:
-                        dispatch({ type: ReducerCases.SET_USER_ROLE, data: data?.role })
-                        localStorage.setItem("userRole", data.role)
-                        navigate('/res/home');
+                        navigate('/res/add-manage');
                         break;
                     case ROLE_ADMIN:
-                        dispatch({ type: ReducerCases.SET_USER_ROLE, data: data?.role })
-                        localStorage.setItem("userRole", data.role)
                         navigate('/admin/home');
                         break;
                 }

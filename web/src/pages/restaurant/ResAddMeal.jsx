@@ -9,10 +9,10 @@ import { showErrorNotification, showSuccessNotification } from "../../utils/comm
 function ResAddMeal() {
     const [lastUploadedImage, setLastUploadedImage] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
-
     const [fileList, setFileList] = useState([]);
     const [form] = Form.useForm();
     const { Option } = Select;
+    const [loading, setLoading] = useState(false);
     const formItemLayout = {
         labelCol: {
             xs: {
@@ -36,21 +36,17 @@ function ResAddMeal() {
     const onFinish = async (credentials) => {
         if (credentials.ingredients)
             credentials.ingredients = credentials.ingredients.split(",").map((item) => item.trim());
-        console.log(credentials.ingredients)
-        console.log("oke", credentials);
+        setLoading(true);
         try {
             const res = await restaurantService.addMeal(credentials);
-            console.log(res)
-
             if (res.is_success) {
-                showSuccessNotification("Thành công", "Tạo món mới thành công");
                 const itemId = res.data.id;
-                console.log(itemId)
                 const formData = new FormData();
                 formData.append("itemId", itemId);
                 for (const file of fileList) {
                     formData.append("file", file);
                     await restaurantService.uploadMealPicture(formData);
+                    showSuccessNotification("Thành công", "Tạo món mới thành công");
                 }
                 form.resetFields();
                 setLastUploadedImage(null);
@@ -60,6 +56,9 @@ function ResAddMeal() {
         }
         catch (error) {
             showErrorNotification("Đăng ký thất bại", error.message);
+        }
+        finally {
+            setLoading(false);
         }
     };
     const onFinishFailed = (errorInfo) => {
@@ -82,16 +81,15 @@ function ResAddMeal() {
         return false; // Prevent automatic upload
     };
 
-    console.log(fileList)
     return (
         <Flex style={{
-            height: "100%", padding: "40px 40px 0px 40px", margin: "40px 20px"
-            , border: `${colors.borderlight} solid 1px`
-            , borderRadius: "15px",
+            height: "calc(100% - 40px)",
+            padding: "40px 40px 0px 40px",
+            margin: "20px",
+            border: `${colors.borderlight} solid 1px`,
+            borderRadius: "15px",
             maxWidth: "1000px",
             minWidth: "500px",
-            maxHeight: "550px"
-
         }}>
             <Flex vertical style={{
                 justifyContent: "flex-start",
@@ -318,7 +316,7 @@ function ResAddMeal() {
                             }}
 
                         >
-                            <Button type="primary" htmlType="submit" style={{ backgroundColor: colors.lightYellow, padding: "0px 30px" }}>
+                            <Button type="primary" htmlType="submit" style={{ backgroundColor: colors.lightYellow, padding: "0px 30px" }} disabled={loading}>
                                 <p style={{ fontSize: "16px", fontWeight: "bold", color: "black", }}>
                                     Lưu
                                 </p>
