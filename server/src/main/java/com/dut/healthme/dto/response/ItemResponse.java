@@ -2,7 +2,6 @@ package com.dut.healthme.dto.response;
 
 import com.dut.healthme.annotation.json.JsonSnakeCaseNaming;
 import com.dut.healthme.entity.Item;
-import com.dut.healthme.entity.Restaurant;
 import com.dut.healthme.entity.Review;
 import com.dut.healthme.entity.enums.ItemType;
 import lombok.Getter;
@@ -27,7 +26,7 @@ public class ItemResponse {
     private String image;
     private Double calo;
     private ItemType type;
-    private Restaurant restaurant;
+    private RestaurantResponse restaurant;
     private List<Review> reviews;
     private Double rating;
 
@@ -42,14 +41,7 @@ public class ItemResponse {
         this.ingredients = item.getIngredients();
         // Initialize and set restaurant details
         if (item.getRestaurant() != null) {
-            this.restaurant = new Restaurant();
-            this.restaurant.setId(item.getRestaurant().getId());
-            this.restaurant.setAddress(item.getRestaurant().getAddress());
-            this.restaurant.setInformation(item.getRestaurant().getInformation());
-            this.restaurant.setCertification(item.getRestaurant().getCertification());
-            this.restaurant.setAccount(item.getRestaurant().getAccount());
-            this.restaurant.setCreatedAt(item.getRestaurant().getCreatedAt());
-            this.restaurant.setUpdatedAt(item.getRestaurant().getUpdatedAt());
+            this.restaurant = new RestaurantResponse().fromEntity(item.getRestaurant());
         }
         this.reviews = item.getReviews();
 
