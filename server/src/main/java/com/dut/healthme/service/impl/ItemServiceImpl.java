@@ -100,4 +100,11 @@ public class ItemServiceImpl implements ItemService {
             throw new BadRequestException(ErrorMessageConstants.SAVE_FILE_FAILED);
         }
     }
+    @Override
+    public List<ItemResponse> getItemsByTypeAndRestaurantId(String type, Account restaurantAccount) {
+        List <Item>items =  this.itemsRepository.findByTypeAndRestaurantId(type, restaurantAccount.getId());
+        return items.stream()
+            .map(item -> new ItemResponse(item))
+            .collect(Collectors.toList());
+    }
 }

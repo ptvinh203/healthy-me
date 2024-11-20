@@ -23,6 +23,7 @@ const colors = {
     grayLight: '#f5f5f5',
     grayMedium: '#bfbfbf',
     grayDark: '#404040',
+    lightYellow: "#F6F7C4"
 };
 
 export default colors;

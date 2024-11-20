@@ -3,7 +3,7 @@ import searchIcon from '../assets/svgs/orderDetail/search.svg';
 import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-export default function ItemSearchHeader({ icon, onItemSearch, value, onChange }) {
+export default function ItemSearchHeader({ icon, onItemSearch, value, onChange, placeholder }) {
     const navigate = useNavigate();
 
     return (
@@ -15,7 +15,7 @@ export default function ItemSearchHeader({ icon, onItemSearch, value, onChange }
                     style={{ padding: '6px 15px', borderRadius: '30px', background: '#F9F7F7', boxShadow: '0px 2px 3px rgba(0, 0, 0, 0.25)' }}
                 >
                     <Input
-                        placeholder="Tìm kiếm sản phẩm của bạn"
+                        placeholder={placeholder ?? "Tìm kiếm sản phẩm của bạn"}
                         allowClear
                         size="large"
                         value={value}
