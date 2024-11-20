@@ -81,7 +81,7 @@ export const routes = {
     ],
     restaurant: [
         {
-            path: "/restaurant/orders",
+            path: "/res/orders",
             element: <RestaurantOrders />
         },
         {
