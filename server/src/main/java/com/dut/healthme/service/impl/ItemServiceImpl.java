@@ -102,7 +102,11 @@ public class ItemServiceImpl implements ItemService {
     }
     @Override
     public List<ItemResponse> getItemsByTypeAndRestaurantId(String type, Account restaurantAccount) {
-        List <Item>items =  this.itemsRepository.findByTypeAndRestaurantId(type, restaurantAccount.getId());
+        Restaurant restaurantFound = this.restaurantsRepository.findByaccountId(restaurantAccount.getId()).orElse(null);
+        if (restaurantFound == null) {
+            throw  new BadRequestException(ErrorMessageConstants.RESTAURANT_NOT_FOUND);
+        }
+        List <Item>items =  this.itemsRepository.findByTypeAndRestaurantId(type, restaurantFound.getId());
         return items.stream()
             .map(item -> new ItemResponse(item))
             .collect(Collectors.toList());
