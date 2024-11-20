@@ -6,6 +6,7 @@ import download from "../../assets/svgs/res/download.svg"
 import { useState } from "react";
 import restaurantService from "../../services/restaurantService";
 import { showErrorNotification, showSuccessNotification } from "../../utils/commonUtils";
+import "../../assets/css/ant_nopadding.css"
 function ResAddMeal() {
     const [lastUploadedImage, setLastUploadedImage] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
@@ -31,7 +32,6 @@ function ResAddMeal() {
             },
         },
     };
-
 
     const onFinish = async (credentials) => {
         if (credentials.ingredients)
@@ -83,19 +83,15 @@ function ResAddMeal() {
 
     return (
         <Flex style={{
-            height: "calc(100% - 40px)",
-            padding: "40px 40px 0px 40px",
-            margin: "20px",
-            border: `${colors.borderlight} solid 1px`,
-            borderRadius: "15px",
-            maxWidth: "1000px",
-            minWidth: "500px",
+            height: "90%", padding: "40px 40px 0px 40px", margin: "40px 20px"
+            , border: `${colors.borderlight} solid 1px`
+            , borderRadius: "15px", overflow: "auto"
         }}>
             <Flex vertical style={{
                 justifyContent: "flex-start",
                 alignItems: "center",
                 width: "200px",
-                maxHeight: "400px"
+                maxHeight: "80%"
             }}>
                 <button style={{
                     display: "flex",
@@ -156,7 +152,10 @@ function ResAddMeal() {
                     </Upload>
                 </Card>
             </Flex>
-            <Flex style={{ margin: "0px 40px", height: "fit-content" }}>  {/* gutter is for spacing between columns */}
+            <Flex style={{
+                margin: "0px 40px", height: "fit-content",
+                maxHeight: "80%",
+            }}>
                 <Form
                     {...formItemLayout}
                     form={form}
@@ -165,6 +164,8 @@ function ResAddMeal() {
                         display: "flex",
                         flexDirection: "row",
                         height: "fit-content"
+                        , maxHeight: "100%",
+                        paddingBottom: "20px",
                     }}
                     initialValues={{
                         variant: 'filled',
@@ -184,7 +185,6 @@ function ResAddMeal() {
                         <Form.Item
                             style={{ margin: 0 }}
                             label="Tên món: "
-
                             name="name"
                             labelCol={{ span: 24, padding: 0 }}
                             wrapperCol={{ span: 24 }}
@@ -295,7 +295,7 @@ function ResAddMeal() {
                                 }
                             ]}
                         >
-                            <Input.TextArea />
+                            <Input.TextArea style={{ resize: "none" }} />
                         </Form.Item>
 
 
@@ -316,7 +316,10 @@ function ResAddMeal() {
                             }}
 
                         >
-                            <Button type="primary" htmlType="submit" style={{ backgroundColor: colors.lightYellow, padding: "0px 30px" }} disabled={loading}>
+                            <Button disabled={loading} type="primary" htmlType="submit" style={{
+                                backgroundColor: colors.lightYellow,
+                                padding: "0px 30px"
+                            }}>
                                 <p style={{ fontSize: "16px", fontWeight: "bold", color: "black", }}>
                                     Lưu
                                 </p>
