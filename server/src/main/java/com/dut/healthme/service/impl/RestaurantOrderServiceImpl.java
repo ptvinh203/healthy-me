@@ -50,6 +50,7 @@ public class RestaurantOrderServiceImpl implements RestaurantOrderService {
                     .createdAt(order.getCreatedAt())
                     .totalAmount(details.size())
                     .customerName(customer.getAccount().getName())
+                    .customerAvatar(customer.getAccount().getAvatar())
                     .customerPhone(customer.getPhoneNumber())
                     .deliveryAddress(customer.getAddress())
                     .build();

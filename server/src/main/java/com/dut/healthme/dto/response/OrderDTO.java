@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class OrderDTO {
+    private String customerAvatar;
     private String customerName;
     private String customerPhone;
     private String deliveryAddress;
