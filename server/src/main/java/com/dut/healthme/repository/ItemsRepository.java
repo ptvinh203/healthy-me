@@ -24,4 +24,9 @@ public interface ItemsRepository extends JpaRepository<Item, Long> {
         nativeQuery = true)
     List<Item> findByNameOrIngredient(@Param("keyword") String keyword);
     Item findByNameAndRestaurantId(@Param("name") String name, @Param("restaurantId") Long restaurantId);
+
+    @Query(value = "SELECT * FROM items i " +
+        "WHERE i.type = CAST(:type AS item_type) AND i.restaurant_id = :restaurantId",
+        nativeQuery = true)
+    List<Item> findByTypeAndRestaurantId(@Param("type") String type, @Param("restaurantId") Long restaurantId);
 }

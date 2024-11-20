@@ -1,6 +1,7 @@
 package com.dut.healthme.controller;
 
 import com.dut.healthme.annotation.auth.CurrentAccount;
+import com.dut.healthme.annotation.auth.PreAuthorizeAdmin;
 import com.dut.healthme.annotation.auth.PreAuthorizeCustomer;
 import com.dut.healthme.annotation.auth.PreAuthorizeRestaurant;
 import com.dut.healthme.common.model.AbstractResponse;
@@ -69,5 +70,15 @@ public class ItemController {
         @CurrentAccount Account restaurantAccount) {
         var item = this.itemService.uploadImage(files,id,restaurantAccount);
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(item));
+    }
+
+    @GetMapping("/GetListFoodBy")
+    @PreAuthorizeRestaurant
+    public ResponseEntity<AbstractResponse> getFoodsByType(
+        @RequestParam("type") String type,
+        @CurrentAccount Account restaurantAccount)
+    {
+        var items = this.itemService.getItemsByTypeAndRestaurantId(type, restaurantAccount);
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(items));
     }
 }

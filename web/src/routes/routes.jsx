@@ -10,12 +10,13 @@ import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
 import LandingPage from "../pages/guest/LandingPage";
 import RegisterPage from "../pages/guest/RegisterPage";
+
 import AdminHome from '../pages/admin/AdminHome';
 import AdminResManage from '../pages/admin/AdminResManage';
 import AdminCusManage from '../pages/admin/AdminCusManage';
 
 import ResHome from "../pages/restaurant/ResHome";
-import ResMealManage from "../pages/restaurant/ResMealManage";
+import ListFood from "../pages/restaurant/ListFood"
 import ResAddMeal from "../pages/restaurant/ResAddMeal";
 import ResOrder from "../pages/restaurant/ResOrder";
 import ResInfo from "../pages/restaurant/ResInfo";
@@ -84,8 +85,8 @@ export const routes = {
             element: <ResHome />
         },
         {
-            path: "/res/meal-manage",
-            element: <ResMealManage />
+            path: "/res/listfood",
+            element: <ListFood />
         },
         {
             path: "/res/add-manage",

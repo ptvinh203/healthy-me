@@ -6,6 +6,7 @@ import healthIcon from '../assets/svgs/sidebar/healthIcon.svg';
 import historyIcon from '../assets/svgs/sidebar/historyIcon.svg';
 import logoutIcon from '../assets/svgs/sidebar/logoutIcon.svg';
 import orderIcon from '../assets/svgs/sidebar/orderIcon.svg';
+import orderManageIcon from '../assets/svgs/sidebar/OrderManageIcon.svg';
 import settingsIcon from '../assets/svgs/sidebar/settingsIcon.svg';
 import calendarIcon from '../assets/svgs/sidebar/calendarIcon.svg';
 import chartpieIcon from '../assets/svgs/sidebar/chartpieIcon.svg';
@@ -18,12 +19,13 @@ import { ReducerCases } from '../constants/ReducerCases';
 import { useStateContext } from '../context/StateContext';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
+
 const { Sider } = Layout;
 
 const Sidebar = () => {
     const [modal, modalContextHolder] = Modal.useModal();
     const [{ account }, dispatch] = useStateContext();
-
+  
     // Menu items for customer
     const customerMenuItems = [
         {
@@ -63,14 +65,14 @@ const Sidebar = () => {
         {
             key: '1',
             icon: <img src={healthIcon} alt="Manage" style={{ width: '16px', height: '16px' }} />,
-            label: 'Bảng điều kiển',
-            path: "/res/add-manage"
+            label: 'Bảng điều khiển',
+            path: '/res/home'
         },
         {
             key: '2',
-            icon: <img src={calendarIcon} alt="ManageMeal" style={{ width: '16px', height: '16px' }} />,
-            label: 'Quản lý món ăn',
-            path: "/res/add-manage",
+            icon: <img src={orderIcon} alt="ItemManage" style={{ width: '16px', height: '16px' }} />,
+            label: 'Quản lí món ăn',
+            path: '/res/listfood'
         },
         {
             key: '3',
@@ -158,8 +160,6 @@ const Sidebar = () => {
         // Navigate to the selected path
         navigate(item.path);
     };
-
-
 
     const menuItemsWithStyles = menuItems.map(item => ({
         key: item.key,

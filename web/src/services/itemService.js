@@ -11,7 +11,12 @@ const itemService = {
         return await apiClient.get(`/item/search`, {
             params: { keyword }
         })
-    }
+    },
+    getItemByTypeAndRestaurant: async (type) => {
+        return await apiClient.get(`/item/listFood`, {
+            params: { type },
+        });
+    },
 }
 
 export default itemService
