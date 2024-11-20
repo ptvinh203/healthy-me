@@ -86,7 +86,6 @@ function ResAddMeal() {
             height: "calc(100% - 40px)",
             padding: "40px 40px 0px 40px",
             margin: "20px",
-            border: `${colors.borderlight} solid 1px`,
             borderRadius: "15px",
             maxWidth: "1000px",
             minWidth: "500px",
