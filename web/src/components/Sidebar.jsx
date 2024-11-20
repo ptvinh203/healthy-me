@@ -25,7 +25,7 @@ const { Sider } = Layout;
 const Sidebar = () => {
     const [modal, modalContextHolder] = Modal.useModal();
     const [{ account }, dispatch] = useStateContext();
-  
+
     // Menu items for customer
     const customerMenuItems = [
         {
