@@ -72,7 +72,7 @@ public class ItemController {
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(item));
     }
 
-    @GetMapping("/GetListFoodBy")
+    @GetMapping("/listFood")
     @PreAuthorizeRestaurant
     public ResponseEntity<AbstractResponse> getFoodsByType(
         @RequestParam("type") String type,
