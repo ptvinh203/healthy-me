@@ -31,6 +31,7 @@ function ListFood() {
                     const res = await itemService.getItemByTypeAndRestaurant(type);
                     const data = res.data;
                     setItems(data);
+                    console.log(data);
                 } catch (error) {
                     console.log(error)
                 } finally {

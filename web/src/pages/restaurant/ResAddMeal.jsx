@@ -84,7 +84,6 @@ function ResAddMeal() {
     return (
         <Flex style={{
             height: "90%", padding: "40px 40px 0px 40px", margin: "40px 20px"
-            , border: `${colors.borderlight} solid 1px`
             , borderRadius: "15px", overflow: "auto"
         }}>
             <Flex vertical style={{
