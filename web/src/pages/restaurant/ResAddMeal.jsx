@@ -41,7 +41,6 @@ function ResAddMeal() {
             const res = await restaurantService.addMeal(credentials);
             if (res.is_success) {
                 const itemId = res.data.id;
-                console.log(itemId)
                 const formData = new FormData();
                 formData.append("itemId", itemId);
                 for (const file of fileList) {
@@ -186,7 +185,6 @@ function ResAddMeal() {
                         <Form.Item
                             style={{ margin: 0 }}
                             label="Tên món: "
-
                             name="name"
                             labelCol={{ span: 24, padding: 0 }}
                             wrapperCol={{ span: 24 }}
@@ -321,7 +319,6 @@ function ResAddMeal() {
                             <Button disabled={loading} type="primary" htmlType="submit" style={{
                                 backgroundColor: colors.lightYellow,
                                 padding: "0px 30px"
-                                , marginLeft: "auto",
                             }}>
                                 <p style={{ fontSize: "16px", fontWeight: "bold", color: "black", }}>
                                     Lưu
