@@ -1,22 +1,26 @@
 package com.dut.healthme.dto.response;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import com.dut.healthme.entity.enums.OrderStatus;
-
+import com.dut.healthme.annotation.json.JsonDateFormat;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class OrderDTO {
-  private Long id;
-  private String customerName;
-  private String customerPhone;
-  private String deliveryAddress;
-  private Double totalAmount;
-  private OrderStatus status;
-  private LocalDateTime createdAt;
-  private List<UpdateOrderStatusRequest> items;
+    private String customerName;
+    private String customerPhone;
+    private String deliveryAddress;
+    private int totalAmount;
+    @JsonDateFormat
+    private Timestamp createdAt;
+    private Long orderId;
+    private Double totalPrice;
+    private List<OrderDetailResponse> orderDetails;
 }
