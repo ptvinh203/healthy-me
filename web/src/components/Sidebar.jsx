@@ -84,7 +84,7 @@ const Sidebar = () => {
             key: '4',
             icon: <img src={chartpieIcon} alt="ManageOrder" style={{ width: '16px', height: '16px' }} />,
             label: 'Quản lý đơn hàng',
-            path: "/res/add-manage",
+            path: "/res/orders",
         },
         {
             key: '5',
