@@ -1,13 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Avatar, Card, Flex, Typography, Tag, Tooltip, DatePicker, Select, Spin } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { Avatar, Card, Flex, Spin, Tag, Typography } from 'antd';
+import { useEffect, useState } from 'react';
 import restaurantOrderService from '../../services/restaurantOrderService';
-import colors from '../../constants/Colors';
-import { formatDateTime, formatPrice } from '../../utils/formatUtils';
-import { Navigate } from 'react-router-dom';
+import { formatPrice } from '../../utils/formatUtils';
 
 const { Text } = Typography;
-const { RangePicker } = DatePicker;
 
 const RestaurantOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -15,9 +11,7 @@ const RestaurantOrders = () => {
     const [filters, setFilters] = useState({
         page: 0,
         size: 10,
-        status: null,
-        fromDate: null,
-        toDate: null
+        status: null
     });
 
     const fetchOrders = async () => {
@@ -36,26 +30,6 @@ const RestaurantOrders = () => {
     useEffect(() => {
         fetchOrders();
     }, [filters]);
-
-    const handleStatusChange = (value) => {
-        setFilters(prev => ({ ...prev, status: value }));
-    };
-
-    const handleDateRangeChange = (dates) => {
-        if (dates) {
-            setFilters(prev => ({
-                ...prev,
-                fromDate: dates[0].format('YYYY-MM-DD'),
-                toDate: dates[1].format('YYYY-MM-DD')
-            }));
-        } else {
-            setFilters(prev => ({
-                ...prev,
-                fromDate: null,
-                toDate: null
-            }));
-        }
-    };
 
     const getStatusColor = (status) => {
         const statusColors = {
@@ -79,65 +53,68 @@ const RestaurantOrders = () => {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
             }}
         >
-            <Flex align="center" justify="space-between">
-                <Flex align="center" gap={16}>
-                    <Avatar size={64} src={order.customerAvatar} />
-                    <Flex vertical gap={4}>
-                        <Text strong>{order.customerName}</Text>
-                        <Text type="secondary">Số điện thoại: {order.phoneNumber}</Text>
-                        <Text type="secondary">
-                            Tổng số món: {order.totalItems}
+            <Flex vertical gap={16}>
+                <Flex align="start" justify="space-between">
+                    <Flex align="center" gap={16}>
+                        <Avatar size={64} src={order.customerAvatar} />
+                        <Flex vertical gap={4}>
+                            <Text strong>{order.customerName}</Text>
+                            <Text type="secondary">Số điện thoại: {order.customerPhone}</Text>
+                            <Text type="secondary">
+                                Tổng số món: {order.totalAmount}
+                            </Text>
+                        </Flex>
+                    </Flex>
+
+                    <Flex vertical align="end" gap={8}>
+                        <Text strong>
+                            Tổng giá: {formatPrice(order.totalPrice)}
                         </Text>
                         <Text type="secondary">
-                            Thời gian đặt hàng: {formatDateTime(order.orderTime)}
+                            Địa chỉ: {order.deliveryAddress}
+                        </Text>
+                        <Text type="secondary">
+                            Thời gian đặt hàng: {order.createdAt}
                         </Text>
                     </Flex>
-                </Flex>
 
-                <Flex vertical align="end" gap={8}>
-                    <Text strong>
-                        Tổng giá: {formatPrice(order.totalPrice)}
-                    </Text>
-                    <Text type="secondary">
-                        Địa chỉ: {order.address}
-                    </Text>
-                    <Text type="secondary">
-                        Thời gian giao hàng: {formatDateTime(order.deliveryTime)}
-                    </Text>
-                    <Tag color={getStatusColor(order.status)}>
-                        {order.status}
+                    <Tag color={getStatusColor('PENDING')}>
+                        Đang chờ
                     </Tag>
                 </Flex>
 
-                <Tooltip title="Xem chi tiết">
-                    <InfoCircleOutlined
-                        style={{ fontSize: 20, color: colors.primary, cursor: 'pointer' }}
-                        onClick={() => Navigate(`/restaurant/orders/${order.id}`)}
-                    />
-                </Tooltip>
+                <div style={{ 
+                    background: '#f5f5f5', 
+                    padding: '12px', 
+                    borderRadius: '6px' 
+                }}>
+                    <Text strong style={{ marginBottom: '8px', display: 'block' }}>
+                        Chi tiết đơn hàng:
+                    </Text>
+                    {order.orderDetails.map((item, index) => (
+                        <Flex 
+                            key={index} 
+                            justify="space-between" 
+                            align="center" 
+                            style={{ 
+                                marginBottom: index !== order.orderDetails.length - 1 ? '8px' : 0 
+                            }}
+                        >
+                            <Text>{item.item_name}</Text>
+                            <Flex gap={24}>
+                                <Text type="secondary">x{item.amount}</Text>
+                            </Flex>
+                        </Flex>
+                    ))}
+                </div>
             </Flex>
         </Card>
     );
 
     return (
-        <div style={{ padding: 24 }}>
-            <Flex justify="space-between" align="center" style={{ marginBottom: 24 }}>
+        <div style={{ padding: 24, height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Flex justify="space-between" align="start" style={{ marginBottom: 24 }}>
                 <Text style={{ fontSize: 24 }}>Danh sách đơn hàng</Text>
-
-                <Flex gap={16}>
-                    <Select
-                        style={{ width: 200 }}
-                        placeholder="Trạng thái đơn hàng"
-                        allowClear
-                        onChange={handleStatusChange}
-                        value={'Chờ xác nhận'}
-                    />
-
-                    <RangePicker
-                        onChange={handleDateRangeChange}
-                        format="DD/MM/YYYY"
-                    />
-                </Flex>
             </Flex>
 
             {loading ? (
@@ -145,7 +122,9 @@ const RestaurantOrders = () => {
                     <Spin size="large" />
                 </Flex>
             ) : (
-                orders.map(renderOrderCard)
+                <div style={{ overflowY: 'auto', flex: 1 }}>
+                    {orders.map(renderOrderCard)}
+                </div>
             )}
         </div>
     );
