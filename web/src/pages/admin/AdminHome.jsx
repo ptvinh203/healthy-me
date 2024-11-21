@@ -59,6 +59,7 @@ function AdminHome() {
                 setIsLoading(true);
                 restaurantService.reject(id)
                     .then((response) => {
+                        setIsListChanged((prev) => !prev);
                         showSuccessNotification(`Từ chối phê duyệt nhà hàng ${response.data.account.name}`);
                     })
                     .catch((error) => { showErrorNotification("Từ chối phê duyệt thất bại", error.message); })
