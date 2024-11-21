@@ -118,19 +118,22 @@ function AdminHome() {
                                                         width: "100px",
                                                         fontSize: '16px'
                                                     }} >
-                                                    Chấp nhận
+                                                    {item.status === "APPROVAL_FAILED" ? "Phê duyệt lại" : "Xác nhận"}
                                                 </Button>
-                                                <Button htmlType="button"
-                                                    onClick={() => { handleReject(item.id) }}
-                                                    style={{
-                                                        padding: "5px 10px", margin: "10px",
-                                                        border: "red solid 1px", borderRadius: "15px",
-                                                        color: colors.primary,
-                                                        width: "100px",
-                                                        fontSize: '16px'
-                                                    }}>
-                                                    Xóa
-                                                </Button>
+                                                {
+                                                    item.status !== "APPROVAL_FAILED" &&
+                                                    <Button htmlType="button"
+                                                        onClick={() => { handleReject(item.id) }}
+                                                        style={{
+                                                            padding: "5px 10px", margin: "10px",
+                                                            border: "red solid 1px", borderRadius: "15px",
+                                                            color: colors.primary,
+                                                            width: "100px",
+                                                            fontSize: '16px'
+                                                        }}>
+                                                        Xóa
+                                                    </Button>
+                                                }
                                             </Flex>
                                         </Flex>
                                     ))}

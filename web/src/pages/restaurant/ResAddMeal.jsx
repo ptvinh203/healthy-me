@@ -36,6 +36,10 @@ function ResAddMeal() {
     const onFinish = async (credentials) => {
         if (credentials.ingredients)
             credentials.ingredients = credentials.ingredients.split(",").map((item) => item.trim());
+        if (fileList.length === 0) {
+            showErrorNotification("Ảnh món ăn", "Vui lòng chọn ảnh cho món ăn mới");
+            return;
+        }
         setLoading(true);
         try {
             const res = await restaurantService.addMeal(credentials);
