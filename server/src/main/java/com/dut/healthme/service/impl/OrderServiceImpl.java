@@ -73,6 +73,8 @@ public class OrderServiceImpl implements OrderService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         return orderMap.entrySet().stream()
+            .sorted((entry1, entry2) -> entry2.getKey().getCreatedAt()
+                .compareTo(entry1.getKey().getCreatedAt()))
             .map(entry -> {
                 Order order = entry.getKey();
                 List<OrderDetailResponse> details = entry.getValue().stream()
