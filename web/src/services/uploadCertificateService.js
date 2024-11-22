@@ -4,6 +4,7 @@ const uploadCertificateService = {
 
     uploadCertificate: async credentials => {
         try {
+            console.log(credentials)
             const response = await apiClient.post('/auth/uploadCertificate', credentials, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -17,8 +18,6 @@ const uploadCertificateService = {
             console.error('Error uploading certificate:', error);
             throw error;
         }
-
-
     },
 }
 export default uploadCertificateService;

@@ -44,6 +44,13 @@ function RegisterResPage() {
             setLoading(false);
         }
     };
+
+    const onEnterPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit(onSubmit)();
+        }
+    };
+
     const handleFileChange = (file) => {
         setFileList((prevList) => [...prevList, file]);
         return false; // Prevent automatic upload
@@ -92,7 +99,7 @@ function RegisterResPage() {
                                 Đăng ký nhà hàng/quán ăn
                             </Title>
                         </Flex>
-                        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }}>
+                        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }} onKeyDown={onEnterPress}>
                             <Controller
                                 name="email"
                                 control={control}
@@ -201,6 +208,7 @@ function RegisterResPage() {
                                     {fileList.length === 0 ? (
                                         <Input
                                             readOnly
+                                            placeholder="Danh sách chứng chỉ"
                                             value=""
                                             style={{
                                                 height: "100%",
@@ -245,14 +253,17 @@ function RegisterResPage() {
                                     <Controller
                                         name="certificate"
                                         control={control}
+
                                         render={() => (
                                             <Upload
                                                 multiple
                                                 beforeUpload={handleFileChange}
                                                 showUploadList={false}
                                                 maxCount={3}
+
                                             >
                                                 <Button
+
                                                     icon={<UploadOutlined />}
                                                     style={{
                                                         backgroundColor: colors.lightBackground,
