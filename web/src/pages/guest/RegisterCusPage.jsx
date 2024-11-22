@@ -49,6 +49,13 @@ function RegisterCusPage() {
             setLoading(false);
         }
     }
+
+    const onEnterPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit(onSubmit)();
+        }
+    };
+
     return (
         <>
             <Flex style={{
@@ -94,7 +101,7 @@ function RegisterCusPage() {
                                     Đăng ký người dùng
                                 </Title>
                             </Flex>
-                            <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }}>
+                            <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }} onKeyDown={onEnterPress}>
                                 <Controller
                                     name="email"
                                     control={control}
@@ -332,7 +339,14 @@ function RegisterCusPage() {
                                     </div>
                                 </Flex>
                                 <Flex style={{ width: "100%", marginTop: "20px" }}>
-                                    <ButtonStyled type={"submit"} cusWidth={"100%"} style={{ width: "100%" }} loading={loading}>
+                                    <ButtonStyled type={"submit"}
+                                        cusWidth={"100%"} style={{ width: "100%" }} loading={loading}
+                                        onKeyPress={(e) => {
+                                            if (e.key === "Enter") {
+                                                form.submit();
+                                            }
+                                        }}
+                                    >
                                         Đăng kí
                                     </ButtonStyled>
                                 </Flex>

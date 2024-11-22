@@ -89,11 +89,12 @@ function LoginPage() {
                                         Người dùng
                                     </Button>
                                 </Link>
-                                <Button type="primary" shape="round" size="large" style={{ marginRight: '16px' }}>
-                                    <Link to="/register/restaurant">
+                                <Link to="/register/restaurant">
+                                    <Button type="primary" shape="round" size="large" style={{ marginRight: '16px' }}>
                                         Nhà hàng/Quán ăn
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
+
                             </div>
                         </div>
                     </Col>

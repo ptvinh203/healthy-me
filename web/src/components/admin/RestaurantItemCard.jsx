@@ -96,6 +96,8 @@ export default function RestaurantItemCard({ item }) {
                                 overflow: 'hidden',
                                 lineHeight: "30px",
                                 textOverflow: 'ellipsis',
+                                color: "red",
+                                fontWeight: "bold"
                             }}
                             >
                                 Nhà hàng này chưa cung cấp chứng chỉ
