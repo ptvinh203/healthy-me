@@ -8,10 +8,14 @@ import com.dut.healthme.dto.response.AccountInfo;
 import com.dut.healthme.dto.response.CustomerInfoResponse;
 import com.dut.healthme.entity.Account;
 import com.dut.healthme.entity.Customer;
+import com.dut.healthme.entity.Order;
+import com.dut.healthme.entity.OrderDetail;
 import com.dut.healthme.entity.enums.Gender;
 import com.dut.healthme.entity.enums.HealthGoal;
 import com.dut.healthme.repository.AccountsRepository;
 import com.dut.healthme.repository.CustomersRepository;
+import com.dut.healthme.repository.OrderDetailsRepository;
+import com.dut.healthme.repository.OrdersRepository;
 import com.dut.healthme.service.CloudinaryService;
 import com.dut.healthme.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomersRepository customerRepository;
     private final AccountsRepository accountRepository;
     private final CloudinaryService cloudinaryService;
+    private final OrderDetailsRepository orderDetailsRepository;
 
     @Override
     public CustomerInfoResponse getCustomerInfo(Long accountId) {
@@ -177,6 +183,19 @@ public class CustomerServiceImpl implements CustomerService {
         customer = customerRepository.save(customer);
 
         return customer.getAddress();
+    }
+
+    @Override
+    public Double getCaloIn(Account account) {
+        LocalDate dateNow = LocalDate.now();
+        List<OrderDetail> orderDetailList = this.orderDetailsRepository.findAllByAccountIdAndCreatedDate(account.getId(),dateNow);
+        if (orderDetailList.isEmpty())
+            return 0.0;
+        Double caloIn = 0.0;
+        for (OrderDetail orderDetail : orderDetailList) {
+            caloIn += orderDetail.getItem().getCalo() * orderDetail.getAmount();
+        }
+        return caloIn;
     }
 
 }

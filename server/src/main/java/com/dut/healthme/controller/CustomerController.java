@@ -1,6 +1,7 @@
 package com.dut.healthme.controller;
 
 import com.dut.healthme.annotation.auth.CurrentAccount;
+import com.dut.healthme.annotation.auth.PreAuthorizeCustomer;
 import com.dut.healthme.common.model.AbstractResponse;
 import com.dut.healthme.dto.request.HealthGoalRequest;
 import com.dut.healthme.dto.request.UpdateCustomerInfoRequest;
@@ -67,5 +68,10 @@ public class CustomerController {
                                                          @RequestParam MultipartFile avatar) {
         AccountInfo updatedCustomer = customerService.updateAvatar(account, avatar);
         return ResponseEntity.ok(AbstractResponse.successWithoutMeta(updatedCustomer));
+    }
+    @GetMapping("/caloIn")
+    @PreAuthorizeCustomer
+    public ResponseEntity<AbstractResponse> getCaloIn(@CurrentAccount Account account) {
+        return ResponseEntity.ok(AbstractResponse.successWithoutMeta(customerService.getCaloIn(account)));
     }
 }
