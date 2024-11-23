@@ -21,4 +21,6 @@ public interface CustomerService {
     String getCustomerAddress(Account account);
 
     String updateAddress(Account account, String address);
+
+    Double getCaloIn(Account account);
 }

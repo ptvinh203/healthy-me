@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Button, Input, Modal, Select } from 'antd';
 import { useState } from 'react';
 import BloodIcon from '../../assets/svgs/home/blood.svg';
@@ -39,7 +38,6 @@ function IndicatorCard({ indicator, activity_index, onChangeActivityIndex }) {
     // State for controlling modal visibility
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editedValue, setEditedValue] = useState(value);
-    const [selectedActivities, setSelectedActivities] = useState(activity_index || 0);
     const [tempSelectedActivities, setTempSelectedActivities] = useState(activity_index || 0); // Temporary state for modal changes
 
     // Function to show modal
@@ -64,7 +62,6 @@ function IndicatorCard({ indicator, activity_index, onChangeActivityIndex }) {
 
     // Function to save changes and call onChangeActivityIndex
     const handleSaveChanges = () => {
-        setSelectedActivities(tempSelectedActivities);
         onChangeActivityIndex(tempSelectedActivities); // Only update when Save button is clicked
         setIsModalVisible(false);
     };
@@ -114,7 +111,8 @@ function IndicatorCard({ indicator, activity_index, onChangeActivityIndex }) {
                     type="number"
                     value={editedValue}
                     onChange={handleValueChange}
-                    style={{ marginBottom: '10px', width: '150px' }}
+                    disabled
+                    style={{ marginBottom: '10px', width: '150px', backgroundColor: 'white', color: 'black' }}
                     suffix={unit} // Display unit as suffix
                 />
                 <p>Loại chỉ số: {type}</p>
@@ -190,7 +188,7 @@ function IndicatorCard({ indicator, activity_index, onChangeActivityIndex }) {
                 visible={isModalVisible}
                 onCancel={handleCloseModal}
                 footer={
-                    <Button type="primary" onClick={handleSaveChanges}>Lưu thay đổi</Button>
+                    name === 'Lượng calo đốt cháy' && <Button type="primary" onClick={handleSaveChanges}>Lưu thay đổi</Button>
                 }
                 centered
             >

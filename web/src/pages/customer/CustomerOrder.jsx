@@ -1,5 +1,5 @@
 import { Col, Flex, Row } from "antd"
-import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg"
+import shoppingCartIcon from "../../assets/images/grocery_store.png"
 import itemIcon from "../../assets/svgs/order/itemIcon.svg"
 import colors from "../../constants/Colors"
 import { useEffect, useState } from "react"
@@ -117,7 +117,7 @@ export default function CustomerOrder() {
                                 Không có sản phẩm nào
                             </Flex>
                         ) : (
-                            <Row gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}>
+                            <Row style={{width: '100%'}} gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}>
                                 {searchResults.map((item, idx) => (
                                     <Col key={idx} span={4}>
                                         <OrderItemCart item={item} />

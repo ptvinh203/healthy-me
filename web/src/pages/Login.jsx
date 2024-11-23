@@ -48,7 +48,7 @@ function LoginPage() {
                         navigate('/cus/home');
                         break;
                     case ROLE_RESTAURANT:
-                        navigate('/res/home');
+                        navigate('/res/add-manage');
                         break;
                     case ROLE_ADMIN:
                         navigate('/admin/home');
@@ -89,11 +89,12 @@ function LoginPage() {
                                         Người dùng
                                     </Button>
                                 </Link>
-                                <Button type="primary" shape="round" size="large" style={{ marginRight: '16px' }}>
-                                    <Link to="/register/restaurant">
+                                <Link to="/register/restaurant">
+                                    <Button type="primary" shape="round" size="large" style={{ marginRight: '16px' }}>
                                         Nhà hàng/Quán ăn
-                                    </Link>
-                                </Button>
+                                    </Button>
+                                </Link>
+
                             </div>
                         </div>
                     </Col>
@@ -110,6 +111,7 @@ function LoginPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 style={{ marginBottom: 10, width: 350, height: 45, borderRadius: 8, backgroundColor: '#EAF0F7' }}
                                 suffix={<Button type="text" shape="circle" icon={<CloseOutlined style={{ color: '#667085' }} onClick={clearInput} />} />}
+                                onPressEnter={Login}
                             />
 
                             <Input.Password
@@ -128,6 +130,7 @@ function LoginPage() {
                                         {visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
                                     </span>
                                 )}
+                                onPressEnter={Login}
                             />
 
                             <div style={{ textAlign: 'right', marginBottom: 24, marginLeft: 210 }}>

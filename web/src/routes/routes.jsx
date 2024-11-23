@@ -1,15 +1,26 @@
 import CustomerHome from "../pages/customer/CustomerHome";
+import CustomerInfo from "../pages/customer/CustomerInfo";
 import CustomerOrder from "../pages/customer/CustomerOrder";
 import CustomerDetail from "../pages/customer/CustomerOrderDetail";
-import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
+import CustomerOrderHistory from "../pages/customer/CustomerOrderHistory";
 import CustomerPayment from "../pages/customer/CustomerPayment";
+import CustomerShoppingCart from "../pages/customer/CustomerShoppingCart";
 import OrderSuccess from "../pages/customer/OrderSuccess";
 import PageNotFound from "../pages/error/PageNotFound";
 import Unauthorized from "../pages/error/Unauthorized";
-import Login from "../pages/Login";
 import LandingPage from "../pages/guest/LandingPage";
 import RegisterPage from "../pages/guest/RegisterPage";
-import CustomerInfo from "../pages/customer/CustomerInfo";
+import AdminHome from '../pages/admin/AdminHome';
+import AdminResManage from '../pages/admin/AdminResManage';
+import AdminCusManage from '../pages/admin/AdminCusManage';
+
+import ResHome from "../pages/restaurant/ResHome";
+import ListFood from "../pages/restaurant/ListFood"
+import ResAddMeal from "../pages/restaurant/ResAddMeal";
+import ResOrder from "../pages/restaurant/ResOrder";
+import ResInfo from "../pages/restaurant/ResInfo";
+import LoginPage from "../pages/Login";
+import RestaurantOrders from "../pages/restaurant/RestaurantOrders";
 
 export const routes = {
     common: [
@@ -23,7 +34,7 @@ export const routes = {
         },
         {
             path: "/login",
-            element: <Login />
+            element: <LoginPage />
         },
         {
             path: "/unauthorized",
@@ -63,7 +74,49 @@ export const routes = {
             path: "/cus/info",
             element: <CustomerInfo />
         },
+        {
+            path: "/cus/order/history",
+            element: <CustomerOrderHistory />
+        }
     ],
-    restaurant: [],
-    admin: []
+    restaurant: [
+        {
+            path: "/res/orders",
+            element: <RestaurantOrders />
+        },
+        {
+            path: "/res/home",
+            element: <ResHome />
+        },
+        {
+            path: "/res/listfood",
+            element: <ListFood />
+        },
+        {
+            path: "/res/add-manage",
+            element: <ResAddMeal />
+        },
+        {
+            path: "/res/order-manage",
+            element: <ResOrder />
+        },
+        {
+            path: "/res/info",
+            element: <ResInfo />
+        }
+    ],
+    admin: [
+        {
+            path: "/admin/home",
+            element: <AdminHome />
+        },
+        {
+            path: "/admin/res-manage",
+            element: <AdminResManage />
+        },
+        {
+            path: "/admin/cus-manage",
+            element: <AdminCusManage />
+        }
+    ]
 }
