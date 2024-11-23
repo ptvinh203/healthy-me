@@ -18,7 +18,7 @@ export default function RestaurantItemCard({ item}) {
                     <img
                         alt="Item image"
                         src={item.image}
-                        style={{ borderRadius: '30px', aspectRatio: '4/3', marginBottom: '10px', objectFit: 'cover', objectPosition: 'center center' }}
+                        style={{ width: '100%', height: 'auto', borderRadius: '30px', aspectRatio: '4/3', marginBottom: '10px', objectFit: 'cover', objectPosition: 'center center' }}
                     />
                     <Rate
                         style={{

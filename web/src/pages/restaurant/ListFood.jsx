@@ -2,7 +2,6 @@ import { Card, Col, Flex, Row } from "antd"
 import { useEffect, useState } from 'react';
 import itemService from '../../services/itemService';
 import ItemSearchHeader from '../../components/ItemSearchHeader';
-import React from 'react';
 import fast_food from "../../assets/images/fast_food.png";
 import fast_food_icon from "../../assets/images/fast_food_icon.png";
 import main_food from "../../assets/images/main_food.png";
@@ -71,49 +70,55 @@ function ListFood() {
                 <Row gutter={64} style={{marginTop: 50}}>
                     <Col span={7}>
                         <Card hoverable style={{display: 'flex', justifyContent: 'center'}} onClick={() => setType("FAST_FOOD")}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <div style={{display: 'flex', width: 70, height: 70, marginRight: 10, backgroundColor: "#F8DEBD", borderRadius: 10,
-                                justifyContent: 'center', alignItems: 'center'
-                            }}>
-                                <img alt="Icon" src={fast_food_icon} style={{ width: 50, height: 40 }} />
-                            </div>
-                            <Meta title="Đồ ăn nhanh" style={{marginLeft: 30}}/>
-                            </div>
-                            <div style={{ width: '100%', marginTop: 10 }}>
-                                <img alt="Đồ ăn nhanh" src={fast_food} style={{ width: '100%', maxWidth: '100%', height: 170, objectFit: 'contain' }} />
+                            <div  style={{display: 'flex', flexDirection: 'column'}}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <div style={{display: 'flex', width: 70, height: 70, marginRight: 10, backgroundColor: "#F8DEBD", borderRadius: 10,
+                                        justifyContent: 'center', alignItems: 'center', marginLeft: 10
+                                    }}>
+                                        <img alt="Icon" src={fast_food_icon} style={{ width: 50, height: 40 }} />
+                                    </div>
+                                    <Meta title="Đồ ăn nhanh" style={{marginLeft: 20}}/>
+                                </div>
+                                <div style={{ width: '100%', marginTop: 10 }}>
+                                    <img alt="Đồ ăn nhanh" src={fast_food} style={{ width: '100%', maxWidth: '100%', height: 170, objectFit: 'contain' }} />
+                                </div>
                             </div>
                         </Card>
                     </Col>
                     <Col span={7}>
                         <Card hoverable style={{display: 'flex', justifyContent: 'center'}} onClick={() => setType("MAIN_FOOD")}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <div style={{display: 'flex', width: 70, height: 70, marginRight: 10, backgroundColor: "#F8DEBD", borderRadius: 10,
-                                justifyContent: 'center', alignItems: 'center'
-                            }}>
-                                <img alt="Icon" src={main_food_icon} style={{ width: 50, height: 50 }} />
-                            </div>
-                            <Meta title="Món chính" style={{marginLeft: 30}}/>
-                            </div>
-                            <div style={{ width: '100%', marginTop: 10 }}>
-                                <img alt="Món chính" src={main_food} style={{ width: '100%', maxWidth: '100%', height: 170, objectFit: 'contain' }} />
+                            <div  style={{display: 'flex', flexDirection: 'column'}}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <div style={{display: 'flex', width: 70, height: 70, marginRight: 10, backgroundColor: "#F8DEBD", borderRadius: 10,
+                                        justifyContent: 'center', alignItems: 'center', marginLeft: 10
+                                    }}>
+                                        <img alt="Icon" src={main_food_icon} style={{ width: 50, height: 50 }} />
+                                    </div>
+                                    <Meta title="Món chính" style={{marginLeft: 20}}/>
+                                </div>
+                                <div style={{ width: '100%', marginTop: 10 }}>
+                                    <img alt="Món chính" src={main_food} style={{ width: '100%', maxWidth: '100%', height: 170, objectFit: 'contain' }} />
+                                </div>
                             </div>
                         </Card>
                     </Col>
                     <Col span={7}>
                         <Card hoverable style={{display: 'flex', justifyContent: 'center'}} onClick={() => setType("DRINK")}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <div style={{display: 'flex', width: 70, height: 70, marginRight: 10, backgroundColor: "#F8DEBD", borderRadius: 10,
-                                justifyContent: 'center', alignItems: 'center'
-                            }}>
-                                <img alt="Icon" src={drink_icon} style={{ width: 50, height: 50 }} />
-                            </div>
-                            <Meta title="Đồ uống" style={{marginLeft: 30}}/>
-                            </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: 15, height: 170 }}>
-                                <img alt="Ảnh 1" src={drink1} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
-                                <img alt="Ảnh 2" src={drink2} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
-                                <img alt="Ảnh 3" src={drink3} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
-                                <img alt="Ảnh 4" src={drink4} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
+                            <div  style={{display: 'flex', flexDirection: 'column'}}>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <div style={{display: 'flex', width: 70, height: 70, marginRight: 10, backgroundColor: "#F8DEBD", borderRadius: 10,
+                                        justifyContent: 'center', alignItems: 'center', marginLeft: 10
+                                    }}>
+                                        <img alt="Icon" src={drink_icon} style={{ width: 50, height: 50 }} />
+                                    </div>
+                                    <Meta title="Đồ uống" style={{marginLeft: 20}}/>
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: 15, height: 170 }}>
+                                    <img alt="Ảnh 1" src={drink1} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
+                                    <img alt="Ảnh 2" src={drink2} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
+                                    <img alt="Ảnh 3" src={drink3} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
+                                    <img alt="Ảnh 4" src={drink4} style={{ width: '100%', height: 80, borderRadius: '50%', objectFit: 'cover' }} />
+                                </div>
                             </div>
                         </Card>
                     </Col>
@@ -131,13 +136,13 @@ function ListFood() {
                 </Col>
                 <Row style={{ marginTop: '15px' }}>
                     {isLoading ? (
-                        <Loading children={undefined} />
+                        <Loading />
                     ) : items.length === 0 ? (
                         <Flex align="center" justify="center" style={{ fontSize: '30px' }}>
                             Không có sản phẩm nào
                         </Flex>
                     ) : (
-                        <Row gutter={items.length >= 5 ? [10, 20] : [30, 20]} justify={items.length >= 5 ? 'space-between' : 'start'}>
+                        <Row style={{width: '100%'}} gutter={items.length >= 5 ? [10, 20] : [30, 20]} justify={items.length >= 5 ? 'space-between' : 'start'}>
                             {items.map((item, idx) => (
                                 <Col key={idx} span={4}>
                                     <RestaurantItemCard item={item}/>

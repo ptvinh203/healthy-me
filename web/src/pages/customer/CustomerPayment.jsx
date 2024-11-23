@@ -1,7 +1,7 @@
 import { Button, Col, Flex, Input, message, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg";
+import shoppingCartIcon from "../../assets/images/grocery_store.png"
 import ItemSearchHeader from "../../components/ItemSearchHeader";
 import Loading from "../../components/Loading";
 import OrderItemCart from "../../components/OrderItemCart";
