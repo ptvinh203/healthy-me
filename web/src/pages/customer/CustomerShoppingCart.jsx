@@ -9,7 +9,7 @@ import "../../assets/css/ant_checkbox.css";
 import { handlePrice, showErrorNotification, showInfoNotification } from "../../utils/commonUtils";
 import shoppingCartService from "../../services/shoppingCartService";
 import { searchItems } from '../../services/searchService';
-import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg"
+import shoppingCartIcon from "../../assets/images/grocery_store.png"
 import OrderItemCart from "../../components/OrderItemCart";
 
 export default function CustomerShoppingCart() {
@@ -22,6 +22,7 @@ export default function CustomerShoppingCart() {
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isShowSearchResults, setIsShowSearchResults] = useState(false);
+    const [loadCart, setLoadCart] = useState(false);
 
     useEffect(() => {
         const fetchCarts = async () => {
@@ -54,8 +55,11 @@ export default function CustomerShoppingCart() {
             cancelText: 'Hủy',
             onOk() {
                 shoppingCartService.deleteShoppingCart(cart.id)
-                    .then(() => { setCarts(carts.filter((c) => c.id !== cart.id)); })
+                    .then(() => { setCarts(carts.filter((c) => c.id !== cart.id));
+                        setLoadCart(!loadCart);
+                     })
                     .catch((error) => { showErrorNotification("Xóa thất bại", error.message); })
+                    .finally(() => {setLoadCart(!loadCart); });
             }
         });
     }
@@ -121,6 +125,7 @@ export default function CustomerShoppingCart() {
                 onItemSearch={handleSearch}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                loadCart = {loadCart}
             />
             <Flex style={{ height: "100%", width: "100%", justifyContent: "flex-start" }} vertical>
                 {isShowSearchResults && (

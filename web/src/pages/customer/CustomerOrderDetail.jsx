@@ -3,7 +3,7 @@ import orderIcon from '../../assets/svgs/orderDetail/order.svg';
 import { useEffect, useState } from 'react';
 import itemService from '../../services/itemService';
 import ItemSearchHeader from '../../components/ItemSearchHeader';
-import shoppingCartIcon from "../../assets/svgs/order/shoppingCartIcon.svg"
+import shoppingCartIcon from "../../assets/images/grocery_store.png"
 import { useNavigate, useParams } from 'react-router-dom';
 import { handlePrice, showErrorNotification, showSuccessNotification } from '../../utils/commonUtils';
 import { useStateContext } from '../../context/StateContext';
@@ -27,6 +27,7 @@ function CustomerDetail() {
     const [isShowSearchResults, setIsShowSearchResults] = useState(false);
     const [addToCartLoading, setAddToCartLoading] = useState(false);
     const [buyItemLoading, setBuyItemLoading] = useState(false);
+    const [loadCart, setLoadCart] = useState(false);
 
     useEffect(() => {
         const getItemInfo = async () => {
@@ -47,11 +48,13 @@ function CustomerDetail() {
             if (is_success) {
                 setQuantity(1)
                 showSuccessNotification('Thêm vào giỏ hàng thành công')
+                setLoadCart(!loadCart);
             }
         } catch (error) {
             showErrorNotification(error.message)
         } finally {
-            setAddToCartLoading(false)
+            setAddToCartLoading(false);
+            setLoadCart(!loadCart);
         }
     }
 
@@ -88,6 +91,7 @@ function CustomerDetail() {
                 onItemSearch={handleSearch}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                loadCart={loadCart}
             />
             {isShowSearchResults && (
                 <div>
@@ -148,6 +152,7 @@ function CustomerDetail() {
                                     borderRadius: 35,
                                     backgroundColor: 'whitesmoke',
                                     border: '2px solid #3A8EF6',
+                                    overflowY: 'auto',
                                 }}
                                 title={
                                     <div style={{ padding: "20px 10px" }}>
@@ -160,9 +165,9 @@ function CustomerDetail() {
                                         <Rate value={item.rating ?? 0} style={{ marginRight: '8px' }} disabled />
                                     </div>
                                 }
-                                bodyStyle={{ padding: '0px 34px' }} // Chỉ áp dụng padding cho body
+                                bodyStyle={{ display: 'flex', flexDirection: 'column', padding: '0px 34px' }} // Chỉ áp dụng padding cho body
                             >
-                                <p style={{ width: '80%', height: '100px' }}>
+                                <p style={{ width: '80%', maxHeight: '100px', marginBottom: 10 }}>
                                     {item.description}
                                 </p>
                                 <p style={{ padding: '10px 0px' }}>Tên nhà hàng/quán ăn: {item.restaurant.account.name}</p>
@@ -198,6 +203,7 @@ function CustomerDetail() {
                                     style={{
                                         padding: '5px 0',
                                         overflowX: 'auto',
+                                        minHeight: 180,
                                         whiteSpace: 'nowrap',
                                         scrollbarWidth: 'thin', // For Firefox
                                         scrollbarColor: '#666666 transparent', // For Firefox
