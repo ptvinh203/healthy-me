@@ -42,6 +42,7 @@ public class CustomerInfoResponse extends AbstractDTO<Customer> {
     private String name;
     private String email;
     private String avatar;
+    private Double caloriesConsumed;
 
     @Override
     public CustomerInfoResponse fromEntity(Customer entity) {

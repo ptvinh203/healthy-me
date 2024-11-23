@@ -8,14 +8,12 @@ import com.dut.healthme.dto.response.AccountInfo;
 import com.dut.healthme.dto.response.CustomerInfoResponse;
 import com.dut.healthme.entity.Account;
 import com.dut.healthme.entity.Customer;
-import com.dut.healthme.entity.Order;
 import com.dut.healthme.entity.OrderDetail;
 import com.dut.healthme.entity.enums.Gender;
 import com.dut.healthme.entity.enums.HealthGoal;
 import com.dut.healthme.repository.AccountsRepository;
 import com.dut.healthme.repository.CustomersRepository;
 import com.dut.healthme.repository.OrderDetailsRepository;
-import com.dut.healthme.repository.OrdersRepository;
 import com.dut.healthme.service.CloudinaryService;
 import com.dut.healthme.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerInfo.setSuggestedCalorieIntake(calculateCalorieIntake(customerInfo.getWeight(),
             customerInfo.getHeight(), customerInfo.getHealthGoal(), customerInfo.getDateOfBirth(), customerInfo.getGender(), customerInfo.getActivityIndex()));
 
+        customerInfo.setCaloriesConsumed(getCaloIn(customer.getAccount()));
         return customerInfo;
     }
 
@@ -188,7 +187,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Double getCaloIn(Account account) {
         LocalDate dateNow = LocalDate.now();
-        List<OrderDetail> orderDetailList = this.orderDetailsRepository.findAllByAccountIdAndCreatedDate(account.getId(),dateNow);
+        List<OrderDetail> orderDetailList = this.orderDetailsRepository.findAllByAccountIdAndCreatedDate(account.getId(), dateNow);
         if (orderDetailList.isEmpty())
             return 0.0;
         Double caloIn = 0.0;

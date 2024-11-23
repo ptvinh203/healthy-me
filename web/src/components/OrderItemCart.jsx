@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Button, Card, Flex, Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 import { handlePrice } from "../utils/commonUtils";
@@ -24,7 +23,7 @@ export default function OrderItemCart({ item, onOrder, isShowNameOnly }) {
             <Flex vertical style={{ cursor: 'pointer' }} onClick={handleItemOnClick}>
                 <Flex vertical style={{ textAlign: 'center', position: 'relative' }}>
                     <img
-                        alt="Item image"
+                        alt={item.name}
                         src={item.image}
                         style={{ borderRadius: '30px', aspectRatio: '4/3', marginBottom: '10px', objectFit: 'cover', objectPosition: 'center center' }}
                     />

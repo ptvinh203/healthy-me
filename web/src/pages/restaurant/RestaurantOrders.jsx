@@ -50,10 +50,11 @@ const RestaurantOrders = () => {
             style={{
                 marginBottom: 16,
                 borderRadius: 8,
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                width: '100%'
             }}
         >
-            <Flex vertical gap={16}>
+            <Flex vertical gap={16} style={{ width: '100%' }}>
                 <Flex align="start" justify="space-between">
                     <Flex align="center" gap={16}>
                         <Avatar size={64} src={order.customerAvatar} />
@@ -83,21 +84,21 @@ const RestaurantOrders = () => {
                     </Tag>
                 </Flex>
 
-                <div style={{ 
-                    background: '#f5f5f5', 
-                    padding: '12px', 
-                    borderRadius: '6px' 
+                <div style={{
+                    background: '#f5f5f5',
+                    padding: '12px',
+                    borderRadius: '6px'
                 }}>
                     <Text strong style={{ marginBottom: '8px', display: 'block' }}>
                         Chi tiết đơn hàng:
                     </Text>
                     {order.orderDetails.map((item, index) => (
-                        <Flex 
-                            key={index} 
-                            justify="space-between" 
-                            align="center" 
-                            style={{ 
-                                marginBottom: index !== order.orderDetails.length - 1 ? '8px' : 0 
+                        <Flex
+                            key={index}
+                            justify="space-between"
+                            align="center"
+                            style={{
+                                marginBottom: index !== order.orderDetails.length - 1 ? '8px' : 0
                             }}
                         >
                             <Text>{item.item_name}</Text>

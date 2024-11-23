@@ -103,7 +103,7 @@ function CustomerDetail() {
                             Quay lại
                         </span>
                     </Col>
-                    <Row style={{ marginTop: '15px' }}>
+                    <Row style={{ marginTop: '15px', width: '100%' }}>
                         {isLoading ? (
                             <Loading />
                         ) : searchResults.length === 0 ? (
@@ -111,9 +111,14 @@ function CustomerDetail() {
                                 Không có sản phẩm nào
                             </Flex>
                         ) : (
-                            <Row gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}>
+                            <Row gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}
+                                style={{ width: '100%' }}
+                            >
                                 {searchResults.map((item, idx) => (
-                                    <Col key={idx} span={4}>
+                                    <Col key={idx} span={4} onClick={() => {
+                                        setItem(item);
+                                        setIsShowSearchResults(false);
+                                    }}>
                                         <OrderItemCart item={item} />
                                     </Col>
                                 ))}

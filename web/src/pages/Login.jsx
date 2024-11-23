@@ -111,6 +111,7 @@ function LoginPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 style={{ marginBottom: 10, width: 350, height: 45, borderRadius: 8, backgroundColor: '#EAF0F7' }}
                                 suffix={<Button type="text" shape="circle" icon={<CloseOutlined style={{ color: '#667085' }} onClick={clearInput} />} />}
+                                onPressEnter={Login}
                             />
 
                             <Input.Password
@@ -129,6 +130,7 @@ function LoginPage() {
                                         {visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
                                     </span>
                                 )}
+                                onPressEnter={Login}
                             />
 
                             <div style={{ textAlign: 'right', marginBottom: 24, marginLeft: 210 }}>
