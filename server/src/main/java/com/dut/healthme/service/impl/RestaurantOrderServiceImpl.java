@@ -54,8 +54,9 @@ public class RestaurantOrderServiceImpl implements RestaurantOrderService {
                     .customerPhone(customer.getPhoneNumber())
                     .deliveryAddress(customer.getAddress())
                     .build();
-            }).toList();
-
+            })
+            .sorted((o1, o2) -> o2.getCreatedAt().compareTo(o1.getCreatedAt()))
+            .toList();
         return new PageImpl<>(result, pageable, orderDetails.getTotalElements());
     }
 }

@@ -9,11 +9,11 @@ SELECT setval('accounts_id_seq', (SELECT MAX(id) FROM accounts), true); -- Reset
 -- Restaurants
 INSERT INTO restaurants (id, information, certification, phone_number, address, account_id, created_at, updated_at, deleted_at)
 VALUES
-    (1,  'Chuyên hải sản tươi sống, phục vụ các món ăn đậm vị biển', array['Chứng nhận an toàn vệ sinh thực phẩm'], '02363778999', 'Lô 14 Hoàng Sa, Phước Mỹ, Sơn Trà, Đà Nẵng', 1, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (2,  'Nhà hàng sang trọng phục vụ các món ăn truyền thống Việt Nam', array['Chứng nhận nhà hàng tiêu chuẩn 4 sao'], '02363774666', '26 Đống Đa, Thạch Thang, Hải Châu, Đà Nẵng', 2, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (3,  'Chuyên các món đặc sản miền Trung, không gian đậm chất làng quê', array['Chứng nhận chất lượng dịch vụ'], '02363772233', '119 Lê Lợi, Hải Châu 1, Hải Châu, Đà Nẵng', 3, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (4,  'Nhà hàng ven biển chuyên phục vụ hải sản và món Việt', array['Chứng nhận dịch vụ 5 sao'], '02363773111', '54 An Thượng 1, Mỹ An, Ngũ Hành Sơn, Đà Nẵng', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (5,  'Không gian cổ điển phục vụ các món ăn đậm đà hương vị truyền thống Việt', array['Chứng nhận nhà hàng chuẩn 5 sao'], '02363772000', '4 Bạch Đằng, Hải Châu, Đà Nẵng', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL);
+    (1,  'Chuyên hải sản tươi sống, phục vụ các món ăn đậm vị biển', array['https://giayphepkinhdoanhkhachsan.com/wp-content/uploads/2021/01/giay-phep-an-toan-thuc-pham-cho-nha-hang-moi-2021.png'], '02363778999', 'Lô 14 Hoàng Sa, Phước Mỹ, Sơn Trà, Đà Nẵng', 1, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (2,  'Nhà hàng sang trọng phục vụ các món ăn truyền thống Việt Nam', array['https://tuvanluat.vn/maytech_data/uploads/2020/02/C%E1%BA%A5p-Gi%E1%BA%A5y-ch%E1%BB%A9ng-nh%E1%BA%ADn-%C4%91%E1%BB%A7-%C4%91i%E1%BB%81u-ki%E1%BB%87n-an-to%C3%A0n-th%E1%BB%B1c-ph%E1%BA%A9m-cho-nh%C3%A0-h%C3%A0ng.png'], '02363774666', '26 Đống Đa, Thạch Thang, Hải Châu, Đà Nẵng', 2, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (3,  'Chuyên các món đặc sản miền Trung, không gian đậm chất làng quê', array['https://accgroup.vn/wp-content/uploads/2021/08/chung-nhan-an-toan-thuc-pham-xuat-khau-mediumlarge.jpg.webp'], '02363772233', '119 Lê Lợi, Hải Châu 1, Hải Châu, Đà Nẵng', 3, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (4,  'Nhà hàng ven biển chuyên phục vụ hải sản và món Việt', array['https://tuvantruongthuanduc.vn/vnt_upload/service/an_toan_thuc_pham_an_uong.jpg'], '02363773111', '54 An Thượng 1, Mỹ An, Ngũ Hành Sơn, Đà Nẵng', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (5,  'Không gian cổ điển phục vụ các món ăn đậm đà hương vị truyền thống Việt', array['https://giayphepkinhdoanhkhachsan.com/wp-content/uploads/2020/11/giay-phep-an-toan-thuc-pham-nha-hang-trung-quoc-1.png'], '02363772000', '4 Bạch Đằng, Hải Châu, Đà Nẵng', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL);
 SELECT setval('restaurants_id_seq', (SELECT MAX(id) FROM restaurants), true); -- Reset sequence
 
 -- Items

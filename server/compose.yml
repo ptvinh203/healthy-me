@@ -1,4 +1,29 @@
 services:
+  health_me_server:
+    container_name: health-me-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - health_me_db
+    environment:
+      - SPRING_DATASOURCE_HOST=${SPRING_DATASOURCE_HOST}
+      - SPRING_DATASOURCE_PORT=${SPRING_DATASOURCE_PORT}
+      - SPRING_DATASOURCE_NAME=${SPRING_DATASOURCE_NAME}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET}
+      - JWT_ACCESS_TOKEN_EXPIRATION_MS=${JWT_ACCESS_TOKEN_EXPIRATION_MS}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+    env_file:
+      - .env
+    networks:
+      - health-me-network
+
   health_me_db:
     image: postgres:15
     container_name: health-me-db
@@ -13,8 +38,16 @@ services:
       - "7373:5432"
     volumes:
       - health_me_data:/var/lib/postgresql/data
-      - ./database/initial_database.sql:/docker-entrypoint-initdb.d/initial_database.sql
+      - ./database/V01__initial_database.sql:/docker-entrypoint-initdb.d/V01__initial_database.sql
+      - ./database/V02__initial_data.sql:/docker-entrypoint-initdb.d/V02__initial_data.sql
+    networks:
+      - health-me-network
 
 volumes:
   health_me_data:
     driver: local
+
+networks:
+  health-me-network:
+    name: health-me-network
+    driver: bridge

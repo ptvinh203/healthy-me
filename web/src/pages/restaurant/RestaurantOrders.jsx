@@ -79,8 +79,8 @@ const RestaurantOrders = () => {
                         </Text>
                     </Flex>
 
-                    <Tag color={getStatusColor('PENDING')}>
-                        Đang chờ
+                    <Tag color={getStatusColor('READY')} style={{ color: 'white', fontWeight: '500' }}>
+                        Đã đặt hàng
                     </Tag>
                 </Flex>
 
