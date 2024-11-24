@@ -117,7 +117,7 @@ export default function CustomerOrder() {
                                 Không có sản phẩm nào
                             </Flex>
                         ) : (
-                            <Row style={{width: '100%'}} gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}>
+                            <Row style={{ width: '100%' }} gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}>
                                 {searchResults.map((item, idx) => (
                                     <Col key={idx} span={4}>
                                         <OrderItemCart item={item} />

@@ -192,7 +192,9 @@ export default function CustomerPayment() {
                                 Không có sản phẩm nào
                             </Flex>
                         ) : (
-                            <Row gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}>
+                            <Row gutter={searchResults.length >= 5 ? [10, 20] : [30, 20]} justify={searchResults.length >= 5 ? 'space-between' : 'start'}
+                                style={{ width: '100%' }}
+                            >
                                 {searchResults.map((item, idx) => (
                                     <Col key={idx} span={4}>
                                         <OrderItemCart item={item} />

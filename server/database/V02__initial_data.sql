@@ -30,7 +30,7 @@ VALUES
     (9, 'Nước Mía', array['Mía tươi'], 'Nước mía ngọt ngào, thanh mát.', 25000, 'https://gamek.mediacdn.vn/133514250583805952/2023/6/25/menueditoriteme47592b72ec64429-16870625590121701900347-1687665963226-168766596345795406500.jpg', 100, 'DRINK', 3, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
     (10, 'Hàu Nướng', array['Hàu', 'phô mai'], 'Hàu nướng phô mai, món ăn hấp dẫn.', 160000, 'https://th.bing.com/th/id/R.95e2f4f2191bbee0ceacd5e58dc19d82?rik=GCqKUgz3NSts8w&pid=ImgRaw&r=0', 300, 'MAIN_FOOD', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
     (11, 'Xôi Gà', array['Gà', 'xôi'], 'Xôi gà nóng hổi, thơm ngon.', 90000, 'https://th.bing.com/th/id/OIP.KSRmV4ejQ3APOVquppv6swHaHa?rs=1&pid=ImgDetMain', 350, 'FAST_FOOD', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
-    (12, 'Nước Chanh', array['Chanh', 'đường'], 'Nước chanh giải khát, cực đã.', 35000, 'https://ngonaz.com/wp-content/uploads/2020/10/tac-dung-cua-nuoc-chanh-nong-2-1.jpg', 80, 'DRINK', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
+    (12, 'Nước Chanh', array['Chanh', 'đường'], 'Nước chanh giải khát, cực đã.', 35000, 'https://www.huongnghiepaau.com/wp-content/uploads/2022/01/nuoc-chanh-loi-ich-cho-suc-khoe.jpg', 80, 'DRINK', 4, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
     (13, 'Phở Bò', array['Bò', 'bánh phở', 'rau'], 'Phở bò ngon, hương vị truyền thống.', 140000, 'https://th.bing.com/th/id/R.7414660730b0c1a3311756559612126d?rik=6Xah1BXR654%2ftw&pid=ImgRaw&r=0', 400, 'MAIN_FOOD', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
     (14, 'Bánh Xèo', array['Bột', 'tôm', 'thịt'], 'Bánh xèo giòn, nhân thịt tươi ngon.', 75000, 'https://th.bing.com/th/id/R.3fd1acb3e0b3875d80ed629a773c7583?rik=m8U1HajYEDFFag&pid=ImgRaw&r=0', 250, 'FAST_FOOD', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
     (15, 'Sinh Tố', array['Trái cây'], 'Sinh tố trái cây tươi ngon.', 45000, 'https://th.bing.com/th/id/OIP.Y-SILbjECKIAxCwIOcUdmAAAAA?rs=1&pid=ImgDetMain', 200, 'DRINK', 5, '2024-10-19 12:00:00', '2024-10-19 12:00:00', NULL),
@@ -97,11 +97,18 @@ VALUES
 SELECT setval('items_id_seq', (SELECT MAX(id) FROM items), true); -- Reset sequence
 
 -- Reviews
-INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (4, 42, 1, null, 4, '2024-10-19 10:42:18.147503', null, null);
-INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (3, 35, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
-INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (2, 34, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
-INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (5, 18, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
 INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (1, 12, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (2, 34, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (3, 35, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (4, 42, 1, null, 4, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (5, 18, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (6, 66, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (7, 36, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (8, 25, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (9, 63, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (10, 73, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (11, 46, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
+INSERT INTO reviews (id, item_id, account_id, comment, evaluate, created_at, updated_at, deleted_at) VALUES (12, 52, 1, null, 5, '2024-10-19 10:42:18.147503', null, null);
 SELECT setval('reviews_id_seq', (SELECT MAX(id) FROM reviews), true); -- Reset sequence
 
 COMMIT;
