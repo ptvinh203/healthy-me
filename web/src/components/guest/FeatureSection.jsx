@@ -24,7 +24,6 @@ function FeatureSection() {
     return (
         <div
             style={{
-
                 width: "100%",
                 padding: "80px ",
                 display: "flex",
@@ -44,12 +43,12 @@ function FeatureSection() {
                     </Text>
                 </Paragraph>
                 <Paragraph strong style={{ width: "250px" }}>
-                    <Text style={{ wordBreak: "break-word", fontSize: "x-Large" }}>
+                    <Text style={{ wordBreak: "break-word", fontSize: "xx-Large" }}>
                         Tính toán BMI dễ hơn
                     </Text>
                 </Paragraph>
                 <Paragraph style={{ width: "250px" }}>
-                    <Text style={{ wordBreak: "break-word" }}>
+                    <Text style={{ wordBreak: "break-word", fontSize: "large" }}>
                         Chúng tôi tính chỉ số BMI của bạn dựa trên dữ liệu như tuổi, chiều
                         cao, cân nặng.
                     </Text>
@@ -63,15 +62,21 @@ function FeatureSection() {
 
                 }} key={index}>
                     <img
-                        style={{ width: "100px", height: "100px" }}
+                        style={{ width: "120px", height: "120px" }}
                         src={feature.imgSrc}
                         alt={feature.title}
                     />
                     <Paragraph strong style={{ width: "250px" }}>
                         <Text style={{ wordBreak: "break-word" }}>{feature.name}</Text>
                     </Paragraph>
+
+                    <Paragraph strong style={{ width: "300px" }}>
+                        <Text style={{ wordBreak: "break-word", fontSize: "x-Large" }}>
+                            {feature.title}                        </Text>
+                    </Paragraph>
                     <Paragraph style={{ width: "250px" }}>
-                        <Text style={{ wordBreak: "break-word" }}>
+
+                        <Text style={{ wordBreak: "break-word", fontSize: "large" }}>
                             {feature.description}
                         </Text>
                     </Paragraph>
