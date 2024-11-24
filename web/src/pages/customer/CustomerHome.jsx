@@ -85,6 +85,8 @@ const CustomerHome = () => {
         if (account) {
             const response = await customerService.updateHealthGoal(account.id, value);
             setCustomerInfo(response.data);
+            dispatch({ type: ReducerCases.SET_RECOMMEND_ITEMS, data: undefined });
+            dispatch({ type: ReducerCases.SET_HIGH_RATING_ITEMS, data: undefined });
         }
     };
 
@@ -92,6 +94,8 @@ const CustomerHome = () => {
         if (account) {
             const response = await customerService.updateActivityIndex(account.id, value);
             setCustomerInfo(response.data);
+            dispatch({ type: ReducerCases.SET_RECOMMEND_ITEMS, data: undefined });
+            dispatch({ type: ReducerCases.SET_HIGH_RATING_ITEMS, data: undefined });
         }
     }
 

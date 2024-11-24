@@ -6,40 +6,40 @@ const CustomSearchBar = () => {
     const suffix = <HeartTwoTone twoToneColor="#eb2f96" />;
     const [query, setQuery] = useState("");
     const [active, setActive] = useState(false);
-    const testApi = "https://jsonplaceholder.typicode.com/photos";
+    // const testApi = "https://jsonplaceholder.typicode.com/photos";
     const [searchResults, setSearchResults] = useState([]);
     const { Text, Paragraph } = Typography;
-
-    useEffect(() => {
-        const controller = new AbortController();
-        async function fetchData() {
-            try {
-                const res = await fetch(testApi, { signal: controller.signal });
-                if (!res.ok) {
-                    throw new Error("Fetching Error");
+    /*
+        useEffect(() => {
+            const controller = new AbortController();
+            async function fetchData() {
+                try {
+                    const res = await fetch(testApi, { signal: controller.signal });
+                    if (!res.ok) {
+                        throw new Error("Fetching Error");
+                    }
+                    const data = await res.json();
+                    setSearchResults(
+                        data.filter((item) => {
+                            return item.title.toLowerCase().includes(query.toLowerCase());
+                        })
+                    );
+                } catch (error) {
+                    if (error.name !== "AbortError") console.log(error.message);
                 }
-                const data = await res.json();
-                setSearchResults(
-                    data.filter((item) => {
-                        return item.title.toLowerCase().includes(query.toLowerCase());
-                    })
-                );
-            } catch (error) {
-                if (error.name !== "AbortError") console.log(error.message);
             }
-        }
 
-        if (query) {
-            fetchData();
-        } else {
-            setSearchResults([]);
-        }
+            if (query) {
+                fetchData();
+            } else {
+                setSearchResults([]);
+            }
 
-        return function () {
-            controller.abort();
-        };
-    }, [query]);
-
+            return function () {
+                controller.abort();
+            };
+        }, [query]);
+    */
     function focus() {
         setActive(true);
     }
@@ -51,7 +51,6 @@ const CustomSearchBar = () => {
     function clearQuery() {
         setQuery("");
     }
-    console.log(searchResults);
     return (
         <div style={{ display: "flex", alignItems: "flex-start", width: "500px" }}>
             <Flex
@@ -78,7 +77,7 @@ const CustomSearchBar = () => {
                         borderColor: colors.border,
                     }}
                 />
-                {query.length >= 3 && (
+                {query.length >= 999 && (
                     <Flex
                         vertical
                         style={{
@@ -94,11 +93,11 @@ const CustomSearchBar = () => {
                         }}
                     >
                         <Paragraph strong style={{ width: "100%", margin: "10px 0px 0px 10px" }}>
-                            <Text style={{ fontSize: "large" }}>Restaurant</Text>
+                            <Text style={{ fontSize: "large" }}></Text>
                         </Paragraph>
                         {searchResults.length == 0 ? (
                             <Paragraph strong style={{ width: "100%", margin: "10px 0px 0px 10px" }}>
-                                <Text style={{ fontSize: "medium" }}>Không tìm thấy nhà hàng</Text>
+                                <Text style={{ fontSize: "medium" }}>Không tìm thấy vấn đề sức khỏe</Text>
                             </Paragraph>
                         ) : (
                             searchResults.map((item) => (
