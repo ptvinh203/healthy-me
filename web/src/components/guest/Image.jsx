@@ -3,7 +3,7 @@ function Image() {
     return (
         <>
             <div>
-                <img style={{ width: "300px", height: "300px", marginLeft: "auto" }} src={image}></img>
+                <img style={{ width: "400px", height: "400px", marginLeft: "auto" }} src={image}></img>
             </div>
         </>
     );

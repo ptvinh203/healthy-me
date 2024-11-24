@@ -45,11 +45,6 @@ function RegisterResPage() {
         }
     };
 
-    const onEnterPress = (e) => {
-        if (e.key === 'Enter') {
-            handleSubmit(onSubmit)();
-        }
-    };
 
     const handleFileChange = (file) => {
         setFileList((prevList) => [...prevList, file]);
@@ -99,7 +94,7 @@ function RegisterResPage() {
                                 Đăng ký nhà hàng/quán ăn
                             </Title>
                         </Flex>
-                        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }} onKeyDown={onEnterPress}>
+                        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "50%" }}>
                             <Controller
                                 name="email"
                                 control={control}
@@ -260,10 +255,8 @@ function RegisterResPage() {
                                                 beforeUpload={handleFileChange}
                                                 showUploadList={false}
                                                 maxCount={3}
-
                                             >
                                                 <Button
-
                                                     icon={<UploadOutlined />}
                                                     style={{
                                                         backgroundColor: colors.lightBackground,
